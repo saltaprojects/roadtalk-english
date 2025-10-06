@@ -15,7 +15,7 @@ const LanguageSwitcher = () => {
       variant="ghost"
       size="default"
       onClick={toggleLanguage}
-      className="gap-2"
+      className="gap-2 text-white hover:text-white/80"
     >
       <Languages className="w-5 h-5" />
       {i18n.language === 'en' ? 'RU' : 'EN'}
