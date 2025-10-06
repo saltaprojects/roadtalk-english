@@ -13,11 +13,11 @@ const LanguageSwitcher = () => {
   return (
     <Button
       variant="ghost"
-      size="sm"
+      size="lg"
       onClick={toggleLanguage}
-      className="gap-2"
+      className="gap-2 text-lg"
     >
-      <Languages className="w-4 h-4" />
+      <Languages className="w-6 h-6" />
       {i18n.language === 'en' ? 'RU' : 'EN'}
     </Button>
   );
