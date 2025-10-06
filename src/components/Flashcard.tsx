@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Volume2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 
 interface FlashcardProps {
   front: string;
@@ -13,14 +14,13 @@ interface FlashcardProps {
 export const Flashcard = ({ front, back, audioId }: FlashcardProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   const playAudio = (e: React.MouseEvent) => {
     e.stopPropagation();
     toast({
-      title: "Playing audio",
-      description: "Listen carefully",
+      title: t('flashcard.playAudio'),
     });
-    // In a real app, this would play actual audio
   };
 
   return (
@@ -51,7 +51,7 @@ export const Flashcard = ({ front, back, audioId }: FlashcardProps) => {
           className="mt-auto"
         >
           <Volume2 className="mr-2 h-4 w-4" />
-          Listen
+          {t('flashcard.playAudio')}
         </Button>
       </div>
 
@@ -69,7 +69,7 @@ export const Flashcard = ({ front, back, audioId }: FlashcardProps) => {
         </div>
         <p className="text-lg">{back}</p>
         <p className="text-sm text-muted-foreground mt-4">
-          Click to flip back
+          {t('flashcard.flip')}
         </p>
       </div>
     </Card>

@@ -7,11 +7,14 @@ import { ArrowLeft, Volume2, RotateCcw } from "lucide-react";
 import { Flashcard } from "@/components/Flashcard";
 import { Quiz } from "@/components/Quiz";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const Lesson = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState<"intro" | "flashcards" | "quiz" | "complete">("intro");
   const [audioPlaying, setAudioPlaying] = useState(false);
 
@@ -97,11 +100,9 @@ const Lesson = () => {
 
   const playAudio = () => {
     setAudioPlaying(true);
-    // Simulate audio playback
     setTimeout(() => setAudioPlaying(false), 2000);
     toast({
-      title: "Audio playing",
-      description: "Listen to the pronunciation",
+      title: t('flashcard.playAudio'),
     });
   };
 
@@ -125,11 +126,14 @@ const Lesson = () => {
               onClick={() => navigate("/dashboard")}
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Dashboard
+              {t('lesson.backToDashboard')}
             </Button>
-            <span className="text-sm font-medium text-muted-foreground">
-              Lesson {id}
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium text-muted-foreground">
+                {t('lesson.introduction')} {id}
+              </span>
+              <LanguageSwitcher />
+            </div>
           </div>
           <Progress value={progressValue} className="h-2" />
         </div>
@@ -156,7 +160,7 @@ const Lesson = () => {
                     className="btn-hero"
                   >
                     <Volume2 className="mr-2 h-4 w-4" />
-                    {audioPlaying ? "Playing..." : "Listen to Scenario"}
+                    {audioPlaying ? "Playing..." : t('flashcard.playAudio')}
                   </Button>
                 </div>
               </div>
@@ -164,9 +168,9 @@ const Lesson = () => {
 
             <div className="space-y-4">
               <div className="flex items-center gap-2 text-muted-foreground">
-                <span>📚 {lessonData.flashcards.length} vocabulary cards</span>
+                <span>📚 {lessonData.flashcards.length}</span>
                 <span>•</span>
-                <span>❓ {lessonData.quiz.length} quiz questions</span>
+                <span>❓ {lessonData.quiz.length}</span>
                 <span>•</span>
                 <span>⏱️ ~5 minutes</span>
               </div>
@@ -176,7 +180,7 @@ const Lesson = () => {
                 className="w-full btn-hero text-lg"
                 onClick={() => setCurrentStep("flashcards")}
               >
-                Start Learning
+                {t('lesson.next')}
               </Button>
             </div>
           </Card>
@@ -186,9 +190,9 @@ const Lesson = () => {
         {currentStep === "flashcards" && (
           <div className="space-y-6">
             <Card className="p-6">
-              <h2 className="text-2xl font-bold mb-2">Vocabulary Practice</h2>
+              <h2 className="text-2xl font-bold mb-2">{t('lesson.vocabulary')}</h2>
               <p className="text-muted-foreground mb-4">
-                Click each card to see the meaning and context
+                {t('flashcard.flip')}
               </p>
             </Card>
 
@@ -210,14 +214,14 @@ const Lesson = () => {
                   onClick={() => setCurrentStep("intro")}
                 >
                   <ArrowLeft className="mr-2 h-4 w-4" />
-                  Back to Intro
+                  {t('lesson.backToDashboard')}
                 </Button>
                 <Button
                   size="lg"
                   className="btn-hero"
                   onClick={() => setCurrentStep("quiz")}
                 >
-                  Continue to Quiz
+                  {t('lesson.next')}
                 </Button>
               </div>
             </Card>
@@ -236,9 +240,9 @@ const Lesson = () => {
         {currentStep === "complete" && (
           <Card className="p-8 card-elevated text-center">
             <div className="text-6xl mb-4">🎉</div>
-            <h1 className="text-3xl font-bold mb-4">Lesson Complete!</h1>
+            <h1 className="text-3xl font-bold mb-4">{t('lesson.congratulations')}</h1>
             <p className="text-lg text-muted-foreground mb-8">
-              Great job! You've completed "{lessonData.title}"
+              {t('lesson.completionMessage')}
             </p>
 
             <div className="grid md:grid-cols-3 gap-4 mb-8">
@@ -246,7 +250,7 @@ const Lesson = () => {
                 <div className="text-3xl font-bold text-accent mb-1">
                   {lessonData.flashcards.length}
                 </div>
-                <div className="text-sm text-muted-foreground">Words Learned</div>
+                <div className="text-sm text-muted-foreground">Words</div>
               </div>
               <div className="bg-muted rounded-lg p-4">
                 <div className="text-3xl font-bold text-accent mb-1">5</div>
@@ -268,14 +272,14 @@ const Lesson = () => {
                 }}
               >
                 <RotateCcw className="mr-2 h-4 w-4" />
-                Review Lesson
+                {t('lesson.backToDashboard')}
               </Button>
               <Button
                 size="lg"
                 className="btn-hero"
                 onClick={() => navigate("/dashboard")}
               >
-                Back to Dashboard
+                {t('lesson.backToDashboard')}
               </Button>
             </div>
           </Card>

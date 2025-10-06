@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle2, XCircle } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface Question {
   question: string;
@@ -20,6 +21,7 @@ export const Quiz = ({ questions, onComplete }: QuizProps) => {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
+  const { t } = useTranslation();
 
   const question = questions[currentQuestion];
   const progress = ((currentQuestion + 1) / questions.length) * 100;
@@ -49,9 +51,9 @@ export const Quiz = ({ questions, onComplete }: QuizProps) => {
     <div className="space-y-6">
       <Card className="p-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-bold">Quiz Time!</h2>
+          <h2 className="text-2xl font-bold">{t('lesson.quiz')}</h2>
           <span className="text-sm font-medium text-muted-foreground">
-            Question {currentQuestion + 1} of {questions.length}
+            {t('quiz.question')} {currentQuestion + 1} / {questions.length}
           </span>
         </div>
         <Progress value={progress} className="h-2" />
@@ -96,13 +98,13 @@ export const Quiz = ({ questions, onComplete }: QuizProps) => {
             {selectedAnswer === question.correct ? (
               <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                 <p className="font-medium text-green-800">
-                  ✓ Correct! Great job!
+                  {t('quiz.correct')}
                 </p>
               </div>
             ) : (
               <div className="bg-red-50 border border-red-200 rounded-lg p-4">
                 <p className="font-medium text-red-800">
-                  Not quite. The correct answer is: "{question.options[question.correct]}"
+                  {t('quiz.incorrect')}: "{question.options[question.correct]}"
                 </p>
               </div>
             )}
@@ -112,7 +114,7 @@ export const Quiz = ({ questions, onComplete }: QuizProps) => {
               className="w-full btn-hero"
               onClick={handleNext}
             >
-              {currentQuestion < questions.length - 1 ? "Next Question" : "Finish Quiz"}
+              {currentQuestion < questions.length - 1 ? t('quiz.next') : t('lesson.finish')}
             </Button>
           </div>
         )}
@@ -120,7 +122,7 @@ export const Quiz = ({ questions, onComplete }: QuizProps) => {
 
       <Card className="p-4 bg-muted/50">
         <div className="flex justify-between items-center text-sm">
-          <span className="text-muted-foreground">Current Score</span>
+          <span className="text-muted-foreground">{t('lesson.score')}</span>
           <span className="font-bold text-lg">
             {score} / {questions.length}
           </span>

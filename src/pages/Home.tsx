@@ -2,10 +2,19 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 import { Truck, BookOpen, Award, Clock } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import heroImage from "@/assets/hero-truck.jpg";
 const Home = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  
   return <div className="min-h-screen">
+      {/* Language Switcher */}
+      <div className="absolute top-4 right-4 z-20">
+        <LanguageSwitcher />
+      </div>
+
       {/* Hero Section */}
       <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{
@@ -17,14 +26,14 @@ const Home = () => {
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
           
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 animate-fade-in">
-            RoadTalk English
+            {t('home.title')}
           </h1>
           <p className="text-xl md:text-2xl text-white/90 mb-8 animate-fade-in">
-            Learn practical English for truck drivers — on your time, on your route
+            {t('home.subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
             <Button size="lg" className="btn-hero text-lg px-8 py-6" onClick={() => navigate("/auth")}>
-              Get Started
+              {t('home.getStarted')}
             </Button>
             
           </div>
@@ -35,31 +44,31 @@ const Home = () => {
       <section className="py-20 px-4 bg-muted/30">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-12">
-            Built for Life on the Road
+            {t('home.features.title')}
           </h2>
           
           <div className="grid md:grid-cols-3 gap-8">
             <Card className="p-8 card-elevated hover:scale-105 transition-transform duration-200">
               <Clock className="w-12 h-12 text-accent mb-4" />
-              <h3 className="text-2xl font-bold mb-3">5-Minute Lessons</h3>
+              <h3 className="text-2xl font-bold mb-3">{t('home.features.lesson.title')}</h3>
               <p className="text-muted-foreground">
-                Quick micro-lessons perfect for rest stops. Learn while you take a break.
+                {t('home.features.lesson.description')}
               </p>
             </Card>
 
             <Card className="p-8 card-elevated hover:scale-105 transition-transform duration-200">
               <BookOpen className="w-12 h-12 text-accent mb-4" />
-              <h3 className="text-2xl font-bold mb-3">Job-Focused Content</h3>
+              <h3 className="text-2xl font-bold mb-3">{t('home.features.content.title')}</h3>
               <p className="text-muted-foreground">
-                Navigation, delivery, border crossings — English you actually need on the job.
+                {t('home.features.content.description')}
               </p>
             </Card>
 
             <Card className="p-8 card-elevated hover:scale-105 transition-transform duration-200">
               <Award className="w-12 h-12 text-accent mb-4" />
-              <h3 className="text-2xl font-bold mb-3">Track Your Progress</h3>
+              <h3 className="text-2xl font-bold mb-3">{t('home.features.progress.title')}</h3>
               <p className="text-muted-foreground">
-                See your improvement with every completed lesson. Stay motivated!
+                {t('home.features.progress.description')}
               </p>
             </Card>
           </div>
@@ -70,13 +79,13 @@ const Home = () => {
       <section className="py-20 px-4 gradient-road text-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-6">
-            Ready to Improve Your English?
+            {t('home.cta.title')}
           </h2>
           <p className="text-xl mb-8 text-white/90">
-            Join drivers learning practical English for the road
+            {t('home.cta.subtitle')}
           </p>
           <Button size="lg" className="btn-hero text-lg px-8 py-6" onClick={() => navigate("/auth")}>
-            Start Learning Today
+            {t('home.cta.button')}
           </Button>
         </div>
       </section>
@@ -84,7 +93,7 @@ const Home = () => {
       {/* Footer */}
       <footer className="py-8 px-4 border-t">
         <div className="max-w-6xl mx-auto text-center text-muted-foreground">
-          <p>© 2025 RoadTalk English. Built for drivers, by language experts.</p>
+          <p>{t('home.footer')}</p>
         </div>
       </footer>
     </div>;

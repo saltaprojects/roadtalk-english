@@ -1,0 +1,102 @@
+{
+  "home": {
+    "title": "RoadTalk English",
+    "subtitle": "Learn practical English for truck drivers — on your time, on your route",
+    "getStarted": "Get Started",
+    "features": {
+      "title": "Built for Life on the Road",
+      "lesson": {
+        "title": "5-Minute Lessons",
+        "description": "Quick micro-lessons perfect for rest stops. Learn while you take a break."
+      },
+      "content": {
+        "title": "Job-Focused Content",
+        "description": "Navigation, delivery, border crossings — English you actually need on the job."
+      },
+      "progress": {
+        "title": "Track Your Progress",
+        "description": "See your improvement with every completed lesson. Stay motivated!"
+      }
+    },
+    "cta": {
+      "title": "Ready to Improve Your English?",
+      "subtitle": "Join drivers learning practical English for the road",
+      "button": "Start Learning Today"
+    },
+    "footer": "© 2025 RoadTalk English. Built for drivers, by language experts."
+  },
+  "auth": {
+    "title": "Welcome Back",
+    "subtitle": "Sign in to continue your learning journey",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "guestAccess": "Continue as Guest",
+    "switchToSignUp": "Need an account?",
+    "switchToSignIn": "Already have an account?",
+    "createAccount": "Create Your Account",
+    "startLearning": "Start learning practical English today",
+    "success": "Welcome! Let's get started.",
+    "guestSuccess": "Continuing as guest. Your progress won't be saved."
+  },
+  "dashboard": {
+    "welcome": "Welcome Back, Driver!",
+    "subtitle": "Ready to continue learning?",
+    "progress": {
+      "title": "Your Progress",
+      "lessonsCompleted": "Lessons Completed",
+      "streak": "Day Streak",
+      "minutesLearned": "Minutes Learned"
+    },
+    "todayLesson": {
+      "badge": "Today's Lesson",
+      "title": "Highway Communication",
+      "description": "Learn essential phrases for talking with dispatchers and other drivers on the road",
+      "duration": "5 min",
+      "start": "Start Lesson"
+    },
+    "topics": {
+      "title": "Learning Topics",
+      "navigation": {
+        "title": "Navigation & Directions",
+        "lessons": "8 lessons"
+      },
+      "delivery": {
+        "title": "Delivery & Documentation",
+        "lessons": "6 lessons"
+      },
+      "roadside": {
+        "title": "Roadside Assistance",
+        "lessons": "5 lessons"
+      },
+      "border": {
+        "title": "Border Crossings",
+        "lessons": "7 lessons"
+      }
+    }
+  },
+  "lesson": {
+    "introduction": "Introduction",
+    "vocabulary": "Vocabulary Practice",
+    "quiz": "Quick Quiz",
+    "complete": "Complete!",
+    "next": "Next",
+    "finish": "Finish",
+    "backToDashboard": "Back to Dashboard",
+    "congratulations": "Great Job!",
+    "completionMessage": "You've completed this lesson. Keep up the great work!",
+    "score": "Your Score"
+  },
+  "flashcard": {
+    "flip": "Tap to flip",
+    "playAudio": "Play Audio"
+  },
+  "quiz": {
+    "question": "Question",
+    "submit": "Submit Answer",
+    "next": "Next Question",
+    "correct": "Correct!",
+    "incorrect": "Not quite. The correct answer is"
+  }
+}

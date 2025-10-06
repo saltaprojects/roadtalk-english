@@ -7,21 +7,22 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useNavigate } from "react-router-dom";
 import { Truck, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Simulate login
     setTimeout(() => {
       toast({
-        title: "Welcome back!",
-        description: "You've successfully logged in.",
+        title: t('auth.success'),
       });
       navigate("/dashboard");
       setIsLoading(false);
@@ -32,19 +33,28 @@ const Auth = () => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Simulate signup
     setTimeout(() => {
       toast({
-        title: "Account created!",
-        description: "Welcome to RoadTalk English.",
+        title: t('auth.success'),
       });
       navigate("/dashboard");
       setIsLoading(false);
     }, 1000);
   };
 
+  const handleGuestAccess = () => {
+    toast({
+      title: t('auth.guestSuccess'),
+    });
+    navigate("/dashboard");
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4 gradient-hero">
+      <div className="absolute top-4 right-4">
+        <LanguageSwitcher />
+      </div>
+      
       <div className="w-full max-w-md">
         <Button
           variant="ghost"
@@ -52,26 +62,26 @@ const Auth = () => {
           onClick={() => navigate("/")}
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Home
+          {t('lesson.backToDashboard')}
         </Button>
 
         <Card className="p-8 card-elevated">
           <div className="text-center mb-6">
             <Truck className="w-12 h-12 mx-auto mb-4 text-accent" />
-            <h1 className="text-3xl font-bold">RoadTalk English</h1>
-            <p className="text-muted-foreground mt-2">Start your learning journey</p>
+            <h1 className="text-3xl font-bold">{t('home.title')}</h1>
+            <p className="text-muted-foreground mt-2">{t('auth.startLearning')}</p>
           </div>
 
           <Tabs defaultValue="login" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="login">Login</TabsTrigger>
-              <TabsTrigger value="signup">Sign Up</TabsTrigger>
+              <TabsTrigger value="login">{t('auth.signIn')}</TabsTrigger>
+              <TabsTrigger value="signup">{t('auth.signUp')}</TabsTrigger>
             </TabsList>
 
             <TabsContent value="login">
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="login-email">Email</Label>
+                  <Label htmlFor="login-email">{t('auth.email')}</Label>
                   <Input
                     id="login-email"
                     type="email"
@@ -81,7 +91,7 @@ const Auth = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="login-password">Password</Label>
+                  <Label htmlFor="login-password">{t('auth.password')}</Label>
                   <Input
                     id="login-password"
                     type="password"
@@ -95,7 +105,7 @@ const Auth = () => {
                   className="w-full h-12 text-lg"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Logging in..." : "Login"}
+                  {isLoading ? "..." : t('auth.signIn')}
                 </Button>
               </form>
             </TabsContent>
@@ -103,17 +113,7 @@ const Auth = () => {
             <TabsContent value="signup">
               <form onSubmit={handleSignup} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="signup-name">Name</Label>
-                  <Input
-                    id="signup-name"
-                    type="text"
-                    placeholder="Your name"
-                    required
-                    className="h-12 text-lg"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="signup-email">Email</Label>
+                  <Label htmlFor="signup-email">{t('auth.email')}</Label>
                   <Input
                     id="signup-email"
                     type="email"
@@ -123,7 +123,7 @@ const Auth = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="signup-password">Password</Label>
+                  <Label htmlFor="signup-password">{t('auth.password')}</Label>
                   <Input
                     id="signup-password"
                     type="password"
@@ -137,7 +137,7 @@ const Auth = () => {
                   className="w-full h-12 text-lg"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Creating account..." : "Sign Up"}
+                  {isLoading ? "..." : t('auth.signUp')}
                 </Button>
               </form>
             </TabsContent>
@@ -147,9 +147,9 @@ const Auth = () => {
             <Button
               variant="link"
               className="text-muted-foreground"
-              onClick={() => navigate("/dashboard")}
+              onClick={handleGuestAccess}
             >
-              Continue as Guest →
+              {t('auth.guestAccess')} →
             </Button>
           </div>
         </Card>

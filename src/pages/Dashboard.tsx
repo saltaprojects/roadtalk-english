@@ -3,19 +3,21 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useNavigate } from "react-router-dom";
 import { BookOpen, Trophy, Clock, Play, LogOut } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const completedLessons = 3;
   const totalLessons = 20;
   const progressPercentage = (completedLessons / totalLessons) * 100;
 
   const topics = [
-    { id: 1, title: "Navigation & Directions", lessons: 5, completed: 3, icon: "🗺️" },
-    { id: 2, title: "Delivery & Pickups", lessons: 4, completed: 0, icon: "📦" },
-    { id: 3, title: "Border Crossings", lessons: 3, completed: 0, icon: "🛂" },
-    { id: 4, title: "Roadside Assistance", lessons: 4, completed: 0, icon: "🔧" },
-    { id: 5, title: "Rest Stop Conversations", lessons: 4, completed: 0, icon: "☕" },
+    { id: 1, title: t('dashboard.topics.navigation.title'), lessons: t('dashboard.topics.navigation.lessons'), completed: 3, icon: "🗺️" },
+    { id: 2, title: t('dashboard.topics.delivery.title'), lessons: t('dashboard.topics.delivery.lessons'), completed: 0, icon: "📦" },
+    { id: 3, title: t('dashboard.topics.border.title'), lessons: t('dashboard.topics.border.lessons'), completed: 0, icon: "🛂" },
+    { id: 4, title: t('dashboard.topics.roadside.title'), lessons: t('dashboard.topics.roadside.lessons'), completed: 0, icon: "🔧" },
   ];
 
   return (
@@ -24,17 +26,20 @@ const Dashboard = () => {
       <header className="gradient-road text-white p-6">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold">Dashboard</h1>
-            <p className="text-white/80 mt-1">Welcome back, Driver!</p>
+            <h1 className="text-3xl font-bold">{t('dashboard.welcome')}</h1>
+            <p className="text-white/80 mt-1">{t('dashboard.subtitle')}</p>
           </div>
-          <Button
-            variant="outline"
-            className="bg-white/10 backdrop-blur-sm text-white border-white/30 hover:bg-white/20"
-            onClick={() => navigate("/")}
-          >
-            <LogOut className="mr-2 h-4 w-4" />
-            Logout
-          </Button>
+          <div className="flex gap-2">
+            <LanguageSwitcher />
+            <Button
+              variant="outline"
+              className="bg-white/10 backdrop-blur-sm text-white border-white/30 hover:bg-white/20"
+              onClick={() => navigate("/")}
+            >
+              <LogOut className="mr-2 h-4 w-4" />
+              Logout
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -43,14 +48,14 @@ const Dashboard = () => {
         <Card className="p-6 card-elevated">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-2xl font-bold">Your Progress</h2>
-              <p className="text-muted-foreground">Keep up the great work!</p>
+              <h2 className="text-2xl font-bold">{t('dashboard.progress.title')}</h2>
+              <p className="text-muted-foreground">{completedLessons} {t('dashboard.progress.lessonsCompleted')}</p>
             </div>
             <Trophy className="w-12 h-12 text-accent" />
           </div>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
-              <span className="font-medium">{completedLessons} of {totalLessons} lessons completed</span>
+              <span className="font-medium">{completedLessons} / {totalLessons}</span>
               <span className="text-muted-foreground">{Math.round(progressPercentage)}%</span>
             </div>
             <Progress value={progressPercentage} className="h-3" />
@@ -63,18 +68,14 @@ const Dashboard = () => {
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
                 <Clock className="w-5 h-5 text-accent" />
-                <span className="text-sm font-medium text-accent">TODAY'S LESSON</span>
+                <span className="text-sm font-medium text-accent">{t('dashboard.todayLesson.badge')}</span>
               </div>
-              <h3 className="text-2xl font-bold mb-2">Asking for Directions</h3>
+              <h3 className="text-2xl font-bold mb-2">{t('dashboard.todayLesson.title')}</h3>
               <p className="text-muted-foreground mb-4">
-                Learn key phrases for finding your way: "Where is...", "How do I get to...", and understanding directions.
+                {t('dashboard.todayLesson.description')}
               </p>
               <div className="flex gap-2 text-sm text-muted-foreground mb-6">
-                <span>⏱️ 5 minutes</span>
-                <span>•</span>
-                <span>🎧 Audio included</span>
-                <span>•</span>
-                <span>❓ 5 questions</span>
+                <span>⏱️ {t('dashboard.todayLesson.duration')}</span>
               </div>
               <Button 
                 size="lg" 
@@ -82,7 +83,7 @@ const Dashboard = () => {
                 onClick={() => navigate("/lesson/1")}
               >
                 <Play className="mr-2 h-5 w-5" />
-                Start Lesson
+                {t('dashboard.todayLesson.start')}
               </Button>
             </div>
           </div>
@@ -90,13 +91,13 @@ const Dashboard = () => {
 
         {/* Topics Grid */}
         <div>
-          <h2 className="text-2xl font-bold mb-4">Learning Topics</h2>
+          <h2 className="text-2xl font-bold mb-4">{t('dashboard.topics.title')}</h2>
           <div className="grid md:grid-cols-2 gap-4">
             {topics.map((topic) => (
               <Card 
                 key={topic.id} 
                 className="p-6 card-elevated hover:scale-105 transition-transform duration-200 cursor-pointer"
-                onClick={() => navigate(`/topic/${topic.id}`)}
+                onClick={() => navigate(`/lesson/${topic.id}`)}
               >
                 <div className="flex items-start gap-4">
                   <div className="text-4xl">{topic.icon}</div>
@@ -104,7 +105,7 @@ const Dashboard = () => {
                     <h3 className="text-xl font-bold mb-2">{topic.title}</h3>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
                       <BookOpen className="w-4 h-4" />
-                      <span>{topic.lessons} lessons</span>
+                      <span>{topic.lessons}</span>
                       {topic.completed > 0 && (
                         <>
                           <span>•</span>
@@ -116,7 +117,7 @@ const Dashboard = () => {
                     </div>
                     {topic.completed > 0 && (
                       <Progress 
-                        value={(topic.completed / topic.lessons) * 100} 
+                        value={(topic.completed / parseInt(topic.lessons)) * 100} 
                         className="h-2"
                       />
                     )}
