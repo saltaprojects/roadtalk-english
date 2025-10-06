@@ -5,10 +5,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useNavigate } from "react-router-dom";
-import { Truck, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import truckLogo from "@/assets/truck-logo.png";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -67,7 +68,7 @@ const Auth = () => {
 
         <Card className="p-8 card-elevated">
           <div className="text-center mb-6">
-            <Truck className="w-12 h-12 mx-auto mb-4 text-accent" />
+            <img src={truckLogo} alt="Truck Logo" className="w-16 h-16 mx-auto mb-4" />
             <h1 className="text-3xl font-bold">{t('home.title')}</h1>
             <p className="text-muted-foreground mt-2">{t('auth.startLearning')}</p>
           </div>
