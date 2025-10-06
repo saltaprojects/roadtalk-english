@@ -3,18 +3,14 @@ import { Card } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 import { Truck, BookOpen, Award, Clock } from "lucide-react";
 import heroImage from "@/assets/hero-truck.jpg";
-
 const Home = () => {
   const navigate = useNavigate();
-
-  return (
-    <div className="min-h-screen">
+  return <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroImage})` }}
-        >
+        <div className="absolute inset-0 bg-cover bg-center" style={{
+        backgroundImage: `url(${heroImage})`
+      }}>
           <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/60" />
         </div>
         
@@ -27,21 +23,10 @@ const Home = () => {
             Learn practical English for truck drivers — on your time, on your route
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
-            <Button 
-              size="lg" 
-              className="btn-hero text-lg px-8 py-6"
-              onClick={() => navigate("/auth")}
-            >
+            <Button size="lg" className="btn-hero text-lg px-8 py-6" onClick={() => navigate("/auth")}>
               Get Started
             </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="bg-white/10 backdrop-blur-sm text-white border-white/30 hover:bg-white/20 text-lg px-8 py-6"
-              onClick={() => navigate("/dashboard")}
-            >
-              Try as Guest
-            </Button>
+            
           </div>
         </div>
       </section>
@@ -90,11 +75,7 @@ const Home = () => {
           <p className="text-xl mb-8 text-white/90">
             Join drivers learning practical English for the road
           </p>
-          <Button 
-            size="lg" 
-            className="btn-hero text-lg px-8 py-6"
-            onClick={() => navigate("/auth")}
-          >
+          <Button size="lg" className="btn-hero text-lg px-8 py-6" onClick={() => navigate("/auth")}>
             Start Learning Today
           </Button>
         </div>
@@ -106,8 +87,6 @@ const Home = () => {
           <p>© 2025 RoadTalk English. Built for drivers, by language experts.</p>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Home;
