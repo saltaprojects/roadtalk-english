@@ -15,9 +15,9 @@ const LanguageSwitcher = () => {
       variant="ghost"
       size="lg"
       onClick={toggleLanguage}
-      className="gap-2 text-lg"
+      className="gap-3 text-xl px-6 py-6 h-auto"
     >
-      <Languages className="w-6 h-6" />
+      <Languages className="w-8 h-8" />
       {i18n.language === 'en' ? 'RU' : 'EN'}
     </Button>
   );
