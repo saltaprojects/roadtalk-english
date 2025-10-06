@@ -103,7 +103,7 @@ const Auth = () => {
                 </div>
                 <Button
                   type="submit"
-                  className="w-full h-12 text-lg"
+                  className="w-full h-12 text-lg bg-accent hover:bg-accent/90"
                   disabled={isLoading}
                 >
                   {isLoading ? "..." : t('auth.signIn')}
@@ -135,7 +135,7 @@ const Auth = () => {
                 </div>
                 <Button
                   type="submit"
-                  className="w-full h-12 text-lg"
+                  className="w-full h-12 text-lg bg-accent hover:bg-accent/90"
                   disabled={isLoading}
                 >
                   {isLoading ? "..." : t('auth.signUp')}
