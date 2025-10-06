@@ -15,7 +15,7 @@ const Home = () => {
         </div>
         
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-          <Truck className="w-16 h-16 mx-auto mb-6 text-accent animate-fade-in" />
+          
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 animate-fade-in">
             RoadTalk English
           </h1>
