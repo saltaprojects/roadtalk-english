@@ -62,7 +62,12 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-muted/30">
+    <div className="min-h-screen relative overflow-hidden bg-background">
+      {/* Animated gradient background */}
+      <div className="absolute inset-0 gradient-hero opacity-10 dark:opacity-20" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-accent/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+      
       {/* Language Switcher */}
       <div className="absolute top-4 right-4 z-20">
         <LanguageSwitcher />
@@ -73,7 +78,7 @@ const Contact = () => {
         <Button
           variant="ghost"
           onClick={() => navigate("/")}
-          className="gap-2"
+          className="gap-2 hover:bg-primary/10"
         >
           <ArrowLeft className="w-4 h-4" />
           {t('contact.back')}
@@ -81,45 +86,57 @@ const Contact = () => {
       </div>
 
       {/* Contact Section */}
-      <div className="container max-w-2xl mx-auto px-4 py-20">
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
-            <Mail className="w-8 h-8 text-primary" />
+      <div className="container max-w-3xl mx-auto px-4 py-20 relative z-10">
+        <div className="text-center mb-12 space-y-4">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-primary to-primary/80 shadow-[var(--shadow-button)] mb-6 animate-in fade-in zoom-in duration-500">
+            <Mail className="w-10 h-10 text-primary-foreground" />
           </div>
-          <h1 className="text-4xl font-bold mb-4">{t('contact.title')}</h1>
-          <p className="text-muted-foreground text-lg">
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent animate-in slide-in-from-bottom-4 duration-700">
+            {t('contact.title')}
+          </h1>
+          <p className="text-muted-foreground text-xl max-w-2xl mx-auto animate-in slide-in-from-bottom-5 duration-700 delay-100">
             {t('contact.subtitle')}
           </p>
         </div>
 
-        <Card className="p-8">
+        <Card className="card-elevated border-2 border-border/50 backdrop-blur-sm bg-card/95 p-8 md:p-10 animate-in slide-in-from-bottom-6 duration-700 delay-200">
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="name">{t('contact.form.name')}</Label>
-              <Input
-                id="name"
-                name="name"
-                type="text"
-                placeholder={t('contact.form.namePlaceholder')}
-                required
-                maxLength={100}
-              />
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label htmlFor="name" className="text-sm font-semibold text-foreground">
+                  {t('contact.form.name')}
+                </Label>
+                <Input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder={t('contact.form.namePlaceholder')}
+                  required
+                  maxLength={100}
+                  className="h-12 border-2 focus:border-primary transition-colors"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-sm font-semibold text-foreground">
+                  {t('contact.form.email')}
+                </Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder={t('contact.form.emailPlaceholder')}
+                  required
+                  maxLength={255}
+                  className="h-12 border-2 focus:border-primary transition-colors"
+                />
+              </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email">{t('contact.form.email')}</Label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                placeholder={t('contact.form.emailPlaceholder')}
-                required
-                maxLength={255}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="subject">{t('contact.form.subject')}</Label>
+              <Label htmlFor="subject" className="text-sm font-semibold text-foreground">
+                {t('contact.form.subject')}
+              </Label>
               <Input
                 id="subject"
                 name="subject"
@@ -127,11 +144,14 @@ const Contact = () => {
                 placeholder={t('contact.form.subjectPlaceholder')}
                 required
                 maxLength={200}
+                className="h-12 border-2 focus:border-primary transition-colors"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="message">{t('contact.form.message')}</Label>
+              <Label htmlFor="message" className="text-sm font-semibold text-foreground">
+                {t('contact.form.message')}
+              </Label>
               <Textarea
                 id="message"
                 name="message"
@@ -139,13 +159,13 @@ const Contact = () => {
                 required
                 maxLength={1000}
                 rows={6}
+                className="border-2 focus:border-primary transition-colors resize-none"
               />
             </div>
 
             <Button 
               type="submit" 
-              className="w-full" 
-              size="lg"
+              className="w-full h-14 text-lg font-bold btn-hero"
               disabled={isSubmitting}
             >
               {isSubmitting ? t('contact.form.sending') : t('contact.form.submit')}
