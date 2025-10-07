@@ -114,6 +114,26 @@ const Auth = () => {
             <TabsContent value="signup">
               <form onSubmit={handleSignup} className="space-y-4">
                 <div className="space-y-2">
+                  <Label htmlFor="signup-name">{t('auth.name')}</Label>
+                  <Input
+                    id="signup-name"
+                    type="text"
+                    placeholder={t('auth.namePlaceholder')}
+                    required
+                    className="h-12 text-lg"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="signup-surname">{t('auth.surname')}</Label>
+                  <Input
+                    id="signup-surname"
+                    type="text"
+                    placeholder={t('auth.surnamePlaceholder')}
+                    required
+                    className="h-12 text-lg"
+                  />
+                </div>
+                <div className="space-y-2">
                   <Label htmlFor="signup-email">{t('auth.email')}</Label>
                   <Input
                     id="signup-email"

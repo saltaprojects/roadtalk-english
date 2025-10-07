@@ -28,6 +28,10 @@
   "auth": {
     "title": "Добро пожаловать",
     "subtitle": "Войдите, чтобы продолжить обучение",
+    "name": "Имя",
+    "namePlaceholder": "Ваше имя",
+    "surname": "Фамилия",
+    "surnamePlaceholder": "Ваша фамилия",
     "email": "Электронная почта",
     "password": "Пароль",
     "signIn": "Войти",

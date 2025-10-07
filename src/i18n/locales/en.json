@@ -28,6 +28,10 @@
   "auth": {
     "title": "Welcome Back",
     "subtitle": "Sign in to continue your learning journey",
+    "name": "Name",
+    "namePlaceholder": "Your name",
+    "surname": "Surname",
+    "surnamePlaceholder": "Your surname",
     "email": "Email",
     "password": "Password",
     "signIn": "Sign In",
