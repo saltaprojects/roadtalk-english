@@ -29,7 +29,8 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     const data = {
       name: formData.get("name") as string,
       email: formData.get("email") as string,
@@ -54,13 +55,23 @@ const Contact = () => {
         console.error('Error saving contact:', error);
         throw error;
       }
+
+      // Send email notification
+      try {
+        await supabase.functions.invoke('send-contact-email', {
+          body: validatedData,
+        });
+      } catch (emailError) {
+        console.error('Error sending email:', emailError);
+        // Don't fail the form submission if email fails
+      }
       
       toast({
         title: t('contact.success.title'),
         description: t('contact.success.description'),
       });
       
-      e.currentTarget.reset();
+      form.reset();
     } catch (error) {
       console.error('Contact form error:', error);
       if (error instanceof z.ZodError) {
