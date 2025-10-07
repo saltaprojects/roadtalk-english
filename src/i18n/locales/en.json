@@ -41,7 +41,7 @@
     "guestSuccess": "Continuing as guest. Your progress won't be saved."
   },
   "dashboard": {
-    "welcome": "Welcome Back, Driver!",
+    "welcome": "Welcome Back, Name of Driver!",
     "subtitle": "Ready to continue learning?",
     "progress": {
       "title": "Your Progress",
