@@ -94,6 +94,13 @@ const Home = () => {
       <footer className="py-8 px-4 border-t">
         <div className="max-w-6xl mx-auto text-center text-muted-foreground">
           <p>{t('home.footer')}</p>
+          <Button 
+            variant="link" 
+            onClick={() => navigate("/contact")}
+            className="mt-2"
+          >
+            Contact Us
+          </Button>
         </div>
       </footer>
     </div>;
