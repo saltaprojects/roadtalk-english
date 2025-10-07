@@ -10,6 +10,7 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { z } from "zod";
+import { supabase } from "@/integrations/supabase/client";
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
@@ -39,8 +40,20 @@ const Contact = () => {
     try {
       const validatedData = contactSchema.parse(data);
       
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Save to database
+      const { error } = await supabase
+        .from('contacts')
+        .insert([{
+          name: validatedData.name,
+          email: validatedData.email,
+          subject: validatedData.subject,
+          message: validatedData.message,
+        }]);
+      
+      if (error) {
+        console.error('Error saving contact:', error);
+        throw error;
+      }
       
       toast({
         title: t('contact.success.title'),
@@ -49,10 +62,17 @@ const Contact = () => {
       
       e.currentTarget.reset();
     } catch (error) {
+      console.error('Contact form error:', error);
       if (error instanceof z.ZodError) {
         toast({
           title: t('contact.error.title'),
           description: error.errors[0].message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: t('contact.error.title'),
+          description: 'Failed to send message. Please try again.',
           variant: "destructive",
         });
       }
