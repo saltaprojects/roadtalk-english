@@ -100,15 +100,16 @@ const Dashboard = () => {
       </header>
 
       <div className="max-w-6xl mx-auto p-6 space-y-8">
-        {/* Subscription Alert */}
-        {!subLoading && hasReachedFreeLimit() && !subscribed && (
+        {/* Subscription Required Alert */}
+        {!subLoading && !subscribed && (
           <Alert className="border-accent bg-accent/10">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription className="flex items-center justify-between">
-              <span>
-                You've completed your {FREE_LESSONS_LIMIT} free lessons! Subscribe for $19.99/month to continue learning.
-              </span>
-              <Button onClick={createCheckoutSession} className="ml-4">
+              <div>
+                <p className="font-medium mb-1">Subscription Required to Access Lessons</p>
+                <p className="text-sm">Subscribe for $19.99/month and get your first 3 lessons included!</p>
+              </div>
+              <Button onClick={createCheckoutSession} className="ml-4 shrink-0">
                 <CreditCard className="mr-2 h-4 w-4" />
                 Subscribe Now
               </Button>
@@ -116,7 +117,7 @@ const Dashboard = () => {
           </Alert>
         )}
 
-        {/* Subscription Status */}
+        {/* Subscription Active */}
         {!subLoading && subscribed && (
           <Alert className="border-green-500 bg-green-500/10">
             <Trophy className="h-4 w-4 text-green-500" />
@@ -162,10 +163,25 @@ const Dashboard = () => {
               <Button 
                 size="lg" 
                 className="btn-hero"
-                onClick={() => navigate("/lesson/1")}
+                onClick={() => {
+                  if (subscribed) {
+                    navigate("/lesson/1");
+                  } else {
+                    createCheckoutSession();
+                  }
+                }}
               >
-                <Play className="mr-2 h-5 w-5" />
-                {t('dashboard.todayLesson.start')}
+                {subscribed ? (
+                  <>
+                    <Play className="mr-2 h-5 w-5" />
+                    {t('dashboard.todayLesson.start')}
+                  </>
+                ) : (
+                  <>
+                    <CreditCard className="mr-2 h-5 w-5" />
+                    Subscribe to Start
+                  </>
+                )}
               </Button>
             </div>
           </div>
@@ -178,8 +194,16 @@ const Dashboard = () => {
             {topics.map((topic) => (
               <Card 
                 key={topic.id} 
-                className="p-6 card-elevated hover:scale-105 transition-transform duration-200 cursor-pointer"
-                onClick={() => navigate(`/lesson/${topic.id}`)}
+                className={`p-6 card-elevated transition-transform duration-200 ${
+                  subscribed ? 'hover:scale-105 cursor-pointer' : 'opacity-60 cursor-not-allowed'
+                }`}
+                onClick={() => {
+                  if (subscribed) {
+                    navigate(`/lesson/${topic.id}`);
+                  } else {
+                    createCheckoutSession();
+                  }
+                }}
               >
                 <div className="flex items-start gap-4">
                   <div className="text-4xl">{topic.icon}</div>

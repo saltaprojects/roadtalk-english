@@ -70,12 +70,7 @@ export const useLessonProgress = () => {
   };
 
   const canAccessLesson = (lessonNumber: number, isSubscribed: boolean) => {
-    // First 3 lessons are always free
-    if (lessonNumber <= FREE_LESSONS_LIMIT) {
-      return true;
-    }
-    
-    // After 3 lessons, need subscription
+    // All lessons require subscription
     return isSubscribed;
   };
 

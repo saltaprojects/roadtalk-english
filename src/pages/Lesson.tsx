@@ -119,15 +119,15 @@ const Lesson = () => {
   };
 
   useEffect(() => {
-    if (!subLoading && !canAccessLesson(lessonNumber, subscribed)) {
+    if (!subLoading && !subscribed) {
       toast({
         title: "Subscription Required",
-        description: `You need a subscription to access lessons beyond ${FREE_LESSONS_LIMIT}.`,
+        description: "Subscribe for $19.99/month to access lessons.",
         variant: "destructive",
       });
       navigate("/dashboard");
     }
-  }, [subLoading, lessonNumber, subscribed, canAccessLesson, navigate, toast, FREE_LESSONS_LIMIT]);
+  }, [subLoading, subscribed, navigate, toast]);
 
   const progressValue = 
     currentStep === "intro" ? 25 : 
@@ -160,23 +160,24 @@ const Lesson = () => {
 
       <div className="max-w-4xl mx-auto p-6">
         {/* Access Restricted Alert */}
-        {!subLoading && !canAccessLesson(lessonNumber, subscribed) && (
+        {!subLoading && !subscribed && (
           <Alert className="mb-6 border-accent bg-accent/10">
             <Lock className="h-4 w-4" />
-            <AlertDescription className="flex items-center justify-between">
-              <span>
-                This lesson requires a subscription. You've used your {FREE_LESSONS_LIMIT} free lessons.
-              </span>
-              <Button onClick={createCheckoutSession} className="ml-4">
+            <AlertDescription className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div>
+                <p className="font-medium">Subscription Required</p>
+                <p className="text-sm">Subscribe for $19.99/month to access all lessons (first 3 lessons included!)</p>
+              </div>
+              <Button onClick={createCheckoutSession} className="shrink-0">
                 <CreditCard className="mr-2 h-4 w-4" />
-                Subscribe for $19.99/mo
+                Subscribe Now
               </Button>
             </AlertDescription>
           </Alert>
         )}
 
         {/* Intro Step */}
-        {currentStep === "intro" && canAccessLesson(lessonNumber, subscribed) && (
+        {currentStep === "intro" && subscribed && (
           <Card className="p-8 card-elevated">
             <h1 className="text-3xl font-bold mb-4">{lessonData.title}</h1>
             <p className="text-lg text-muted-foreground mb-6">
