@@ -24,6 +24,8 @@ const Lesson = () => {
   const { canAccessLesson, markLessonComplete, FREE_LESSONS_LIMIT } = useLessonProgress();
   
   const lessonNumber = parseInt(id || "1");
+  const isFirstLesson = lessonNumber === 1;
+  const requiresSubscription = !isFirstLesson && !subscribed;
 
   const lessonData = {
     title: "Asking for Directions",
@@ -119,15 +121,15 @@ const Lesson = () => {
   };
 
   useEffect(() => {
-    if (!subLoading && !subscribed) {
+    // Only redirect if not first lesson and not subscribed
+    if (!subLoading && requiresSubscription) {
       toast({
         title: t('lesson.subscription.required'),
-        description: t('lesson.subscription.description'),
+        description: t('lesson.subscription.firstFree'),
         variant: "destructive",
       });
-      navigate("/dashboard");
     }
-  }, [subLoading, subscribed, navigate, toast, t]);
+  }, [subLoading, requiresSubscription, toast, t]);
 
   const progressValue = 
     currentStep === "intro" ? 25 : 
@@ -160,13 +162,13 @@ const Lesson = () => {
 
       <div className="max-w-4xl mx-auto p-6">
         {/* Access Restricted Alert */}
-        {!subLoading && !subscribed && (
+        {!subLoading && requiresSubscription && (
           <Alert className="mb-6 border-accent bg-accent/10">
             <Lock className="h-4 w-4" />
             <AlertDescription className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div>
                 <p className="font-medium">{t('lesson.subscription.required')}</p>
-                <p className="text-sm">{t('lesson.subscription.descriptionFull')}</p>
+                <p className="text-sm">{t('lesson.subscription.firstFree')}</p>
               </div>
               <Button onClick={createCheckoutSession} className="shrink-0">
                 <CreditCard className="mr-2 h-4 w-4" />
@@ -177,7 +179,7 @@ const Lesson = () => {
         )}
 
         {/* Intro Step */}
-        {currentStep === "intro" && subscribed && (
+        {currentStep === "intro" && !requiresSubscription && (
           <Card className="p-8 card-elevated">
             <h1 className="text-3xl font-bold mb-4">{lessonData.title}</h1>
             <p className="text-lg text-muted-foreground mb-6">
@@ -223,7 +225,7 @@ const Lesson = () => {
         )}
 
         {/* Flashcards Step */}
-        {currentStep === "flashcards" && (
+        {currentStep === "flashcards" && !requiresSubscription && (
           <div className="space-y-6">
             <Card className="p-6">
               <h2 className="text-2xl font-bold mb-2">{t('lesson.vocabulary')}</h2>
@@ -265,7 +267,7 @@ const Lesson = () => {
         )}
 
         {/* Quiz Step */}
-        {currentStep === "quiz" && (
+        {currentStep === "quiz" && !requiresSubscription && (
           <Quiz 
             questions={lessonData.quiz} 
             onComplete={handleQuizComplete}
@@ -273,7 +275,7 @@ const Lesson = () => {
         )}
 
         {/* Complete Step */}
-        {currentStep === "complete" && (
+        {currentStep === "complete" && !requiresSubscription && (
           <Card className="p-8 card-elevated text-center">
             <div className="text-6xl mb-4">🎉</div>
             <h1 className="text-3xl font-bold mb-4">{t('lesson.congratulations')}</h1>
