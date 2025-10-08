@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -5,13 +6,49 @@ import { useNavigate } from "react-router-dom";
 import { BookOpen, Trophy, Clock, Play, LogOut } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { toast } = useToast();
+  const [userName, setUserName] = useState<string>("");
   const completedLessons = 3;
   const totalLessons = 20;
   const progressPercentage = (completedLessons / totalLessons) * 100;
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        navigate("/auth");
+        return;
+      }
+
+      // Fetch user profile
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("first_name, last_name")
+        .eq("id", session.user.id)
+        .single();
+
+      if (profile) {
+        setUserName(`${profile.first_name} ${profile.last_name}`);
+      }
+    };
+
+    checkAuth();
+  }, [navigate]);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    toast({
+      title: "Logged out successfully",
+    });
+    navigate("/");
+  };
 
   const topics = [
     { id: 1, title: t('dashboard.topics.navigation.title'), lessons: t('dashboard.topics.navigation.lessons'), completed: 3, icon: "🗺️" },
@@ -26,7 +63,9 @@ const Dashboard = () => {
       <header className="gradient-road text-white p-6">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold">{t('dashboard.welcome')}</h1>
+            <h1 className="text-3xl font-bold">
+              {userName ? `Welcome Back, ${userName}!` : t('dashboard.welcome')}
+            </h1>
             <p className="text-white/80 mt-1">{t('dashboard.subtitle')}</p>
           </div>
           <div className="flex gap-2">
@@ -34,7 +73,7 @@ const Dashboard = () => {
             <Button
               variant="outline"
               className="bg-white/10 backdrop-blur-sm text-white border-white/30 hover:bg-white/20"
-              onClick={() => navigate("/")}
+              onClick={handleLogout}
             >
               <LogOut className="mr-2 h-4 w-4" />
               Logout

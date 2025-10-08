@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import truckLogo from "@/assets/truck-logo.png";
+import { supabase } from "@/integrations/supabase/client";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -17,37 +18,79 @@ const Auth = () => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        navigate("/dashboard");
+      }
+    };
+    checkUser();
+  }, [navigate]);
+
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     
-    setTimeout(() => {
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+      setIsLoading(false);
+    } else {
       toast({
         title: t('auth.success'),
       });
       navigate("/dashboard");
-      setIsLoading(false);
-    }, 1000);
+    }
   };
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     
-    setTimeout(() => {
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const firstName = formData.get("first_name") as string;
+    const lastName = formData.get("last_name") as string;
+
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${window.location.origin}/dashboard`,
+        data: {
+          first_name: firstName,
+          last_name: lastName,
+        },
+      },
+    });
+
+    if (error) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+      setIsLoading(false);
+    } else {
       toast({
         title: t('auth.success'),
       });
       navigate("/dashboard");
-      setIsLoading(false);
-    }, 1000);
-  };
-
-  const handleGuestAccess = () => {
-    toast({
-      title: t('auth.guestSuccess'),
-    });
-    navigate("/dashboard");
+    }
   };
 
   return (
@@ -85,6 +128,7 @@ const Auth = () => {
                   <Label htmlFor="login-email">{t('auth.email')}</Label>
                   <Input
                     id="login-email"
+                    name="email"
                     type="email"
                     placeholder="your@email.com"
                     required
@@ -95,6 +139,7 @@ const Auth = () => {
                   <Label htmlFor="login-password">{t('auth.password')}</Label>
                   <Input
                     id="login-password"
+                    name="password"
                     type="password"
                     placeholder="••••••••"
                     required
@@ -117,6 +162,7 @@ const Auth = () => {
                   <Label htmlFor="signup-name">{t('auth.name')}</Label>
                   <Input
                     id="signup-name"
+                    name="first_name"
                     type="text"
                     placeholder={t('auth.namePlaceholder')}
                     required
@@ -127,6 +173,7 @@ const Auth = () => {
                   <Label htmlFor="signup-surname">{t('auth.surname')}</Label>
                   <Input
                     id="signup-surname"
+                    name="last_name"
                     type="text"
                     placeholder={t('auth.surnamePlaceholder')}
                     required
@@ -137,6 +184,7 @@ const Auth = () => {
                   <Label htmlFor="signup-email">{t('auth.email')}</Label>
                   <Input
                     id="signup-email"
+                    name="email"
                     type="email"
                     placeholder="your@email.com"
                     required
@@ -147,6 +195,7 @@ const Auth = () => {
                   <Label htmlFor="signup-password">{t('auth.password')}</Label>
                   <Input
                     id="signup-password"
+                    name="password"
                     type="password"
                     placeholder="••••••••"
                     required
