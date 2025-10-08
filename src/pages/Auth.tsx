@@ -163,16 +163,6 @@ const Auth = () => {
               </form>
             </TabsContent>
           </Tabs>
-
-          <div className="mt-6 text-center">
-            <Button
-              variant="link"
-              className="text-muted-foreground"
-              onClick={handleGuestAccess}
-            >
-              {t('auth.guestAccess')} →
-            </Button>
-          </div>
         </Card>
       </div>
     </div>
