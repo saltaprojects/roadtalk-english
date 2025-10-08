@@ -152,5 +152,50 @@
       "title": "Error",
       "description": "Please check your input and try again."
     }
+  },
+  "practice": {
+    "title": "AI Conversation Practice",
+    "subtitle": "Practice real-life situations with AI",
+    "scenarios": {
+      "police": {
+        "title": "Police Inspection",
+        "description": "Practice routine traffic stops and document checks",
+        "difficulty": "Intermediate"
+      },
+      "gasStation": {
+        "title": "Gas Station",
+        "description": "Communicate at fuel stations and rest stops",
+        "difficulty": "Beginner"
+      },
+      "dispatcher": {
+        "title": "Dispatcher Communication",
+        "description": "Report status and handle route changes",
+        "difficulty": "Beginner"
+      },
+      "border": {
+        "title": "Border Crossing",
+        "description": "Navigate customs and border procedures",
+        "difficulty": "Professional"
+      },
+      "weighStation": {
+        "title": "Weigh Station",
+        "description": "Handle inspections and logbook checks",
+        "difficulty": "Intermediate"
+      },
+      "delivery": {
+        "title": "Delivery Site",
+        "description": "Communicate with receivers and complete paperwork",
+        "difficulty": "Beginner"
+      }
+    },
+    "chat": {
+      "startConversation": "Start Conversation",
+      "endConversation": "End Conversation",
+      "typing": "AI is typing...",
+      "inputPlaceholder": "Type your message...",
+      "send": "Send",
+      "scenarioContext": "Scenario Context",
+      "error": "Something went wrong. Please try again."
+    }
   }
 }

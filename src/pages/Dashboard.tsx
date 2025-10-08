@@ -153,6 +153,45 @@ const Dashboard = () => {
           </div>
         </Card>
 
+        {/* AI Conversation Practice */}
+        <Card className="p-8 card-elevated border-primary/20 border-2">
+          <div className="flex items-start justify-between">
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-3xl">💬</span>
+                <span className="text-sm font-medium text-primary">AI Practice</span>
+              </div>
+              <h3 className="text-2xl font-bold mb-2">{t('practice.title')}</h3>
+              <p className="text-muted-foreground mb-6">
+                {t('practice.subtitle')}
+              </p>
+              <Button 
+                size="lg" 
+                className="btn-hero"
+                onClick={() => {
+                  if (subscribed) {
+                    navigate("/practice");
+                  } else {
+                    createCheckoutSession();
+                  }
+                }}
+              >
+                {subscribed ? (
+                  <>
+                    <Play className="mr-2 h-5 w-5" />
+                    Start Practicing
+                  </>
+                ) : (
+                  <>
+                    <CreditCard className="mr-2 h-5 w-5" />
+                    {t('dashboard.subscription.subscribeToStart')}
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+        </Card>
+
         {/* Today's Lesson */}
         <Card className="p-8 card-elevated border-accent/20 border-2">
           <div className="flex items-start justify-between">
