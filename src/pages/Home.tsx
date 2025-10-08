@@ -5,6 +5,7 @@ import { Truck, BookOpen, Award, Clock, Mail } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Progress } from "@/components/ui/progress";
 import heroImage from "@/assets/hero-truck.jpg";
 const Home = () => {
   const navigate = useNavigate();
@@ -41,37 +42,134 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Learning Paths Section */}
       <section className="py-20 px-4 bg-muted/30">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto space-y-12">
           <h2 className="text-4xl font-bold text-center mb-12">
-            {t('home.features.title')}
+            Choose Your Learning Path
           </h2>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="p-8 card-elevated hover:scale-105 transition-transform duration-200">
-              <Clock className="w-12 h-12 text-accent mb-4" />
-              <h3 className="text-2xl font-bold mb-3">{t('home.features.lesson.title')}</h3>
-              <p className="text-muted-foreground">
-                {t('home.features.lesson.description')}
-              </p>
-            </Card>
 
-            <Card className="p-8 card-elevated hover:scale-105 transition-transform duration-200">
-              <BookOpen className="w-12 h-12 text-accent mb-4" />
-              <h3 className="text-2xl font-bold mb-3">{t('home.features.content.title')}</h3>
-              <p className="text-muted-foreground">
-                {t('home.features.content.description')}
-              </p>
-            </Card>
+          {/* Beginner Section */}
+          <div>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-12 w-12 rounded-full bg-green-500/20 flex items-center justify-center">
+                <span className="text-green-500 font-bold text-xl">B</span>
+              </div>
+              <div>
+                <h3 className="text-3xl font-bold">Beginner</h3>
+                <p className="text-muted-foreground">Perfect for those starting their trucking journey</p>
+              </div>
+            </div>
+            <div className="grid md:grid-cols-2 gap-6">
+              <Card className="p-6 card-elevated hover:scale-105 transition-transform duration-200 cursor-pointer">
+                <div className="flex items-start gap-4">
+                  <div className="text-4xl">🗺️</div>
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold mb-2">Navigation Basics</h4>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                      <BookOpen className="w-4 h-4" />
+                      <span>5 lessons</span>
+                    </div>
+                    <p className="text-muted-foreground text-sm">Learn essential navigation skills for truck drivers</p>
+                  </div>
+                </div>
+              </Card>
+              <Card className="p-6 card-elevated hover:scale-105 transition-transform duration-200 cursor-pointer">
+                <div className="flex items-start gap-4">
+                  <div className="text-4xl">📦</div>
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold mb-2">Delivery Fundamentals</h4>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                      <BookOpen className="w-4 h-4" />
+                      <span>6 lessons</span>
+                    </div>
+                    <p className="text-muted-foreground text-sm">Master the basics of safe and efficient deliveries</p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
 
-            <Card className="p-8 card-elevated hover:scale-105 transition-transform duration-200">
-              <Award className="w-12 h-12 text-accent mb-4" />
-              <h3 className="text-2xl font-bold mb-3">{t('home.features.progress.title')}</h3>
-              <p className="text-muted-foreground">
-                {t('home.features.progress.description')}
-              </p>
-            </Card>
+          {/* Intermediate Section */}
+          <div>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-12 w-12 rounded-full bg-orange-500/20 flex items-center justify-center">
+                <span className="text-orange-500 font-bold text-xl">I</span>
+              </div>
+              <div>
+                <h3 className="text-3xl font-bold">Intermediate</h3>
+                <p className="text-muted-foreground">Advance your skills with complex scenarios</p>
+              </div>
+            </div>
+            <div className="grid md:grid-cols-2 gap-6">
+              <Card className="p-6 card-elevated hover:scale-105 transition-transform duration-200 cursor-pointer">
+                <div className="flex items-start gap-4">
+                  <div className="text-4xl">🛂</div>
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold mb-2">Border Procedures</h4>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                      <BookOpen className="w-4 h-4" />
+                      <span>7 lessons</span>
+                    </div>
+                    <p className="text-muted-foreground text-sm">Navigate international border crossings with confidence</p>
+                  </div>
+                </div>
+              </Card>
+              <Card className="p-6 card-elevated hover:scale-105 transition-transform duration-200 cursor-pointer">
+                <div className="flex items-start gap-4">
+                  <div className="text-4xl">🔧</div>
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold mb-2">Roadside Maintenance</h4>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                      <BookOpen className="w-4 h-4" />
+                      <span>8 lessons</span>
+                    </div>
+                    <p className="text-muted-foreground text-sm">Handle common roadside issues and maintenance</p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
+
+          {/* Professional Section */}
+          <div>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-12 w-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+                <span className="text-purple-500 font-bold text-xl">P</span>
+              </div>
+              <div>
+                <h3 className="text-3xl font-bold">Professional</h3>
+                <p className="text-muted-foreground">Expert-level training for seasoned drivers</p>
+              </div>
+            </div>
+            <div className="grid md:grid-cols-2 gap-6">
+              <Card className="p-6 card-elevated hover:scale-105 transition-transform duration-200 cursor-pointer">
+                <div className="flex items-start gap-4">
+                  <div className="text-4xl">🏗️</div>
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold mb-2">Heavy Load Management</h4>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                      <BookOpen className="w-4 h-4" />
+                      <span>8 lessons</span>
+                    </div>
+                    <p className="text-muted-foreground text-sm">Specialized training for oversized and heavy loads</p>
+                  </div>
+                </div>
+              </Card>
+              <Card className="p-6 card-elevated hover:scale-105 transition-transform duration-200 cursor-pointer">
+                <div className="flex items-start gap-4">
+                  <div className="text-4xl">🌍</div>
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold mb-2">International Routes</h4>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                      <BookOpen className="w-4 h-4" />
+                      <span>10 lessons</span>
+                    </div>
+                    <p className="text-muted-foreground text-sm">Master cross-border logistics and regulations</p>
+                  </div>
+                </div>
+              </Card>
+            </div>
           </div>
         </div>
       </section>
