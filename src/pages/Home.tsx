@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
-import { Truck, BookOpen, Award, Clock } from "lucide-react";
+import { Truck, BookOpen, Award, Clock, Mail } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import heroImage from "@/assets/hero-truck.jpg";
 const Home = () => {
   const navigate = useNavigate();
@@ -94,15 +95,24 @@ const Home = () => {
       <footer className="py-8 px-4 border-t">
         <div className="max-w-6xl mx-auto text-center text-muted-foreground">
           <p>{t('home.footer')}</p>
-          <Button 
-            variant="link" 
-            onClick={() => navigate("/contact")}
-            className="mt-2"
-          >
-            Contact Us
-          </Button>
         </div>
       </footer>
+
+      {/* Floating Action Button */}
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            onClick={() => navigate("/contact")}
+            className="btn-hero fixed bottom-6 right-6 h-16 w-16 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse z-50"
+            size="icon"
+          >
+            <Mail className="h-6 w-6" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent side="left" className="text-base">
+          <p>{t('home.fab.tooltip')}</p>
+        </TooltipContent>
+      </Tooltip>
     </div>;
 };
 export default Home;

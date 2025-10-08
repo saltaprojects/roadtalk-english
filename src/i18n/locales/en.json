@@ -23,7 +23,10 @@
       "subtitle": "Join drivers learning practical English for the road",
       "button": "Start Learning Today"
     },
-    "footer": "© 2025 RoadTalk English. Built for drivers, by language experts."
+    "footer": "© 2025 RoadTalk English. Built for drivers, by language experts.",
+    "fab": {
+      "tooltip": "Contact Us"
+    }
   },
   "auth": {
     "title": "Welcome Back",
