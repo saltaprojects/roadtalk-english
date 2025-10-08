@@ -203,7 +203,7 @@ const Dashboard = () => {
               <div className="h-10 w-10 rounded-full bg-green-500/20 flex items-center justify-center">
                 <span className="text-green-500 font-bold text-lg">B</span>
               </div>
-              <h2 className="text-2xl font-bold">Beginner</h2>
+              <h2 className="text-2xl font-bold">{t('dashboard.levels.beginner')}</h2>
             </div>
             <div className="grid md:grid-cols-2 gap-4">
               {topicsByLevel.beginner.map((topic) => (
@@ -255,7 +255,7 @@ const Dashboard = () => {
               <div className="h-10 w-10 rounded-full bg-orange-500/20 flex items-center justify-center">
                 <span className="text-orange-500 font-bold text-lg">I</span>
               </div>
-              <h2 className="text-2xl font-bold">Intermediate</h2>
+              <h2 className="text-2xl font-bold">{t('dashboard.levels.intermediate')}</h2>
             </div>
             <div className="grid md:grid-cols-2 gap-4">
               {topicsByLevel.intermediate.map((topic) => (
@@ -307,7 +307,7 @@ const Dashboard = () => {
               <div className="h-10 w-10 rounded-full bg-purple-500/20 flex items-center justify-center">
                 <span className="text-purple-500 font-bold text-lg">P</span>
               </div>
-              <h2 className="text-2xl font-bold">Professional</h2>
+              <h2 className="text-2xl font-bold">{t('dashboard.levels.professional')}</h2>
             </div>
             <div className="grid md:grid-cols-2 gap-4">
               {topicsByLevel.professional.map((topic) => (

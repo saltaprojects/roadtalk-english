@@ -52,6 +52,11 @@
     "welcome": "Welcome Back, Name of Driver!",
     "subtitle": "Ready to continue learning?",
     "logout": "Logout",
+    "levels": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "professional": "Professional"
+    },
     "subscription": {
       "required": "Subscription Required to Access Lessons",
       "requiredShort": "Subscription Required",
