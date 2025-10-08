@@ -52,6 +52,7 @@ export const useSubscription = () => {
 
   const createCheckoutSession = async () => {
     try {
+      console.log('[CHECKOUT] Starting checkout session...');
       const { data: { session } } = await supabase.auth.getSession();
       
       if (!session) {
@@ -63,6 +64,7 @@ export const useSubscription = () => {
         return;
       }
 
+      console.log('[CHECKOUT] User authenticated, calling create-checkout...');
       const { data, error } = await supabase.functions.invoke('create-checkout', {
         headers: {
           Authorization: `Bearer ${session.access_token}`,
@@ -70,14 +72,21 @@ export const useSubscription = () => {
       });
 
       if (error) {
+        console.error('[CHECKOUT] Error from edge function:', error);
         throw error;
       }
 
-      if (data.url) {
-        window.location.href = data.url;
+      console.log('[CHECKOUT] Response data:', data);
+
+      if (data?.url) {
+        console.log('[CHECKOUT] Redirecting to:', data.url);
+        // Use window.location.assign for better compatibility
+        window.location.assign(data.url);
+      } else {
+        throw new Error('No checkout URL received');
       }
     } catch (error) {
-      console.error('Error creating checkout session:', error);
+      console.error('[CHECKOUT] Error creating checkout session:', error);
       toast({
         title: "Error",
         description: "Failed to create checkout session. Please try again.",
