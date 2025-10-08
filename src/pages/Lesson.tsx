@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, Volume2, RotateCcw } from "lucide-react";
+import { ArrowLeft, Volume2, RotateCcw, Lock, CreditCard } from "lucide-react";
 import { Flashcard } from "@/components/Flashcard";
 import { Quiz } from "@/components/Quiz";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useSubscription } from "@/hooks/useSubscription";
+import { useLessonProgress } from "@/hooks/useLessonProgress";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const Lesson = () => {
   const { id } = useParams();
@@ -17,6 +20,10 @@ const Lesson = () => {
   const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState<"intro" | "flashcards" | "quiz" | "complete">("intro");
   const [audioPlaying, setAudioPlaying] = useState(false);
+  const { subscribed, loading: subLoading, createCheckoutSession } = useSubscription();
+  const { canAccessLesson, markLessonComplete, FREE_LESSONS_LIMIT } = useLessonProgress();
+  
+  const lessonNumber = parseInt(id || "1");
 
   const lessonData = {
     title: "Asking for Directions",
@@ -106,9 +113,21 @@ const Lesson = () => {
     });
   };
 
-  const handleQuizComplete = () => {
+  const handleQuizComplete = async () => {
+    await markLessonComplete(id || "1");
     setCurrentStep("complete");
   };
+
+  useEffect(() => {
+    if (!subLoading && !canAccessLesson(lessonNumber, subscribed)) {
+      toast({
+        title: "Subscription Required",
+        description: `You need a subscription to access lessons beyond ${FREE_LESSONS_LIMIT}.`,
+        variant: "destructive",
+      });
+      navigate("/dashboard");
+    }
+  }, [subLoading, lessonNumber, subscribed, canAccessLesson, navigate, toast, FREE_LESSONS_LIMIT]);
 
   const progressValue = 
     currentStep === "intro" ? 25 : 
@@ -140,8 +159,24 @@ const Lesson = () => {
       </header>
 
       <div className="max-w-4xl mx-auto p-6">
+        {/* Access Restricted Alert */}
+        {!subLoading && !canAccessLesson(lessonNumber, subscribed) && (
+          <Alert className="mb-6 border-accent bg-accent/10">
+            <Lock className="h-4 w-4" />
+            <AlertDescription className="flex items-center justify-between">
+              <span>
+                This lesson requires a subscription. You've used your {FREE_LESSONS_LIMIT} free lessons.
+              </span>
+              <Button onClick={createCheckoutSession} className="ml-4">
+                <CreditCard className="mr-2 h-4 w-4" />
+                Subscribe for $19.99/mo
+              </Button>
+            </AlertDescription>
+          </Alert>
+        )}
+
         {/* Intro Step */}
-        {currentStep === "intro" && (
+        {currentStep === "intro" && canAccessLesson(lessonNumber, subscribed) && (
           <Card className="p-8 card-elevated">
             <h1 className="text-3xl font-bold mb-4">{lessonData.title}</h1>
             <p className="text-lg text-muted-foreground mb-6">

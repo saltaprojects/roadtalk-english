@@ -3,18 +3,24 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, Trophy, Clock, Play, LogOut } from "lucide-react";
+import { BookOpen, Trophy, Clock, Play, LogOut, CreditCard, AlertCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useSubscription } from "@/hooks/useSubscription";
+import { useLessonProgress } from "@/hooks/useLessonProgress";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { toast } = useToast();
   const [userName, setUserName] = useState<string>("");
-  const completedLessons = 3;
+  const { subscribed, subscription_status, loading: subLoading, createCheckoutSession, checkSubscription } = useSubscription();
+  const { getCompletedCount, hasReachedFreeLimit, FREE_LESSONS_LIMIT, loading: progressLoading } = useLessonProgress();
+  
+  const completedLessons = getCompletedCount();
   const totalLessons = 20;
   const progressPercentage = (completedLessons / totalLessons) * 100;
 
@@ -40,7 +46,18 @@ const Dashboard = () => {
     };
 
     checkAuth();
-  }, [navigate]);
+    
+    // Check subscription status when coming back from payment
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('payment') === 'success') {
+      checkSubscription();
+      toast({
+        title: "Payment successful!",
+        description: "Your subscription is now active.",
+      });
+      window.history.replaceState({}, '', '/dashboard');
+    }
+  }, [navigate, checkSubscription, toast]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -83,6 +100,32 @@ const Dashboard = () => {
       </header>
 
       <div className="max-w-6xl mx-auto p-6 space-y-8">
+        {/* Subscription Alert */}
+        {!subLoading && hasReachedFreeLimit() && !subscribed && (
+          <Alert className="border-accent bg-accent/10">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription className="flex items-center justify-between">
+              <span>
+                You've completed your {FREE_LESSONS_LIMIT} free lessons! Subscribe for $19.99/month to continue learning.
+              </span>
+              <Button onClick={createCheckoutSession} className="ml-4">
+                <CreditCard className="mr-2 h-4 w-4" />
+                Subscribe Now
+              </Button>
+            </AlertDescription>
+          </Alert>
+        )}
+
+        {/* Subscription Status */}
+        {!subLoading && subscribed && (
+          <Alert className="border-green-500 bg-green-500/10">
+            <Trophy className="h-4 w-4 text-green-500" />
+            <AlertDescription>
+              <span className="font-medium">Active Subscription</span> - You have unlimited access to all lessons!
+            </AlertDescription>
+          </Alert>
+        )}
+
         {/* Progress Overview */}
         <Card className="p-6 card-elevated">
           <div className="flex items-center justify-between mb-4">
