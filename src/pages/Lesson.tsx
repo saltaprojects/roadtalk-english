@@ -121,13 +121,13 @@ const Lesson = () => {
   useEffect(() => {
     if (!subLoading && !subscribed) {
       toast({
-        title: "Subscription Required",
-        description: "Subscribe for $19.99/month to access lessons.",
+        title: t('lesson.subscription.required'),
+        description: t('lesson.subscription.description'),
         variant: "destructive",
       });
       navigate("/dashboard");
     }
-  }, [subLoading, subscribed, navigate, toast]);
+  }, [subLoading, subscribed, navigate, toast, t]);
 
   const progressValue = 
     currentStep === "intro" ? 25 : 
@@ -165,12 +165,12 @@ const Lesson = () => {
             <Lock className="h-4 w-4" />
             <AlertDescription className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div>
-                <p className="font-medium">Subscription Required</p>
-                <p className="text-sm">Subscribe for $19.99/month to access all lessons (first 3 lessons included!)</p>
+                <p className="font-medium">{t('lesson.subscription.required')}</p>
+                <p className="text-sm">{t('lesson.subscription.descriptionFull')}</p>
               </div>
               <Button onClick={createCheckoutSession} className="shrink-0">
                 <CreditCard className="mr-2 h-4 w-4" />
-                Subscribe Now
+                {t('lesson.subscription.subscribeNow')}
               </Button>
             </AlertDescription>
           </Alert>

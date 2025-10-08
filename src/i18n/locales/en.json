@@ -51,6 +51,16 @@
   "dashboard": {
     "welcome": "Welcome Back, Name of Driver!",
     "subtitle": "Ready to continue learning?",
+    "logout": "Logout",
+    "subscription": {
+      "required": "Subscription Required to Access Lessons",
+      "requiredShort": "Subscription Required",
+      "description": "Subscribe for $19.99/month and get your first 3 lessons included!",
+      "subscribeNow": "Subscribe Now",
+      "subscribeToStart": "Subscribe to Start",
+      "active": "Active Subscription",
+      "activeDescription": "You have unlimited access to all lessons!"
+    },
     "progress": {
       "title": "Your Progress",
       "lessonsCompleted": "Lessons Completed",
@@ -94,7 +104,13 @@
     "backToDashboard": "Back to Dashboard",
     "congratulations": "Great Job!",
     "completionMessage": "You've completed this lesson. Keep up the great work!",
-    "score": "Your Score"
+    "score": "Your Score",
+    "subscription": {
+      "required": "Subscription Required",
+      "description": "Subscribe for $19.99/month to access lessons.",
+      "descriptionFull": "Subscribe for $19.99/month to access all lessons (first 3 lessons included!)",
+      "subscribeNow": "Subscribe Now"
+    }
   },
   "flashcard": {
     "flip": "Tap to flip",

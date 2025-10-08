@@ -93,7 +93,7 @@ const Dashboard = () => {
               onClick={handleLogout}
             >
               <LogOut className="mr-2 h-4 w-4" />
-              Logout
+              {t('dashboard.logout')}
             </Button>
           </div>
         </div>
@@ -106,12 +106,12 @@ const Dashboard = () => {
             <AlertCircle className="h-4 w-4" />
             <AlertDescription className="flex items-center justify-between">
               <div>
-                <p className="font-medium mb-1">Subscription Required to Access Lessons</p>
-                <p className="text-sm">Subscribe for $19.99/month and get your first 3 lessons included!</p>
+                <p className="font-medium mb-1">{t('dashboard.subscription.required')}</p>
+                <p className="text-sm">{t('dashboard.subscription.description')}</p>
               </div>
               <Button onClick={createCheckoutSession} className="ml-4 shrink-0">
                 <CreditCard className="mr-2 h-4 w-4" />
-                Subscribe Now
+                {t('dashboard.subscription.subscribeNow')}
               </Button>
             </AlertDescription>
           </Alert>
@@ -122,7 +122,7 @@ const Dashboard = () => {
           <Alert className="border-green-500 bg-green-500/10">
             <Trophy className="h-4 w-4 text-green-500" />
             <AlertDescription>
-              <span className="font-medium">Active Subscription</span> - You have unlimited access to all lessons!
+              <span className="font-medium">{t('dashboard.subscription.active')}</span> - {t('dashboard.subscription.activeDescription')}
             </AlertDescription>
           </Alert>
         )}
@@ -179,7 +179,7 @@ const Dashboard = () => {
                 ) : (
                   <>
                     <CreditCard className="mr-2 h-5 w-5" />
-                    Subscribe to Start
+                    {t('dashboard.subscription.subscribeToStart')}
                   </>
                 )}
               </Button>
