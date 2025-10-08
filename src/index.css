@@ -8,78 +8,77 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 220 15% 20%;
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 15% 20%;
+    --card: 222 47% 15%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 20%;
+    --popover: 222 47% 15%;
+    --popover-foreground: 210 40% 98%;
 
-    /* Modern teal - trust & innovation */
-    --primary: 186 85% 45%;
-    --primary-foreground: 0 0% 100%;
+    /* Electric Cyan - modern & tech */
+    --primary: 189 97% 55%;
+    --primary-foreground: 222 47% 11%;
 
-    /* Vibrant orange - energy & action */
-    --secondary: 25 95% 55%;
-    --secondary-foreground: 0 0% 100%;
+    /* Neon Purple - creative & bold */
+    --secondary: 271 91% 65%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 220 15% 96%;
-    --muted-foreground: 220 12% 50%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 280 70% 55%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 167 97% 55%;
+    --accent-foreground: 222 47% 11%;
 
-    --destructive: 0 85% 55%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 220 15% 90%;
-    --input: 220 15% 90%;
-    --ring: 186 85% 45%;
+    --border: 217 33% 25%;
+    --input: 217 33% 25%;
+    --ring: 189 97% 55%;
 
-    --radius: 1rem;
+    --radius: 0.75rem;
 
-    /* Modern Gradients */
-    --gradient-road: linear-gradient(135deg, hsl(186 85% 45%) 0%, hsl(220 75% 50%) 100%);
-    --gradient-sunset: linear-gradient(135deg, hsl(25 95% 55%) 0%, hsl(340 90% 55%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(186 90% 40%) 0%, hsl(220 80% 45%) 50%, hsl(280 70% 50%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(220 20% 98%) 100%);
+    /* Dark Modern Gradients */
+    --gradient-road: linear-gradient(135deg, hsl(189 97% 55%) 0%, hsl(271 91% 65%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(222 47% 11%) 0%, hsl(217 33% 17%) 50%, hsl(189 97% 55% / 0.1) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(222 47% 15%) 0%, hsl(217 33% 20%) 100%);
 
-    /* Modern Shadows */
-    --shadow-card: 0 8px 30px -8px hsl(186 85% 45% / 0.15);
-    --shadow-button: 0 4px 15px -2px hsl(186 85% 45% / 0.4);
-    --shadow-glow: 0 0 40px hsl(186 85% 45% / 0.3);
+    /* Dark Modern Shadows */
+    --shadow-card: 0 10px 40px -10px hsl(189 97% 55% / 0.2);
+    --shadow-button: 0 4px 20px hsl(189 97% 55% / 0.5);
+    --shadow-glow: 0 0 50px hsl(189 97% 55% / 0.4);
   }
 
   .dark {
-    --background: 220 30% 10%;
-    --foreground: 0 0% 95%;
+    --background: 222 47% 8%;
+    --foreground: 210 40% 98%;
 
-    --card: 220 25% 14%;
-    --card-foreground: 0 0% 95%;
+    --card: 222 47% 12%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 220 25% 14%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 222 47% 12%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 186 85% 50%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 189 97% 55%;
+    --primary-foreground: 222 47% 11%;
 
-    --secondary: 25 95% 60%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 271 91% 65%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 220 25% 18%;
-    --muted-foreground: 220 15% 70%;
+    --muted: 217 33% 14%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 280 70% 60%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 167 97% 55%;
+    --accent-foreground: 222 47% 11%;
 
-    --destructive: 0 75% 55%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 220 25% 22%;
-    --input: 220 25% 22%;
-    --ring: 186 85% 50%;
+    --border: 217 33% 22%;
+    --input: 217 33% 22%;
+    --ring: 189 97% 55%;
   }
 }
 
@@ -99,11 +98,11 @@ All colors MUST be HSL.
 
 @layer components {
   .btn-hero {
-    @apply bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--accent))] text-white font-bold shadow-[var(--shadow-button)] hover:shadow-[var(--shadow-glow)] hover:scale-105 transition-all duration-300;
+    @apply bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--accent))] text-[hsl(var(--primary-foreground))] font-bold shadow-[var(--shadow-button)] hover:shadow-[var(--shadow-glow)] hover:scale-105 transition-all duration-300;
   }
 
   .card-elevated {
-    @apply shadow-[var(--shadow-card)] hover:shadow-xl hover:scale-[1.02] transition-all duration-300 bg-gradient-to-br from-[hsl(var(--card))] to-[hsl(220,20%,98%)];
+    @apply shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-glow)] hover:scale-[1.02] transition-all duration-300 bg-gradient-to-br from-[hsl(var(--card))] to-[hsl(var(--muted))];
   }
 
   .gradient-road {
