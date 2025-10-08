@@ -5,7 +5,7 @@ import { Truck, BookOpen, Award, Clock, Mail } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import heroImage from "@/assets/hero-truck-animated.jpg";
+import heroImage from "@/assets/hero-truck.jpg";
 const Home = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
