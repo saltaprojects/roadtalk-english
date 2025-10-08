@@ -104,18 +104,9 @@
     "incorrect": "Not quite. The correct answer is"
   },
   "contact": {
-    "title": "Send Us a Message",
-    "subtitle": "Fill out the form and we'll get back to you soon",
+    "title": "Contact Us",
+    "subtitle": "Have questions? We're here to help!",
     "back": "Back",
-    "info": {
-      "title": "Let's Connect",
-      "description": "We're here to help with any questions about RoadTalk English",
-      "email": "Email Us",
-      "location": "Location",
-      "locationValue": "Available Worldwide",
-      "hours": "Support Hours",
-      "hoursValue": "24/7 Available"
-    },
     "form": {
       "name": "Name",
       "namePlaceholder": "Your name",
