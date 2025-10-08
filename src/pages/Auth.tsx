@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
@@ -131,6 +132,7 @@ const Auth = () => {
                     name="email"
                     type="email"
                     placeholder="your@email.com"
+                    autoComplete="email"
                     required
                     className="h-12 text-lg"
                   />
@@ -142,9 +144,19 @@ const Auth = () => {
                     name="password"
                     type="password"
                     placeholder="••••••••"
+                    autoComplete="current-password"
                     required
                     className="h-12 text-lg"
                   />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="remember" defaultChecked />
+                  <Label
+                    htmlFor="remember"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                  >
+                    {t('auth.rememberMe')}
+                  </Label>
                 </div>
                 <Button
                   type="submit"
