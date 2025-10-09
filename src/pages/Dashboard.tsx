@@ -169,7 +169,10 @@ const Dashboard = () => {
             </div>
 
             {/* Driver Chat with AI */}
-            <div className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer">
+            <div 
+              className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer"
+              onClick={() => navigate("/driver-chat")}
+            >
               <div className="text-3xl mb-2">🤖</div>
               <h3 className="font-semibold text-sm mb-1">Driver Chat with AI</h3>
               <p className="text-xs text-muted-foreground">Ask questions anytime</p>
