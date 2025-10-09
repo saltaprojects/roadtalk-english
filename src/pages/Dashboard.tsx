@@ -155,14 +155,14 @@ const Dashboard = () => {
           {/* Practice Sections */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t">
             {/* AI Conversation Practice */}
-            <div className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer">
+            <div className="text-center p-4 rounded-lg bg-muted/50 hover:bg-primary/10 hover:border-primary/50 border-2 border-transparent transition-all duration-300 cursor-pointer transform hover:scale-105">
               <div className="text-3xl mb-2">💬</div>
               <h3 className="font-semibold text-sm mb-1">AI Conversation Practice</h3>
               <p className="text-xs text-muted-foreground">Practice real scenarios</p>
             </div>
 
             {/* Pronunciation Help */}
-            <div className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer">
+            <div className="text-center p-4 rounded-lg bg-muted/50 hover:bg-primary/10 hover:border-primary/50 border-2 border-transparent transition-all duration-300 cursor-pointer transform hover:scale-105">
               <div className="text-3xl mb-2">🎤</div>
               <h3 className="font-semibold text-sm mb-1">Pronunciation Help</h3>
               <p className="text-xs text-muted-foreground">Learn correct sounds</p>
@@ -170,7 +170,7 @@ const Dashboard = () => {
 
             {/* Driver Chat with AI */}
             <div 
-              className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer"
+              className="text-center p-4 rounded-lg bg-muted/50 hover:bg-primary/10 hover:border-primary/50 border-2 border-transparent transition-all duration-300 cursor-pointer transform hover:scale-105"
               onClick={() => navigate("/driver-chat")}
             >
               <div className="text-3xl mb-2">🤖</div>
@@ -180,7 +180,7 @@ const Dashboard = () => {
 
             {/* Road Signs Practice */}
             <div 
-              className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer"
+              className="text-center p-4 rounded-lg bg-muted/50 hover:bg-primary/10 hover:border-primary/50 border-2 border-transparent transition-all duration-300 cursor-pointer transform hover:scale-105"
               onClick={() => navigate("/road-signs")}
             >
               <div className="text-3xl mb-2">🚦</div>
