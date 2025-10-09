@@ -1,393 +1,419 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, Send, Loader2, MessageCircle, X } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { ArrowLeft, CheckCircle2, XCircle, ChevronRight, RotateCcw, Trophy } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 
-type Message = {
-  role: "user" | "assistant";
-  content: string;
-};
-
-type RoadSign = {
-  id: string;
-  name: string;
-  emoji: string;
-  category: "warning" | "regulatory" | "guide" | "truck-specific";
-  description: string;
+type QuizQuestion = {
+  id: number;
+  signEmoji: string;
+  signName: string;
+  question: string;
+  answers: string[];
+  correctAnswer: number;
+  category: string;
   color: string;
+  explanation: string;
 };
 
-const roadSigns: RoadSign[] = [
-  { id: "stop", name: "Stop Sign", emoji: "🛑", category: "regulatory", description: "Must come to complete stop", color: "bg-red-500" },
-  { id: "yield", name: "Yield Sign", emoji: "⚠️", category: "regulatory", description: "Give right of way", color: "bg-yellow-500" },
-  { id: "speed", name: "Speed Limit", emoji: "🚦", category: "regulatory", description: "Maximum speed allowed", color: "bg-white" },
-  { id: "no-trucks", name: "No Trucks", emoji: "🚛", category: "truck-specific", description: "Trucks prohibited", color: "bg-red-400" },
-  { id: "weight", name: "Weight Limit", emoji: "⚖️", category: "truck-specific", description: "Maximum weight allowed", color: "bg-orange-500" },
-  { id: "height", name: "Height Restriction", emoji: "📏", category: "truck-specific", description: "Maximum height clearance", color: "bg-orange-500" },
-  { id: "weigh", name: "Weigh Station", emoji: "🏪", category: "truck-specific", description: "Trucks must stop", color: "bg-blue-500" },
-  { id: "truck-route", name: "Truck Route", emoji: "🛣️", category: "guide", description: "Designated truck route", color: "bg-green-500" },
-  { id: "merge", name: "Merge", emoji: "🔀", category: "warning", description: "Traffic merging ahead", color: "bg-yellow-500" },
-  { id: "curve", name: "Sharp Curve", emoji: "↪️", category: "warning", description: "Sharp turn ahead", color: "bg-yellow-500" },
-  { id: "hill", name: "Steep Hill", emoji: "⛰️", category: "warning", description: "Steep grade ahead", color: "bg-yellow-500" },
-  { id: "parking", name: "No Parking", emoji: "🅿️", category: "regulatory", description: "Parking prohibited", color: "bg-red-400" },
+const quizQuestions: QuizQuestion[] = [
+  {
+    id: 1,
+    signEmoji: "🛑",
+    signName: "Stop Sign",
+    question: "What must you do when you see this sign?",
+    answers: [
+      "Slow down and proceed with caution",
+      "Come to a complete stop",
+      "Yield to oncoming traffic",
+      "Stop only if cars are coming"
+    ],
+    correctAnswer: 1,
+    category: "Regulatory",
+    color: "bg-red-500",
+    explanation: "You must come to a complete stop at the stop line, crosswalk, or intersection, whichever comes first."
+  },
+  {
+    id: 2,
+    signEmoji: "⚠️",
+    signName: "Yield Sign",
+    question: "What does this sign require you to do?",
+    answers: [
+      "Stop completely",
+      "Speed up to merge",
+      "Slow down and give right of way",
+      "Honk your horn"
+    ],
+    correctAnswer: 2,
+    category: "Regulatory",
+    color: "bg-yellow-500",
+    explanation: "Yield means slow down and give the right of way to traffic and pedestrians."
+  },
+  {
+    id: 3,
+    signEmoji: "⚖️",
+    signName: "Weight Limit",
+    question: "As a truck driver, what should you do when you see this sign?",
+    answers: [
+      "Ignore it if your load is light",
+      "Check your truck's weight and comply with the limit",
+      "Speed up before the weigh station",
+      "Only commercial trucks need to follow this"
+    ],
+    correctAnswer: 1,
+    category: "Truck-Specific",
+    color: "bg-orange-500",
+    explanation: "Always check your truck's total weight (including cargo) and ensure it's within the posted limit."
+  },
+  {
+    id: 4,
+    signEmoji: "📏",
+    signName: "Height Restriction",
+    question: "Why is this sign critical for truck drivers?",
+    answers: [
+      "It's just a suggestion",
+      "It indicates the maximum safe height clearance",
+      "Only applies to buses",
+      "You can ignore it if moving slowly"
+    ],
+    correctAnswer: 1,
+    category: "Truck-Specific",
+    color: "bg-orange-500",
+    explanation: "Height restrictions prevent trucks from hitting low bridges or overpasses. Always know your truck's height!"
+  },
+  {
+    id: 5,
+    signEmoji: "🏪",
+    signName: "Weigh Station Ahead",
+    question: "What must commercial truck drivers do at a weigh station?",
+    answers: [
+      "Drive past if there's no line",
+      "Stop only if the lights are flashing",
+      "All commercial trucks must stop unless sign says open/closed",
+      "Only stop during business hours"
+    ],
+    correctAnswer: 2,
+    category: "Truck-Specific",
+    color: "bg-blue-500",
+    explanation: "Commercial trucks must stop at weigh stations unless signs indicate the station is closed or you're exempt."
+  },
+  {
+    id: 6,
+    signEmoji: "🛣️",
+    signName: "Truck Route",
+    question: "What does this sign indicate?",
+    answers: [
+      "Trucks are prohibited",
+      "This is a designated route for trucks",
+      "Trucks must exit here",
+      "Truck parking available"
+    ],
+    correctAnswer: 1,
+    category: "Guide",
+    color: "bg-green-500",
+    explanation: "This sign marks a designated route for trucks, often to avoid residential areas or weight-restricted roads."
+  },
+  {
+    id: 7,
+    signEmoji: "🔀",
+    signName: "Merge Sign",
+    question: "What should you do when you see this warning sign?",
+    answers: [
+      "Speed up to pass merging traffic",
+      "Stop and wait",
+      "Prepare for traffic merging from the side",
+      "Change lanes immediately"
+    ],
+    correctAnswer: 2,
+    category: "Warning",
+    color: "bg-yellow-500",
+    explanation: "Be prepared for traffic merging into your lane. Adjust speed and position to allow safe merging."
+  },
+  {
+    id: 8,
+    signEmoji: "⛰️",
+    signName: "Steep Hill",
+    question: "For truck drivers, this sign means:",
+    answers: [
+      "Use lower gear to control speed downhill",
+      "Speed up going downhill",
+      "Turn on hazard lights",
+      "Avoid using brakes"
+    ],
+    correctAnswer: 0,
+    category: "Warning",
+    color: "bg-yellow-500",
+    explanation: "Use a lower gear going downhill to avoid overheating brakes. Check your brakes before descending."
+  },
+  {
+    id: 9,
+    signEmoji: "🚛",
+    signName: "No Trucks",
+    question: "What does this sign mean?",
+    answers: [
+      "Trucks under 5 tons allowed",
+      "No trucks allowed on this road",
+      "Trucks must use right lane",
+      "Truck parking prohibited"
+    ],
+    correctAnswer: 1,
+    category: "Regulatory",
+    color: "bg-red-400",
+    explanation: "This sign prohibits trucks from using the road ahead. Find an alternate route."
+  },
+  {
+    id: 10,
+    signEmoji: "↪️",
+    signName: "Sharp Curve",
+    question: "How should truck drivers approach this sign?",
+    answers: [
+      "Maintain current speed",
+      "Reduce speed before the curve",
+      "Speed up to get through quickly",
+      "Use horn continuously"
+    ],
+    correctAnswer: 1,
+    category: "Warning",
+    color: "bg-yellow-500",
+    explanation: "Slow down before the curve. Trucks have higher centers of gravity and can tip on sharp curves at high speeds."
+  }
 ];
 
 const RoadSigns = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [showChat, setShowChat] = useState(false);
-  const [selectedSign, setSelectedSign] = useState<RoadSign | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+  const [showResult, setShowResult] = useState(false);
+  const [score, setScore] = useState(0);
+  const [quizComplete, setQuizComplete] = useState(false);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  const question = quizQuestions[currentQuestion];
+  const progressPercentage = ((currentQuestion + 1) / quizQuestions.length) * 100;
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  // Send initial greeting
-  useEffect(() => {
-    const initialGreeting: Message = {
-      role: "assistant",
-      content: "Hello! I'm your road signs and terminology assistant. Ask me anything about US road signs, traffic rules, or trucking terminology. For example: 'What does a yellow diamond sign mean?' or 'Explain truck route signs'."
-    };
-    setMessages([initialGreeting]);
-  }, []);
-
-  const sendMessage = async (userMessage: string) => {
-    if (!userMessage.trim() || isLoading) return;
-
-    const newUserMessage: Message = { role: "user", content: userMessage };
-    setMessages((prev) => [...prev, newUserMessage]);
-    setInput("");
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/road-signs-helper`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${session?.access_token || import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-          },
-          body: JSON.stringify({
-            messages: [...messages, newUserMessage],
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        
-        if (response.status === 429) {
-          setError("Too many requests. Please wait a moment and try again.");
-          toast({
-            title: "Rate Limited",
-            description: "Please wait a moment before sending another message.",
-            variant: "destructive",
-          });
-          return;
-        }
-        
-        if (response.status === 402) {
-          setError("AI service credits exhausted. Please contact support.");
-          toast({
-            title: "Service Unavailable",
-            description: "Please contact support to continue using AI features.",
-            variant: "destructive",
-          });
-          return;
-        }
-        
-        throw new Error(errorData.error || "Failed to get response");
-      }
-
-      const reader = response.body?.getReader();
-      const decoder = new TextDecoder();
-      let assistantMessage = "";
-
-      if (reader) {
-        let buffer = "";
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-
-          buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split("\n");
-          buffer = lines.pop() || "";
-
-          for (let line of lines) {
-            line = line.trim();
-            if (!line || line.startsWith(":")) continue;
-            if (!line.startsWith("data: ")) continue;
-
-            const data = line.slice(6);
-            if (data === "[DONE]") continue;
-
-            try {
-              const parsed = JSON.parse(data);
-              const content = parsed.choices?.[0]?.delta?.content;
-              if (content) {
-                assistantMessage += content;
-                setMessages((prev) => {
-                  const newMessages = [...prev];
-                  const lastMessage = newMessages[newMessages.length - 1];
-                  if (lastMessage?.role === "assistant") {
-                    lastMessage.content = assistantMessage;
-                  } else {
-                    newMessages.push({ role: "assistant", content: assistantMessage });
-                  }
-                  return newMessages;
-                });
-              }
-            } catch (e) {
-              console.error("Error parsing SSE data:", e);
-            }
-          }
-        }
-      }
-    } catch (error) {
-      console.error("Error sending message:", error);
-      setError("Failed to send message. Please try again.");
+  const handleAnswerClick = (answerIndex: number) => {
+    if (showResult) return;
+    
+    setSelectedAnswer(answerIndex);
+    setShowResult(true);
+    
+    if (answerIndex === question.correctAnswer) {
+      setScore(score + 1);
       toast({
-        title: "Error",
-        description: "Failed to send message. Please try again.",
+        title: "Correct! ✓",
+        description: "Great job!",
+      });
+    } else {
+      toast({
+        title: "Incorrect",
+        description: "Review the explanation below",
         variant: "destructive",
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  const handleSend = () => {
-    sendMessage(input);
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
+  const handleNext = () => {
+    if (currentQuestion < quizQuestions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+      setSelectedAnswer(null);
+      setShowResult(false);
+    } else {
+      setQuizComplete(true);
     }
   };
 
-  const handleSignClick = (sign: RoadSign) => {
-    setSelectedSign(sign);
-    const question = `Tell me about the ${sign.name} road sign. What does it mean and what should a truck driver do when they see it?`;
-    sendMessage(question);
-    setShowChat(true);
+  const handleRestart = () => {
+    setCurrentQuestion(0);
+    setSelectedAnswer(null);
+    setShowResult(false);
+    setScore(0);
+    setQuizComplete(false);
   };
 
-  const categories = [
-    { id: "all", name: "All Signs", icon: "🚦" },
-    { id: "truck-specific", name: "Truck Specific", icon: "🚛" },
-    { id: "warning", name: "Warning", icon: "⚠️" },
-    { id: "regulatory", name: "Regulatory", icon: "🛑" },
-    { id: "guide", name: "Guide", icon: "🛣️" },
-  ];
+  if (quizComplete) {
+    const percentage = Math.round((score / quizQuestions.length) * 100);
+    const passed = percentage >= 70;
 
-  const filteredSigns = selectedCategory === "all" 
-    ? roadSigns 
-    : roadSigns.filter(sign => sign.category === selectedCategory);
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+        <div className="bg-gradient-to-r from-orange-500 to-red-600 text-white p-6 shadow-xl">
+          <div className="container mx-auto max-w-4xl">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate("/dashboard")}
+              className="text-white hover:bg-white/20 mb-4"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+          </div>
+        </div>
+
+        <div className="container mx-auto p-6 max-w-4xl">
+          <Card className="p-12 text-center bg-white/95 backdrop-blur">
+            <Trophy className={`w-24 h-24 mx-auto mb-6 ${passed ? 'text-green-500' : 'text-orange-500'}`} />
+            <h1 className="text-4xl font-bold mb-4">
+              {passed ? "Congratulations! 🎉" : "Good Try! 💪"}
+            </h1>
+            <p className="text-2xl mb-8 text-muted-foreground">
+              You scored <span className="font-bold text-primary">{score}</span> out of{" "}
+              <span className="font-bold">{quizQuestions.length}</span>
+            </p>
+            <div className="mb-8">
+              <Progress value={percentage} className="h-4 mb-2" />
+              <p className="text-lg font-semibold">{percentage}%</p>
+            </div>
+            <p className="text-lg mb-8">
+              {passed 
+                ? "Excellent work! You have a strong understanding of road signs for truck drivers."
+                : "Keep practicing! Review the signs and try again to improve your score."}
+            </p>
+            <div className="flex gap-4 justify-center">
+              <Button
+                onClick={handleRestart}
+                size="lg"
+                className="bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700"
+              >
+                <RotateCcw className="mr-2 h-5 w-5" />
+                Try Again
+              </Button>
+              <Button
+                onClick={() => navigate("/dashboard")}
+                size="lg"
+                variant="outline"
+              >
+                Back to Dashboard
+              </Button>
+            </div>
+          </Card>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
       {/* Header */}
       <div className="bg-gradient-to-r from-orange-500 to-red-600 text-white p-6 shadow-xl">
-        <div className="container mx-auto max-w-7xl">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => navigate("/dashboard")}
-                className="text-white hover:bg-white/20"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </Button>
-              <div>
-                <h1 className="text-3xl font-bold flex items-center gap-3">
-                  🚦 Road Signs Practice
-                </h1>
-                <p className="text-white/90 mt-1">
-                  Learn US road signs for truck drivers - Click any sign to learn more
-                </p>
-              </div>
-            </div>
+        <div className="container mx-auto max-w-4xl">
+          <div className="flex items-center justify-between mb-4">
             <Button
-              onClick={() => setShowChat(!showChat)}
-              className="bg-white/20 hover:bg-white/30 text-white border-white/30"
-              size="lg"
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate("/dashboard")}
+              className="text-white hover:bg-white/20"
             >
-              <MessageCircle className="mr-2 h-5 w-5" />
-              {showChat ? "Hide" : "Show"} AI Chat
+              <ArrowLeft className="h-5 w-5" />
             </Button>
+            <div className="text-right">
+              <p className="text-sm text-white/80">Your Score</p>
+              <p className="text-2xl font-bold">{score} / {quizQuestions.length}</p>
+            </div>
+          </div>
+          <h1 className="text-3xl font-bold mb-2">🚦 Road Signs Practice Quiz</h1>
+          <p className="text-white/90 mb-4">Test your knowledge of US road signs for truck drivers</p>
+          <div className="space-y-2">
+            <div className="flex justify-between text-sm">
+              <span>Question {currentQuestion + 1} of {quizQuestions.length}</span>
+              <span>{Math.round(progressPercentage)}% Complete</span>
+            </div>
+            <Progress value={progressPercentage} className="h-2 bg-white/20" />
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto p-6 max-w-7xl">
-        <div className="grid lg:grid-cols-3 gap-6">
-          {/* Main Content - Signs Grid */}
-          <div className={`${showChat ? 'lg:col-span-2' : 'lg:col-span-3'} space-y-6`}>
-            {/* Category Filter */}
-            <Card className="p-4 bg-white/95 backdrop-blur">
-              <p className="text-sm font-semibold mb-3 text-slate-700">Filter by Category:</p>
-              <div className="flex flex-wrap gap-2">
-                {categories.map((cat) => (
-                  <Badge
-                    key={cat.id}
-                    variant={selectedCategory === cat.id ? "default" : "outline"}
-                    className="cursor-pointer px-4 py-2 text-sm hover:scale-105 transition-transform"
-                    onClick={() => setSelectedCategory(cat.id)}
-                  >
-                    {cat.icon} {cat.name}
-                  </Badge>
-                ))}
-              </div>
-            </Card>
-
-            {/* Road Signs Grid */}
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredSigns.map((sign) => (
-                <Card
-                  key={sign.id}
-                  className="group cursor-pointer overflow-hidden bg-white hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
-                  onClick={() => handleSignClick(sign)}
-                >
-                  <div className={`${sign.color} p-6 text-center transition-all duration-300 group-hover:p-8`}>
-                    <div className="text-7xl mb-2 transition-transform duration-300 group-hover:scale-110">
-                      {sign.emoji}
-                    </div>
-                  </div>
-                  <div className="p-4 bg-gradient-to-br from-white to-slate-50">
-                    <h3 className="font-bold text-lg mb-1 text-slate-800">{sign.name}</h3>
-                    <p className="text-sm text-slate-600 mb-2">{sign.description}</p>
-                    <Badge variant="secondary" className="text-xs">
-                      {sign.category.replace("-", " ")}
-                    </Badge>
-                  </div>
-                </Card>
-              ))}
+      <div className="container mx-auto p-6 max-w-4xl">
+        <Card className="overflow-hidden bg-white/95 backdrop-blur">
+          {/* Road Sign Display */}
+          <div className={`${question.color} p-12 text-center`}>
+            <Badge className="mb-4 text-sm">{question.category}</Badge>
+            <div className="text-9xl mb-4 animate-in fade-in zoom-in duration-500">
+              {question.signEmoji}
             </div>
-
-            {/* Info Card */}
-            <Card className="p-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-              <h3 className="text-xl font-bold mb-2">💡 Pro Tip</h3>
-              <p className="text-white/90">
-                Click on any road sign to ask the AI assistant detailed questions about it. 
-                You can learn about what each sign means, when you'll see it, and how to respond as a truck driver.
-              </p>
-            </Card>
+            <h2 className="text-2xl font-bold text-white drop-shadow-lg">
+              {question.signName}
+            </h2>
           </div>
 
-          {/* Chat Sidebar */}
-          {showChat && (
-            <div className="lg:col-span-1">
-              <Card className="sticky top-6 bg-white/95 backdrop-blur overflow-hidden flex flex-col h-[calc(100vh-8rem)]">
-                <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <MessageCircle className="h-5 w-5" />
-                    <h3 className="font-bold">AI Assistant</h3>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setShowChat(false)}
-                    className="text-white hover:bg-white/20 h-8 w-8"
+          {/* Question and Answers */}
+          <div className="p-8">
+            <h3 className="text-xl font-bold mb-6 text-slate-800">
+              {question.question}
+            </h3>
+
+            <div className="space-y-3 mb-6">
+              {question.answers.map((answer, index) => {
+                const isSelected = selectedAnswer === index;
+                const isCorrect = index === question.correctAnswer;
+                const showCorrect = showResult && isCorrect;
+                const showIncorrect = showResult && isSelected && !isCorrect;
+
+                return (
+                  <button
+                    key={index}
+                    onClick={() => handleAnswerClick(index)}
+                    disabled={showResult}
+                    className={`w-full p-4 text-left rounded-lg border-2 transition-all duration-200 ${
+                      showCorrect
+                        ? "bg-green-100 border-green-500 text-green-800"
+                        : showIncorrect
+                        ? "bg-red-100 border-red-500 text-red-800"
+                        : isSelected
+                        ? "bg-blue-100 border-blue-500 text-blue-800"
+                        : "bg-white border-slate-200 hover:border-blue-400 hover:bg-blue-50"
+                    } ${showResult ? "cursor-not-allowed" : "cursor-pointer"}`}
                   >
-                    <X className="h-4 w-4" />
-                  </Button>
-                </div>
-
-                {/* Messages */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-3">
-                  {messages.length === 0 && (
-                    <div className="text-center text-muted-foreground py-8">
-                      <MessageCircle className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                      <p className="text-sm">Click on any road sign to start learning!</p>
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium">{answer}</span>
+                      {showCorrect && <CheckCircle2 className="h-5 w-5 text-green-600" />}
+                      {showIncorrect && <XCircle className="h-5 w-5 text-red-600" />}
                     </div>
-                  )}
-                  {messages.map((message, index) => (
-                    <div
-                      key={index}
-                      className={`flex ${
-                        message.role === "user" ? "justify-end" : "justify-start"
-                      }`}
-                    >
-                      <div
-                        className={`rounded-lg px-4 py-2 max-w-[85%] ${
-                          message.role === "user"
-                            ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white"
-                            : "bg-slate-100 text-slate-800"
-                        }`}
-                      >
-                        <p className="text-sm whitespace-pre-wrap">{message.content}</p>
-                      </div>
-                    </div>
-                  ))}
-                  {isLoading && (
-                    <div className="flex justify-start">
-                      <div className="bg-slate-100 rounded-lg px-4 py-2">
-                        <Loader2 className="h-4 w-4 animate-spin text-slate-600" />
-                      </div>
-                    </div>
-                  )}
-                  <div ref={messagesEndRef} />
-                </div>
-
-                {/* Error Alert */}
-                {error && (
-                  <Alert variant="destructive" className="m-4 mt-0">
-                    <AlertDescription className="text-sm">{error}</AlertDescription>
-                  </Alert>
-                )}
-
-                {/* Input */}
-                <div className="p-4 border-t bg-white">
-                  <div className="flex gap-2">
-                    <Input
-                      value={input}
-                      onChange={(e) => setInput(e.target.value)}
-                      onKeyPress={handleKeyPress}
-                      placeholder="Ask about road signs..."
-                      disabled={isLoading}
-                      className="flex-1"
-                    />
-                    <Button 
-                      onClick={handleSend} 
-                      disabled={isLoading || !input.trim()}
-                      className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                    >
-                      {isLoading ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <Send className="h-4 w-4" />
-                      )}
-                    </Button>
-                  </div>
-                </div>
-              </Card>
+                  </button>
+                );
+              })}
             </div>
-          )}
-        </div>
+
+            {/* Explanation */}
+            {showResult && (
+              <div
+                className={`p-4 rounded-lg ${
+                  selectedAnswer === question.correctAnswer
+                    ? "bg-green-50 border-l-4 border-green-500"
+                    : "bg-blue-50 border-l-4 border-blue-500"
+                }`}
+              >
+                <p className="font-semibold mb-2 text-slate-800">
+                  {selectedAnswer === question.correctAnswer ? "✓ Correct!" : "ℹ️ Explanation:"}
+                </p>
+                <p className="text-slate-700">{question.explanation}</p>
+              </div>
+            )}
+
+            {/* Next Button */}
+            {showResult && (
+              <Button
+                onClick={handleNext}
+                size="lg"
+                className="w-full mt-6 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700"
+              >
+                {currentQuestion < quizQuestions.length - 1 ? (
+                  <>
+                    Next Question
+                    <ChevronRight className="ml-2 h-5 w-5" />
+                  </>
+                ) : (
+                  <>
+                    See Results
+                    <Trophy className="ml-2 h-5 w-5" />
+                  </>
+                )}
+              </Button>
+            )}
+          </div>
+        </Card>
       </div>
     </div>
   );
