@@ -136,7 +136,7 @@ const Dashboard = () => {
         )}
 
         {/* Progress Overview */}
-        <Card className="p-6 card-elevated">
+        <Card className="p-4 card-elevated">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="text-2xl font-bold">{t('dashboard.progress.title')}</h2>
