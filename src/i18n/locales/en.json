@@ -111,12 +111,92 @@
     "congratulations": "Great Job!",
     "completionMessage": "You've completed this lesson. Keep up the great work!",
     "score": "Your Score",
+    "practiceSentences": "Practice Sentences",
+    "practiceSentencesDescription": "Read these common highway communication phrases with Russian translations",
     "subscription": {
       "required": "Subscription Required",
       "description": "Subscribe for $14.55/month to access lessons.",
       "descriptionFull": "Your first lesson is free! Subscribe for $14.55/month to access all lessons.",
       "firstFree": "Your first lesson is free! Subscribe for $14.55/month to access all lessons.",
       "subscribeNow": "Subscribe for $14.55/month"
+    },
+    "highway": {
+      "context": "You're on the highway and need to communicate with your dispatcher and other drivers about road conditions and delivery updates.",
+      "practice": {
+        "sentence1": "I'm currently on Highway 80, heading east.",
+        "sentence1Russian": "Я сейчас на шоссе 80, еду на восток.",
+        "sentence2": "There's heavy traffic ahead, I might be delayed.",
+        "sentence2Russian": "Впереди большая пробка, я могу опоздать.",
+        "sentence3": "I need to take a rest break at the next truck stop.",
+        "sentence3Russian": "Мне нужно сделать перерыв на следующей стоянке для грузовиков.",
+        "sentence4": "Can you confirm the delivery address?",
+        "sentence4Russian": "Можете подтвердить адрес доставки?",
+        "sentence5": "I'll arrive in approximately two hours.",
+        "sentence5Russian": "Я прибуду примерно через два часа."
+      },
+      "flashcard1": {
+        "front": "I'm calling to update my location",
+        "back": "Use this when reporting to dispatcher"
+      },
+      "flashcard2": {
+        "front": "What's the road condition ahead?",
+        "back": "Ask other drivers about traffic or weather"
+      },
+      "flashcard3": {
+        "front": "My ETA is 3 PM",
+        "back": "ETA = Estimated Time of Arrival"
+      },
+      "flashcard4": {
+        "front": "Copy that, over and out",
+        "back": "Confirm you understood the message"
+      },
+      "quiz": {
+        "question1": {
+          "text": "How do you tell your dispatcher about traffic delays?",
+          "options": [
+            "There's heavy traffic ahead, I might be delayed",
+            "I don't know where I am",
+            "The truck is broken",
+            "I need food"
+          ]
+        },
+        "question2": {
+          "text": "What does ETA mean?",
+          "options": [
+            "Extra Time Available",
+            "Estimated Time of Arrival",
+            "Emergency Traffic Alert",
+            "Engine Temperature Alarm"
+          ]
+        },
+        "question3": {
+          "text": "You need to confirm a delivery address. What do you say?",
+          "options": [
+            "Where is the place?",
+            "I'm lost",
+            "Can you confirm the delivery address?",
+            "Give me directions"
+          ]
+        },
+        "question4": {
+          "text": "How do you report your current location on the highway?",
+          "options": [
+            "I'm currently on Highway 80, heading east",
+            "I'm somewhere on the road",
+            "I'm driving my truck",
+            "I don't know"
+          ]
+        },
+        "question5": {
+          "text": "Complete: 'I need to take a rest break at the ___ truck stop.'",
+          "options": [
+            "previous",
+            "old",
+            "next",
+            "last"
+          ]
+        }
+      }
     }
   },
   "flashcard": {
