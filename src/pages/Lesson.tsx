@@ -12,140 +12,103 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useSubscription } from "@/hooks/useSubscription";
 import { useLessonProgress } from "@/hooks/useLessonProgress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-
 const Lesson = () => {
-  const { id } = useParams();
+  const {
+    id
+  } = useParams();
   const navigate = useNavigate();
-  const { toast } = useToast();
-  const { t } = useTranslation();
+  const {
+    toast
+  } = useToast();
+  const {
+    t
+  } = useTranslation();
   const [currentStep, setCurrentStep] = useState<"intro" | "flashcards" | "quiz" | "complete">("intro");
   const [audioPlaying, setAudioPlaying] = useState(false);
-  const { subscribed, loading: subLoading, createCheckoutSession } = useSubscription();
-  const { canAccessLesson, markLessonComplete, FREE_LESSONS_LIMIT } = useLessonProgress();
-  
+  const {
+    subscribed,
+    loading: subLoading,
+    createCheckoutSession
+  } = useSubscription();
+  const {
+    canAccessLesson,
+    markLessonComplete,
+    FREE_LESSONS_LIMIT
+  } = useLessonProgress();
   const lessonNumber = parseInt(id || "1");
   const isFirstLesson = lessonNumber === 1;
   const requiresSubscription = !isFirstLesson && !subscribed;
-
   const lessonData = {
     title: "Asking for Directions",
     description: "Learn essential phrases for finding your way on the road",
     audioContext: "You're at a gas station and need to find the nearest truck stop with parking.",
-    flashcards: [
-      { 
-        front: "Where is the nearest truck stop?", 
-        back: "Use this to find truck-specific facilities",
-        audio: "where-truck-stop"
-      },
-      { 
-        front: "How do I get to the highway?", 
-        back: "Ask for directions to major roads",
-        audio: "how-highway"
-      },
-      { 
-        front: "Is there parking available?", 
-        back: "Check if overnight parking is allowed",
-        audio: "parking-available"
-      },
-      { 
-        front: "Which exit should I take?", 
-        back: "Clarify which highway exit to use",
-        audio: "which-exit"
-      },
-    ],
-    quiz: [
-      {
-        question: "You need to find the nearest truck stop. What do you say?",
-        options: [
-          "Where is the nearest truck stop?",
-          "I want food",
-          "Give me directions",
-          "Where am I?"
-        ],
-        correct: 0
-      },
-      {
-        question: "How do you ask if overnight parking is allowed?",
-        options: [
-          "Can I sleep?",
-          "Is there parking available?",
-          "Where is hotel?",
-          "I need rest"
-        ],
-        correct: 1
-      },
-      {
-        question: "You're confused about which highway exit. What do you ask?",
-        options: [
-          "Help me",
-          "I don't know",
-          "Which exit should I take?",
-          "Where is exit?"
-        ],
-        correct: 2
-      },
-      {
-        question: "Someone says 'Take exit 42 and turn right'. What should you do?",
-        options: [
-          "Ask them to repeat",
-          "Take exit 42, then turn right",
-          "Turn left at exit 42",
-          "Keep driving straight"
-        ],
-        correct: 1
-      },
-      {
-        question: "Complete: 'How ___ I get to the highway?'",
-        options: [
-          "can",
-          "is",
-          "do",
-          "am"
-        ],
-        correct: 2
-      }
-    ]
+    flashcards: [{
+      front: "Where is the nearest truck stop?",
+      back: "Use this to find truck-specific facilities",
+      audio: "where-truck-stop"
+    }, {
+      front: "How do I get to the highway?",
+      back: "Ask for directions to major roads",
+      audio: "how-highway"
+    }, {
+      front: "Is there parking available?",
+      back: "Check if overnight parking is allowed",
+      audio: "parking-available"
+    }, {
+      front: "Which exit should I take?",
+      back: "Clarify which highway exit to use",
+      audio: "which-exit"
+    }],
+    quiz: [{
+      question: "You need to find the nearest truck stop. What do you say?",
+      options: ["Where is the nearest truck stop?", "I want food", "Give me directions", "Where am I?"],
+      correct: 0
+    }, {
+      question: "How do you ask if overnight parking is allowed?",
+      options: ["Can I sleep?", "Is there parking available?", "Where is hotel?", "I need rest"],
+      correct: 1
+    }, {
+      question: "You're confused about which highway exit. What do you ask?",
+      options: ["Help me", "I don't know", "Which exit should I take?", "Where is exit?"],
+      correct: 2
+    }, {
+      question: "Someone says 'Take exit 42 and turn right'. What should you do?",
+      options: ["Ask them to repeat", "Take exit 42, then turn right", "Turn left at exit 42", "Keep driving straight"],
+      correct: 1
+    }, {
+      question: "Complete: 'How ___ I get to the highway?'",
+      options: ["can", "is", "do", "am"],
+      correct: 2
+    }]
   };
-
   const playAudio = () => {
     setAudioPlaying(true);
     setTimeout(() => setAudioPlaying(false), 2000);
     toast({
-      title: t('flashcard.playAudio'),
+      title: t('flashcard.playAudio')
     });
   };
-
   const handleQuizComplete = async () => {
     await markLessonComplete(id || "1");
     setCurrentStep("complete");
   };
-
   useEffect(() => {
     // Only redirect if not first lesson and not subscribed
     if (!subLoading && requiresSubscription) {
       toast({
         title: t('lesson.subscription.required'),
         description: t('lesson.subscription.firstFree'),
-        variant: "destructive",
+        variant: "destructive"
       });
     }
   }, [subLoading, requiresSubscription, toast, t]);
-
-  const progressValue = 
-    currentStep === "intro" ? 25 : 
-    currentStep === "flashcards" ? 50 : 
-    currentStep === "quiz" ? 75 : 100;
-
-  return (
-    <div className="min-h-screen bg-muted/30">
+  const progressValue = currentStep === "intro" ? 25 : currentStep === "flashcards" ? 50 : currentStep === "quiz" ? 75 : 100;
+  return <div className="min-h-screen bg-muted/30">
       {/* Header */}
       <header className="bg-background border-b p-4">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center justify-between mb-4">
-            <Button
-              variant="ghost"
-              onClick={() => navigate("/dashboard")}
-            >
+            <Button variant="ghost" onClick={() => navigate("/dashboard")}>
               <ArrowLeft className="mr-2 h-4 w-4" />
               {t('lesson.backToDashboard')}
             </Button>
@@ -162,8 +125,7 @@ const Lesson = () => {
 
       <div className="max-w-4xl mx-auto p-6">
         {/* Access Restricted Alert */}
-        {!subLoading && requiresSubscription && (
-          <Alert className="mb-6 border-accent bg-accent/10">
+        {!subLoading && requiresSubscription && <Alert className="mb-6 border-accent bg-accent/10">
             <Lock className="h-4 w-4" />
             <AlertDescription className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div>
@@ -175,12 +137,10 @@ const Lesson = () => {
                 {t('lesson.subscription.subscribeNow')}
               </Button>
             </AlertDescription>
-          </Alert>
-        )}
+          </Alert>}
 
         {/* Intro Step */}
-        {currentStep === "intro" && !requiresSubscription && (
-          <Card className="p-8 card-elevated">
+        {currentStep === "intro" && !requiresSubscription && <Card className="p-8 card-elevated">
             <h1 className="text-3xl font-bold mb-4">{lessonData.title}</h1>
             <p className="text-lg text-muted-foreground mb-6">
               {lessonData.description}
@@ -192,11 +152,7 @@ const Lesson = () => {
                 <div className="flex-1">
                   <h3 className="font-bold mb-2">Scenario</h3>
                   <p className="mb-4">{lessonData.audioContext}</p>
-                  <Button 
-                    onClick={playAudio}
-                    disabled={audioPlaying}
-                    className="btn-hero"
-                  >
+                  <Button onClick={playAudio} disabled={audioPlaying} className="btn-hero">
                     <Volume2 className="mr-2 h-4 w-4" />
                     {audioPlaying ? "Playing..." : t('flashcard.playAudio')}
                   </Button>
@@ -206,27 +162,21 @@ const Lesson = () => {
 
             <div className="space-y-4">
               <div className="flex items-center gap-2 text-muted-foreground">
-                <span>📚 {lessonData.flashcards.length}</span>
-                <span>•</span>
-                <span>❓ {lessonData.quiz.length}</span>
-                <span>•</span>
-                <span>⏱️ ~5 minutes</span>
+                
+                
+                
+                
+                <span>5 minutes</span>
               </div>
 
-              <Button 
-                size="lg" 
-                className="w-full btn-hero text-lg"
-                onClick={() => setCurrentStep("flashcards")}
-              >
+              <Button size="lg" className="w-full btn-hero text-lg" onClick={() => setCurrentStep("flashcards")}>
                 {t('lesson.next')}
               </Button>
             </div>
-          </Card>
-        )}
+          </Card>}
 
         {/* Flashcards Step */}
-        {currentStep === "flashcards" && !requiresSubscription && (
-          <div className="space-y-6">
+        {currentStep === "flashcards" && !requiresSubscription && <div className="space-y-6">
             <Card className="p-6">
               <h2 className="text-2xl font-bold mb-2">{t('lesson.vocabulary')}</h2>
               <p className="text-muted-foreground mb-4">
@@ -235,48 +185,27 @@ const Lesson = () => {
             </Card>
 
             <div className="grid md:grid-cols-2 gap-4">
-              {lessonData.flashcards.map((card, index) => (
-                <Flashcard
-                  key={index}
-                  front={card.front}
-                  back={card.back}
-                  audioId={card.audio}
-                />
-              ))}
+              {lessonData.flashcards.map((card, index) => <Flashcard key={index} front={card.front} back={card.back} audioId={card.audio} />)}
             </div>
 
             <Card className="p-6">
               <div className="flex justify-between items-center">
-                <Button
-                  variant="outline"
-                  onClick={() => setCurrentStep("intro")}
-                >
+                <Button variant="outline" onClick={() => setCurrentStep("intro")}>
                   <ArrowLeft className="mr-2 h-4 w-4" />
                   {t('lesson.backToDashboard')}
                 </Button>
-                <Button
-                  size="lg"
-                  className="btn-hero"
-                  onClick={() => setCurrentStep("quiz")}
-                >
+                <Button size="lg" className="btn-hero" onClick={() => setCurrentStep("quiz")}>
                   {t('lesson.next')}
                 </Button>
               </div>
             </Card>
-          </div>
-        )}
+          </div>}
 
         {/* Quiz Step */}
-        {currentStep === "quiz" && !requiresSubscription && (
-          <Quiz 
-            questions={lessonData.quiz} 
-            onComplete={handleQuizComplete}
-          />
-        )}
+        {currentStep === "quiz" && !requiresSubscription && <Quiz questions={lessonData.quiz} onComplete={handleQuizComplete} />}
 
         {/* Complete Step */}
-        {currentStep === "complete" && !requiresSubscription && (
-          <Card className="p-8 card-elevated text-center">
+        {currentStep === "complete" && !requiresSubscription && <Card className="p-8 card-elevated text-center">
             <div className="text-6xl mb-4">🎉</div>
             <h1 className="text-3xl font-bold mb-4">{t('lesson.congratulations')}</h1>
             <p className="text-lg text-muted-foreground mb-8">
@@ -301,30 +230,19 @@ const Lesson = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={() => {
-                  setCurrentStep("intro");
-                  window.scrollTo(0, 0);
-                }}
-              >
+              <Button variant="outline" size="lg" onClick={() => {
+            setCurrentStep("intro");
+            window.scrollTo(0, 0);
+          }}>
                 <RotateCcw className="mr-2 h-4 w-4" />
                 {t('lesson.backToDashboard')}
               </Button>
-              <Button
-                size="lg"
-                className="btn-hero"
-                onClick={() => navigate("/dashboard")}
-              >
+              <Button size="lg" className="btn-hero" onClick={() => navigate("/dashboard")}>
                 {t('lesson.backToDashboard')}
               </Button>
             </div>
-          </Card>
-        )}
+          </Card>}
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Lesson;
