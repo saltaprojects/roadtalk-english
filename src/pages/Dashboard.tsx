@@ -153,7 +153,7 @@ const Dashboard = () => {
           </div>
 
           {/* Practice Sections */}
-          <div className="grid md:grid-cols-3 gap-4 pt-4 border-t">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t">
             {/* AI Conversation Practice */}
             <div className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer">
               <div className="text-3xl mb-2">💬</div>
@@ -173,6 +173,13 @@ const Dashboard = () => {
               <div className="text-3xl mb-2">🤖</div>
               <h3 className="font-semibold text-sm mb-1">Driver Chat with AI</h3>
               <p className="text-xs text-muted-foreground">Ask questions anytime</p>
+            </div>
+
+            {/* Road Signs Practice */}
+            <div className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer">
+              <div className="text-3xl mb-2">🚦</div>
+              <h3 className="font-semibold text-sm mb-1">Road Signs Practice</h3>
+              <p className="text-xs text-muted-foreground">Learn traffic signs</p>
             </div>
           </div>
         </Card>
