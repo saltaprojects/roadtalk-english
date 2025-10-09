@@ -218,7 +218,7 @@ const Dashboard = () => {
               </Button>
               {!subscribed && (
                 <p className="text-sm text-muted-foreground mt-3">
-                  ✨ Try your first lesson free! Subscribe for $19.99/month to unlock all lessons.
+                  ✨ Try your first lesson free! Subscribe for $14.55/month to unlock all lessons.
                 </p>
               )}
             </div>

@@ -60,9 +60,9 @@
     "subscription": {
       "required": "Subscription Required to Access Lessons",
       "requiredShort": "Subscription Required",
-      "description": "Subscribe for $19.99/month to unlock all lessons!",
-      "firstFree": "Your first lesson is free! Subscribe for $19.99/month to access all lessons.",
-      "subscribeNow": "Subscribe for $19.99/month",
+      "description": "Subscribe for $14.55/month to unlock all lessons!",
+      "firstFree": "Your first lesson is free! Subscribe for $14.55/month to access all lessons.",
+      "subscribeNow": "Subscribe for $14.55/month",
       "subscribeToStart": "Subscribe to Start",
       "active": "Active Subscription",
       "activeDescription": "You have unlimited access to all lessons!"
@@ -113,10 +113,10 @@
     "score": "Your Score",
     "subscription": {
       "required": "Subscription Required",
-      "description": "Subscribe for $19.99/month to access lessons.",
-      "descriptionFull": "Your first lesson is free! Subscribe for $19.99/month to access all lessons.",
-      "firstFree": "Your first lesson is free! Subscribe for $19.99/month to access all lessons.",
-      "subscribeNow": "Subscribe for $19.99/month"
+      "description": "Subscribe for $14.55/month to access lessons.",
+      "descriptionFull": "Your first lesson is free! Subscribe for $14.55/month to access all lessons.",
+      "firstFree": "Your first lesson is free! Subscribe for $14.55/month to access all lessons.",
+      "subscribeNow": "Subscribe for $14.55/month"
     }
   },
   "flashcard": {
