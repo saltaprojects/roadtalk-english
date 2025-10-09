@@ -144,12 +144,36 @@ const Dashboard = () => {
             </div>
             <Trophy className="w-12 h-12 text-accent" />
           </div>
-          <div className="space-y-2">
+          <div className="space-y-2 mb-6">
             <div className="flex justify-between text-sm">
               <span className="font-medium">{completedLessons} / {totalLessons}</span>
               <span className="text-muted-foreground">{Math.round(progressPercentage)}%</span>
             </div>
             <Progress value={progressPercentage} className="h-3" />
+          </div>
+
+          {/* Practice Sections */}
+          <div className="grid md:grid-cols-3 gap-4 pt-4 border-t">
+            {/* AI Conversation Practice */}
+            <div className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer">
+              <div className="text-3xl mb-2">💬</div>
+              <h3 className="font-semibold text-sm mb-1">AI Conversation Practice</h3>
+              <p className="text-xs text-muted-foreground">Practice real scenarios</p>
+            </div>
+
+            {/* Pronunciation Help */}
+            <div className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer">
+              <div className="text-3xl mb-2">🎤</div>
+              <h3 className="font-semibold text-sm mb-1">Pronunciation Help</h3>
+              <p className="text-xs text-muted-foreground">Learn correct sounds</p>
+            </div>
+
+            {/* Driver Chat with AI */}
+            <div className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer">
+              <div className="text-3xl mb-2">🤖</div>
+              <h3 className="font-semibold text-sm mb-1">Driver Chat with AI</h3>
+              <p className="text-xs text-muted-foreground">Ask questions anytime</p>
+            </div>
           </div>
         </Card>
 
