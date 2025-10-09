@@ -58,7 +58,7 @@ serve(async (req) => {
         },
       ],
       mode: "subscription",
-      payment_method_types: ["card"],
+      payment_method_types: ["card", "apple_pay"],
       success_url: `${origin}/dashboard?payment=success`,
       cancel_url: `${origin}/dashboard?payment=cancelled`,
     });
