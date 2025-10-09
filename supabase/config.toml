@@ -11,3 +11,6 @@ verify_jwt = true
 
 [functions.ai-conversation]
 verify_jwt = true
+
+[functions.road-signs-helper]
+verify_jwt = false
