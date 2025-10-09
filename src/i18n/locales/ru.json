@@ -155,6 +155,108 @@
       "description": "Пожалуйста, проверьте введённые данные и попробуйте снова."
     }
   },
+  "lessons": {
+    "highwayCommunication": {
+      "scenario": "Вы едете по трассе и вам нужно общаться с диспетчером и другими водителями о дорожной обстановке и графике.",
+      "flashcards": [
+        {
+          "english": "I'm running 30 minutes behind schedule",
+          "transcription": "Айм ранинг сёрти минитс бихайнд скеджул",
+          "translation": "Я опаздываю на 30 минут от графика"
+        },
+        {
+          "english": "What's my next pickup location?",
+          "transcription": "Уотс май некст пикап лоукейшн?",
+          "translation": "Где моя следующая точка загрузки?"
+        },
+        {
+          "english": "There's heavy traffic on Interstate 95",
+          "transcription": "Зэрз хэви трэфик он Интерстейт найнти-файв",
+          "translation": "Плотное движение на Междуштатной трассе 95"
+        },
+        {
+          "english": "I need to take my 30-minute break",
+          "transcription": "Ай нид ту тейк май сёрти-минит брейк",
+          "translation": "Мне нужно взять 30-минутный перерыв"
+        }
+      ],
+      "practiceSentences": [
+        {
+          "english": "Copy that, I'll update my ETA",
+          "transcription": "Копи зэт, айл аптейт май И-Ти-Эй",
+          "translation": "Понял, обновлю предполагаемое время прибытия"
+        },
+        {
+          "english": "The weather conditions are getting worse",
+          "transcription": "Зэ уэзэр кондишнз ар гэтинг уорс",
+          "translation": "Погодные условия ухудшаются"
+        },
+        {
+          "english": "I'm approaching the weigh station",
+          "transcription": "Айм эпроучинг зэ уэй стейшн",
+          "translation": "Я приближаюсь к весовой станции"
+        },
+        {
+          "english": "Can you confirm the delivery time?",
+          "transcription": "Кэн ю конфёрм зэ дэливэри тайм?",
+          "translation": "Можете подтвердить время доставки?"
+        },
+        {
+          "english": "I'll be at the truck stop in 20 minutes",
+          "transcription": "Айл би эт зэ трак стоп ин туэнти минитс",
+          "translation": "Я буду на стоянке для грузовиков через 20 минут"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "You're running late. What do you tell your dispatcher?",
+          "questionTranscription": "Юр ранинг лейт. Уот ду ю тэл юр диспэтчер?",
+          "options": [
+            "I'm running 30 minutes behind schedule",
+            "I'm very tired now",
+            "Where should I go?",
+            "The truck is broken"
+          ],
+          "optionTranscriptions": [
+            "Айм ранинг сёрти минитс бихайнд скеджул",
+            "Айм вэри тайэд нау",
+            "Уэр шуд ай гоу?",
+            "Зэ трак из броукэн"
+          ]
+        },
+        {
+          "question": "How do you ask about your next stop?",
+          "questionTranscription": "Хау ду ю аск эбаут юр некст стоп?",
+          "options": [
+            "Where am I going?",
+            "What's my next pickup location?",
+            "I don't know the address",
+            "Tell me the place"
+          ],
+          "optionTranscriptions": [
+            "Уэр эм ай гоуинг?",
+            "Уотс май некст пикап лоукейшн?",
+            "Ай донт ноу зэ эдрэс",
+            "Тэл ми зэ плейс"
+          ]
+        },
+        {
+          "question": "You need to report traffic conditions. What phrase is most professional?",
+          "questionTranscription": "Ю нид ту рипорт трэфик кондишнз. Уот фрейз из моуст профэшнл?",
+          "options": [
+            "Many cars here",
+            "Road is bad",
+            "There's heavy traffic on Interstate 95"
+          ],
+          "optionTranscriptions": [
+            "Мэни карз хиэр",
+            "Роуд из бэд",
+            "Зэрз хэви трэфик он Интерстейт найнти-файв"
+          ]
+        }
+      ]
+    }
+  },
   "practice": {
     "title": "Практика разговора с ИИ",
     "subtitle": "Практикуйте реальные ситуации с искусственным интеллектом",

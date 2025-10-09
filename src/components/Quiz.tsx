@@ -9,6 +9,8 @@ interface Question {
   question: string;
   options: string[];
   correct: number;
+  questionTranscription?: string;
+  optionTranscriptions?: string[];
 }
 
 interface QuizProps {
@@ -21,7 +23,8 @@ export const Quiz = ({ questions, onComplete }: QuizProps) => {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const showTranscriptions = i18n.language === 'ru';
 
   const question = questions[currentQuestion];
   const progress = ((currentQuestion + 1) / questions.length) * 100;
@@ -60,7 +63,12 @@ export const Quiz = ({ questions, onComplete }: QuizProps) => {
       </Card>
 
       <Card className="p-8 card-elevated">
-        <h3 className="text-xl font-bold mb-6">{question.question}</h3>
+        <h3 className="text-xl font-bold mb-2">{question.question}</h3>
+        {showTranscriptions && question.questionTranscription && (
+          <p className="text-sm text-muted-foreground italic mb-6">
+            [{question.questionTranscription}]
+          </p>
+        )}
 
         <div className="space-y-3 mb-6">
           {question.options.map((option, index) => {
@@ -85,7 +93,14 @@ export const Quiz = ({ questions, onComplete }: QuizProps) => {
                 onClick={() => handleAnswer(index)}
                 disabled={showResult}
               >
-                <span className="flex-1">{option}</span>
+                <div className="flex-1 text-left">
+                  <div>{option}</div>
+                  {showTranscriptions && question.optionTranscriptions?.[index] && (
+                    <div className="text-xs text-muted-foreground italic mt-1">
+                      [{question.optionTranscriptions[index]}]
+                    </div>
+                  )}
+                </div>
                 {showCorrect && <CheckCircle2 className="w-5 h-5 text-green-600" />}
                 {showIncorrect && <XCircle className="w-5 h-5 text-red-600" />}
               </Button>

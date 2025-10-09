@@ -9,12 +9,14 @@ interface FlashcardProps {
   front: string;
   back: string;
   audioId: string;
+  transcription?: string;
 }
 
-export const Flashcard = ({ front, back, audioId }: FlashcardProps) => {
+export const Flashcard = ({ front, back, audioId, transcription }: FlashcardProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const { toast } = useToast();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const showTranscription = i18n.language === 'ru' && transcription;
 
   const playAudio = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -43,7 +45,12 @@ export const Flashcard = ({ front, back, audioId }: FlashcardProps) => {
             Phrase
           </span>
         </div>
-        <p className="text-xl font-bold mb-4">{front}</p>
+        <p className="text-xl font-bold mb-2">{front}</p>
+        {showTranscription && (
+          <p className="text-sm text-muted-foreground italic mb-4">
+            [{transcription}]
+          </p>
+        )}
         <Button
           size="sm"
           variant="outline"
@@ -67,6 +74,12 @@ export const Flashcard = ({ front, back, audioId }: FlashcardProps) => {
             Meaning
           </span>
         </div>
+        <p className="text-base font-semibold mb-2">{front}</p>
+        {showTranscription && (
+          <p className="text-sm text-muted-foreground italic mb-3">
+            [{transcription}]
+          </p>
+        )}
         <p className="text-lg">{back}</p>
         <p className="text-sm text-muted-foreground mt-4">
           {t('flashcard.flip')}

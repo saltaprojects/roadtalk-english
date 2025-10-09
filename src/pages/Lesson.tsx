@@ -39,47 +39,113 @@ const Lesson = () => {
   const isFirstLesson = lessonNumber === 1;
   const requiresSubscription = !isFirstLesson && !subscribed;
   const lessonData = {
-    title: "Asking for Directions",
-    description: "Learn essential phrases for finding your way on the road",
-    audioContext: "You're at a gas station and need to find the nearest truck stop with parking.",
-    flashcards: [{
-      front: "Where is the nearest truck stop?",
-      back: "Use this to find truck-specific facilities",
-      audio: "where-truck-stop"
-    }, {
-      front: "How do I get to the highway?",
-      back: "Ask for directions to major roads",
-      audio: "how-highway"
-    }, {
-      front: "Is there parking available?",
-      back: "Check if overnight parking is allowed",
-      audio: "parking-available"
-    }, {
-      front: "Which exit should I take?",
-      back: "Clarify which highway exit to use",
-      audio: "which-exit"
-    }],
-    quiz: [{
-      question: "You need to find the nearest truck stop. What do you say?",
-      options: ["Where is the nearest truck stop?", "I want food", "Give me directions", "Where am I?"],
-      correct: 0
-    }, {
-      question: "How do you ask if overnight parking is allowed?",
-      options: ["Can I sleep?", "Is there parking available?", "Where is hotel?", "I need rest"],
-      correct: 1
-    }, {
-      question: "You're confused about which highway exit. What do you ask?",
-      options: ["Help me", "I don't know", "Which exit should I take?", "Where is exit?"],
-      correct: 2
-    }, {
-      question: "Someone says 'Take exit 42 and turn right'. What should you do?",
-      options: ["Ask them to repeat", "Take exit 42, then turn right", "Turn left at exit 42", "Keep driving straight"],
-      correct: 1
-    }, {
-      question: "Complete: 'How ___ I get to the highway?'",
-      options: ["can", "is", "do", "am"],
-      correct: 2
-    }]
+    title: t('dashboard.todayLesson.title'),
+    description: t('dashboard.todayLesson.description'),
+    audioContext: t('lessons.highwayCommunication.scenario'),
+    flashcards: [
+      {
+        front: t('lessons.highwayCommunication.flashcards.0.english'),
+        back: t('lessons.highwayCommunication.flashcards.0.translation'),
+        transcription: t('lessons.highwayCommunication.flashcards.0.transcription'),
+        audio: "phrase-1"
+      },
+      {
+        front: t('lessons.highwayCommunication.flashcards.1.english'),
+        back: t('lessons.highwayCommunication.flashcards.1.translation'),
+        transcription: t('lessons.highwayCommunication.flashcards.1.transcription'),
+        audio: "phrase-2"
+      },
+      {
+        front: t('lessons.highwayCommunication.flashcards.2.english'),
+        back: t('lessons.highwayCommunication.flashcards.2.translation'),
+        transcription: t('lessons.highwayCommunication.flashcards.2.transcription'),
+        audio: "phrase-3"
+      },
+      {
+        front: t('lessons.highwayCommunication.flashcards.3.english'),
+        back: t('lessons.highwayCommunication.flashcards.3.translation'),
+        transcription: t('lessons.highwayCommunication.flashcards.3.transcription'),
+        audio: "phrase-4"
+      }
+    ],
+    practiceSentences: [
+      {
+        english: t('lessons.highwayCommunication.practiceSentences.0.english'),
+        transcription: t('lessons.highwayCommunication.practiceSentences.0.transcription'),
+        translation: t('lessons.highwayCommunication.practiceSentences.0.translation')
+      },
+      {
+        english: t('lessons.highwayCommunication.practiceSentences.1.english'),
+        transcription: t('lessons.highwayCommunication.practiceSentences.1.transcription'),
+        translation: t('lessons.highwayCommunication.practiceSentences.1.translation')
+      },
+      {
+        english: t('lessons.highwayCommunication.practiceSentences.2.english'),
+        transcription: t('lessons.highwayCommunication.practiceSentences.2.transcription'),
+        translation: t('lessons.highwayCommunication.practiceSentences.2.translation')
+      },
+      {
+        english: t('lessons.highwayCommunication.practiceSentences.3.english'),
+        transcription: t('lessons.highwayCommunication.practiceSentences.3.transcription'),
+        translation: t('lessons.highwayCommunication.practiceSentences.3.translation')
+      },
+      {
+        english: t('lessons.highwayCommunication.practiceSentences.4.english'),
+        transcription: t('lessons.highwayCommunication.practiceSentences.4.transcription'),
+        translation: t('lessons.highwayCommunication.practiceSentences.4.translation')
+      }
+    ],
+    quiz: [
+      {
+        question: t('lessons.highwayCommunication.quiz.0.question'),
+        questionTranscription: t('lessons.highwayCommunication.quiz.0.questionTranscription'),
+        options: [
+          t('lessons.highwayCommunication.quiz.0.options.0'),
+          t('lessons.highwayCommunication.quiz.0.options.1'),
+          t('lessons.highwayCommunication.quiz.0.options.2'),
+          t('lessons.highwayCommunication.quiz.0.options.3')
+        ],
+        optionTranscriptions: [
+          t('lessons.highwayCommunication.quiz.0.optionTranscriptions.0'),
+          t('lessons.highwayCommunication.quiz.0.optionTranscriptions.1'),
+          t('lessons.highwayCommunication.quiz.0.optionTranscriptions.2'),
+          t('lessons.highwayCommunication.quiz.0.optionTranscriptions.3')
+        ],
+        correct: 0
+      },
+      {
+        question: t('lessons.highwayCommunication.quiz.1.question'),
+        questionTranscription: t('lessons.highwayCommunication.quiz.1.questionTranscription'),
+        options: [
+          t('lessons.highwayCommunication.quiz.1.options.0'),
+          t('lessons.highwayCommunication.quiz.1.options.1'),
+          t('lessons.highwayCommunication.quiz.1.options.2'),
+          t('lessons.highwayCommunication.quiz.1.options.3')
+        ],
+        optionTranscriptions: [
+          t('lessons.highwayCommunication.quiz.1.optionTranscriptions.0'),
+          t('lessons.highwayCommunication.quiz.1.optionTranscriptions.1'),
+          t('lessons.highwayCommunication.quiz.1.optionTranscriptions.2'),
+          t('lessons.highwayCommunication.quiz.1.optionTranscriptions.3')
+        ],
+        correct: 1
+      },
+      {
+        question: t('lessons.highwayCommunication.quiz.2.question'),
+        questionTranscription: t('lessons.highwayCommunication.quiz.2.questionTranscription'),
+        options: [
+          t('lessons.highwayCommunication.quiz.2.options.0'),
+          t('lessons.highwayCommunication.quiz.2.options.1'),
+          t('lessons.highwayCommunication.quiz.2.options.2')
+        ],
+        optionTranscriptions: [
+          t('lessons.highwayCommunication.quiz.2.optionTranscriptions.0'),
+          t('lessons.highwayCommunication.quiz.2.optionTranscriptions.1'),
+          t('lessons.highwayCommunication.quiz.2.optionTranscriptions.2')
+        ],
+        correct: 2
+      }
+    ]
   };
   const playAudio = () => {
     setAudioPlaying(true);
@@ -185,7 +251,15 @@ const Lesson = () => {
             </Card>
 
             <div className="grid md:grid-cols-2 gap-4">
-              {lessonData.flashcards.map((card, index) => <Flashcard key={index} front={card.front} back={card.back} audioId={card.audio} />)}
+              {lessonData.flashcards.map((card, index) => (
+                <Flashcard 
+                  key={index} 
+                  front={card.front} 
+                  back={card.back} 
+                  audioId={card.audio}
+                  transcription={card.transcription}
+                />
+              ))}
             </div>
 
             <Card className="p-6">
