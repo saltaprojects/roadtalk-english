@@ -28,77 +28,80 @@ const Lesson = () => {
   const requiresSubscription = !isFirstLesson && !subscribed;
 
   const lessonData = {
-    title: t('dashboard.todayLesson.title'),
-    description: t('dashboard.todayLesson.description'),
-    audioContext: t('lesson.highway.context'),
-    practiceSentences: [
-      { 
-        english: t('lesson.highway.practice.sentence1'),
-        russian: t('lesson.highway.practice.sentence1Russian')
-      },
-      { 
-        english: t('lesson.highway.practice.sentence2'),
-        russian: t('lesson.highway.practice.sentence2Russian')
-      },
-      { 
-        english: t('lesson.highway.practice.sentence3'),
-        russian: t('lesson.highway.practice.sentence3Russian')
-      },
-      { 
-        english: t('lesson.highway.practice.sentence4'),
-        russian: t('lesson.highway.practice.sentence4Russian')
-      },
-      { 
-        english: t('lesson.highway.practice.sentence5'),
-        russian: t('lesson.highway.practice.sentence5Russian')
-      },
-    ],
+    title: "Asking for Directions",
+    description: "Learn essential phrases for finding your way on the road",
+    audioContext: "You're at a gas station and need to find the nearest truck stop with parking.",
     flashcards: [
       { 
-        front: t('lesson.highway.flashcard1.front'),
-        back: t('lesson.highway.flashcard1.back'),
-        audio: "dispatcher-call"
+        front: "Where is the nearest truck stop?", 
+        back: "Use this to find truck-specific facilities",
+        audio: "where-truck-stop"
       },
       { 
-        front: t('lesson.highway.flashcard2.front'),
-        back: t('lesson.highway.flashcard2.back'),
-        audio: "road-condition"
+        front: "How do I get to the highway?", 
+        back: "Ask for directions to major roads",
+        audio: "how-highway"
       },
       { 
-        front: t('lesson.highway.flashcard3.front'),
-        back: t('lesson.highway.flashcard3.back'),
-        audio: "eta-update"
+        front: "Is there parking available?", 
+        back: "Check if overnight parking is allowed",
+        audio: "parking-available"
       },
       { 
-        front: t('lesson.highway.flashcard4.front'),
-        back: t('lesson.highway.flashcard4.back'),
-        audio: "other-driver"
+        front: "Which exit should I take?", 
+        back: "Clarify which highway exit to use",
+        audio: "which-exit"
       },
     ],
     quiz: [
       {
-        question: t('lesson.highway.quiz.question1.text'),
-        options: t('lesson.highway.quiz.question1.options', { returnObjects: true }) as string[],
+        question: "You need to find the nearest truck stop. What do you say?",
+        options: [
+          "Where is the nearest truck stop?",
+          "I want food",
+          "Give me directions",
+          "Where am I?"
+        ],
         correct: 0
       },
       {
-        question: t('lesson.highway.quiz.question2.text'),
-        options: t('lesson.highway.quiz.question2.options', { returnObjects: true }) as string[],
+        question: "How do you ask if overnight parking is allowed?",
+        options: [
+          "Can I sleep?",
+          "Is there parking available?",
+          "Where is hotel?",
+          "I need rest"
+        ],
         correct: 1
       },
       {
-        question: t('lesson.highway.quiz.question3.text'),
-        options: t('lesson.highway.quiz.question3.options', { returnObjects: true }) as string[],
+        question: "You're confused about which highway exit. What do you ask?",
+        options: [
+          "Help me",
+          "I don't know",
+          "Which exit should I take?",
+          "Where is exit?"
+        ],
         correct: 2
       },
       {
-        question: t('lesson.highway.quiz.question4.text'),
-        options: t('lesson.highway.quiz.question4.options', { returnObjects: true }) as string[],
-        correct: 0
+        question: "Someone says 'Take exit 42 and turn right'. What should you do?",
+        options: [
+          "Ask them to repeat",
+          "Take exit 42, then turn right",
+          "Turn left at exit 42",
+          "Keep driving straight"
+        ],
+        correct: 1
       },
       {
-        question: t('lesson.highway.quiz.question5.text'),
-        options: t('lesson.highway.quiz.question5.options', { returnObjects: true }) as string[],
+        question: "Complete: 'How ___ I get to the highway?'",
+        options: [
+          "can",
+          "is",
+          "do",
+          "am"
+        ],
         correct: 2
       }
     ]
@@ -241,22 +244,6 @@ const Lesson = () => {
                 />
               ))}
             </div>
-
-            {/* Practice Sentences Section */}
-            <Card className="p-6">
-              <h2 className="text-2xl font-bold mb-4">{t('lesson.practiceSentences')}</h2>
-              <p className="text-muted-foreground mb-6">
-                {t('lesson.practiceSentencesDescription')}
-              </p>
-              <div className="space-y-4">
-                {lessonData.practiceSentences.map((sentence, index) => (
-                  <div key={index} className="bg-muted/50 rounded-lg p-4 border border-border">
-                    <p className="text-lg font-medium mb-2">{sentence.english}</p>
-                    <p className="text-muted-foreground italic">{sentence.russian}</p>
-                  </div>
-                ))}
-              </div>
-            </Card>
 
             <Card className="p-6">
               <div className="flex justify-between items-center">
