@@ -207,7 +207,10 @@ const Dashboard = () => {
             {/* Essential Phrases */}
             <Card 
               className="p-6 card-elevated hover:scale-105 transition-transform cursor-pointer"
-              onClick={() => toast({ title: "Coming Soon", description: "Essential phrases and short tests will be available soon!" })}
+              onClick={() => {
+                // Scroll to the lessons section
+                document.querySelector('.all-lessons-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
             >
               <Book className="w-10 h-10 mb-3 text-primary" />
               <h3 className="text-lg font-bold mb-2">Essential Phrases & Short Tests</h3>
@@ -311,87 +314,26 @@ const Dashboard = () => {
           </div>
         </Card>
 
-        {/* Topics by Level */}
-        <div className="space-y-8">
-          {/* Beginner Section */}
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="h-10 w-10 rounded-full bg-green-500/20 flex items-center justify-center">
-                <span className="text-green-500 font-bold text-lg">B</span>
-              </div>
-              <h2 className="text-2xl font-bold">{t('dashboard.levels.beginner')}</h2>
-            </div>
-            <div className="grid md:grid-cols-2 gap-4">
-              {topicsByLevel.beginner.map((topic) => {
-                const isFirstLesson = topic.id === 1;
-                const canAccess = subscribed || isFirstLesson;
-                
-                return (
-                  <Card 
-                    key={topic.id} 
-                    className={`p-6 card-elevated transition-transform duration-200 ${
-                      canAccess ? 'hover:scale-105 cursor-pointer' : 'opacity-60 cursor-not-allowed'
-                    }`}
-                    onClick={() => {
-                      if (canAccess) {
-                        navigate(`/lesson/${topic.id}`);
-                      } else {
-                        createCheckoutSession();
-                      }
-                    }}
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="text-4xl">{topic.icon}</div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <h3 className="text-xl font-bold">{topic.title}</h3>
-                          {isFirstLesson && (
-                            <span className="px-2 py-1 bg-green-500 text-white text-xs font-bold rounded">FREE</span>
-                          )}
-                        </div>
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
-                          <BookOpen className="w-4 h-4" />
-                          <span>{topic.lessons}</span>
-                          {topic.completed > 0 && (
-                            <>
-                              <span>•</span>
-                              <span className="text-accent font-medium">
-                                {topic.completed} completed
-                              </span>
-                            </>
-                          )}
-                        </div>
-                        {topic.completed > 0 && (
-                          <Progress 
-                            value={(topic.completed / parseInt(topic.lessons)) * 100} 
-                            className="h-2"
-                          />
-                        )}
-                      </div>
-                    </div>
-                  </Card>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Intermediate Section */}
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="h-10 w-10 rounded-full bg-orange-500/20 flex items-center justify-center">
-                <span className="text-orange-500 font-bold text-lg">I</span>
-              </div>
-              <h2 className="text-2xl font-bold">{t('dashboard.levels.intermediate')}</h2>
-            </div>
-            <div className="grid md:grid-cols-2 gap-4">
-              {topicsByLevel.intermediate.map((topic) => (
+        {/* All Lessons - No Level Division */}
+        <div className="all-lessons-section">
+          <h2 className="text-2xl font-bold mb-4">All Available Lessons</h2>
+          <div className="grid md:grid-cols-2 gap-4">
+            {[
+              ...topicsByLevel.beginner,
+              ...topicsByLevel.intermediate,
+              ...topicsByLevel.professional
+            ].map((topic) => {
+              const isFirstLesson = topic.id === 1;
+              const canAccess = subscribed || isFirstLesson;
+              
+              return (
                 <Card 
                   key={topic.id} 
                   className={`p-6 card-elevated transition-transform duration-200 ${
-                    subscribed ? 'hover:scale-105 cursor-pointer' : 'opacity-60 cursor-not-allowed'
+                    canAccess ? 'hover:scale-105 cursor-pointer' : 'opacity-60 cursor-not-allowed'
                   }`}
                   onClick={() => {
-                    if (subscribed) {
+                    if (canAccess) {
                       navigate(`/lesson/${topic.id}`);
                     } else {
                       createCheckoutSession();
@@ -401,7 +343,12 @@ const Dashboard = () => {
                   <div className="flex items-start gap-4">
                     <div className="text-4xl">{topic.icon}</div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold mb-2">{topic.title}</h3>
+                      <div className="flex items-center gap-2 mb-2">
+                        <h3 className="text-xl font-bold">{topic.title}</h3>
+                        {isFirstLesson && (
+                          <span className="px-2 py-1 bg-green-500 text-white text-xs font-bold rounded">FREE</span>
+                        )}
+                      </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
                         <BookOpen className="w-4 h-4" />
                         <span>{topic.lessons}</span>
@@ -423,60 +370,8 @@ const Dashboard = () => {
                     </div>
                   </div>
                 </Card>
-              ))}
-            </div>
-          </div>
-
-          {/* Professional Section */}
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="h-10 w-10 rounded-full bg-purple-500/20 flex items-center justify-center">
-                <span className="text-purple-500 font-bold text-lg">P</span>
-              </div>
-              <h2 className="text-2xl font-bold">{t('dashboard.levels.professional')}</h2>
-            </div>
-            <div className="grid md:grid-cols-2 gap-4">
-              {topicsByLevel.professional.map((topic) => (
-                <Card 
-                  key={topic.id} 
-                  className={`p-6 card-elevated transition-transform duration-200 ${
-                    subscribed ? 'hover:scale-105 cursor-pointer' : 'opacity-60 cursor-not-allowed'
-                  }`}
-                  onClick={() => {
-                    if (subscribed) {
-                      navigate(`/lesson/${topic.id}`);
-                    } else {
-                      createCheckoutSession();
-                    }
-                  }}
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="text-4xl">{topic.icon}</div>
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold mb-2">{topic.title}</h3>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
-                        <BookOpen className="w-4 h-4" />
-                        <span>{topic.lessons}</span>
-                        {topic.completed > 0 && (
-                          <>
-                            <span>•</span>
-                            <span className="text-accent font-medium">
-                              {topic.completed} completed
-                            </span>
-                          </>
-                        )}
-                      </div>
-                      {topic.completed > 0 && (
-                        <Progress 
-                          value={(topic.completed / parseInt(topic.lessons)) * 100} 
-                          className="h-2"
-                        />
-                      )}
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
+              );
+            })}
           </div>
         </div>
       </div>
