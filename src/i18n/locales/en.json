@@ -339,13 +339,26 @@
     "actions": {
       "playAudio": "Listen",
       "playing": "Playing...",
-      "loading": "Generating audio..."
+      "loading": "Generating audio...",
+      "practice": "Practice",
+      "recording": "Recording...",
+      "stopRecording": "Stop Recording",
+      "analyzing": "Analyzing..."
     },
     "feedback": {
       "audioGenerated": "Audio ready",
       "audioError": "Failed to generate audio. Please try again.",
       "rateLimit": "Too many requests. Please wait a moment.",
-      "noPhrasesInCategory": "No phrases in this category yet"
+      "noPhrasesInCategory": "No phrases in this category yet",
+      "score": "Pronunciation Score",
+      "excellent": "Excellent! (90-100%)",
+      "good": "Good (70-89%)",
+      "fair": "Fair (50-69%)",
+      "needsPractice": "Needs Practice (0-49%)",
+      "microphoneError": "Could not access microphone. Please allow microphone access.",
+      "recognitionError": "Could not recognize speech. Please try again.",
+      "noSpeechDetected": "No speech detected. Please speak clearly.",
+      "notSupported": "Speech recognition is not supported in this browser."
     }
   }
 }

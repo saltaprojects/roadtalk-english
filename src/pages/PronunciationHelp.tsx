@@ -7,16 +7,25 @@ import { useToast } from "@/hooks/use-toast";
 import PhraseCard from "@/components/PhraseCard";
 import { getPhrasesByCategory, type PhraseCategory } from "@/data/pronunciationPhrases";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 
 type CategoryFilter = 'all' | PhraseCategory;
+
+interface PracticeResult {
+  score: number;
+  category: 'excellent' | 'good' | 'fair' | 'needsPractice';
+}
 
 const PronunciationHelp = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { toast } = useToast();
+  const { isRecording, isAnalyzing, startRecording, stopRecording } = useSpeechRecognition();
   
   const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>('all');
   const [playingPhraseId, setPlayingPhraseId] = useState<string | null>(null);
+  const [recordingPhraseId, setRecordingPhraseId] = useState<string | null>(null);
+  const [practiceResults, setPracticeResults] = useState<Record<string, PracticeResult>>({});
 
   const phrases = getPhrasesByCategory(selectedCategory);
 
@@ -61,6 +70,70 @@ const PronunciationHelp = () => {
       console.error('Error with speech synthesis:', error);
       toast({
         title: t('pronunciation.feedback.audioError'),
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handlePracticePronunciation = async (phraseId: string) => {
+    const phrase = phrases.find(p => p.id === phraseId);
+    if (!phrase) return;
+
+    // Check if browser supports speech recognition
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      toast({
+        title: t('pronunciation.feedback.notSupported'),
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // If already recording this phrase, stop it
+    if (isRecording && recordingPhraseId === phraseId) {
+      stopRecording();
+      setRecordingPhraseId(null);
+      return;
+    }
+
+    // Request microphone permission and start recording
+    try {
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+      
+      setRecordingPhraseId(phraseId);
+      
+      const result = await startRecording(phrase.english);
+      
+      // Update practice results
+      setPracticeResults(prev => ({
+        ...prev,
+        [phraseId]: {
+          score: result.score,
+          category: result.category,
+        },
+      }));
+
+      setRecordingPhraseId(null);
+
+      // Show feedback toast
+      toast({
+        title: `${result.score}%`,
+        description: t(`pronunciation.feedback.${result.category}`),
+      });
+
+    } catch (error: any) {
+      setRecordingPhraseId(null);
+      
+      let errorMessage = t('pronunciation.feedback.recognitionError');
+      
+      if (error.message === 'microphone-permission') {
+        errorMessage = t('pronunciation.feedback.microphoneError');
+      } else if (error.message === 'no-speech') {
+        errorMessage = t('pronunciation.feedback.noSpeechDetected');
+      }
+
+      toast({
+        title: errorMessage,
         variant: "destructive",
       });
     }
@@ -124,6 +197,10 @@ const PronunciationHelp = () => {
                 onPlay={handlePlayAudio}
                 isPlaying={playingPhraseId === phrase.id}
                 isLoading={false}
+                onPractice={handlePracticePronunciation}
+                isRecording={isRecording && recordingPhraseId === phrase.id}
+                isAnalyzing={isAnalyzing && recordingPhraseId === phrase.id}
+                practiceResult={practiceResults[phrase.id] || null}
               />
             ))}
           </div>
