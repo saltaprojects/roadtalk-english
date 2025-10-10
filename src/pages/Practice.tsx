@@ -12,6 +12,15 @@ import dispatcherImage from "@/assets/scenarios/dispatcher-conversation.jpg";
 import borderImage from "@/assets/scenarios/border-conversation.jpg";
 import weighStationImage from "@/assets/scenarios/weigh-station-conversation.jpg";
 import deliveryImage from "@/assets/scenarios/delivery-conversation.jpg";
+import restaurantImage from "@/assets/scenarios/restaurant-conversation.jpg";
+import facilitiesImage from "@/assets/scenarios/facilities-conversation.jpg";
+import hotelImage from "@/assets/scenarios/hotel-conversation.jpg";
+import mechanicImage from "@/assets/scenarios/mechanic-conversation.jpg";
+import loadingProblemImage from "@/assets/scenarios/loading-problem-conversation.jpg";
+import parkingImage from "@/assets/scenarios/parking-conversation.jpg";
+import accidentImage from "@/assets/scenarios/accident-conversation.jpg";
+import cbRadioImage from "@/assets/scenarios/cb-radio-conversation.jpg";
+import contractImage from "@/assets/scenarios/contract-conversation.jpg";
 
 type Scenario = {
   id: string;
@@ -23,12 +32,26 @@ type Scenario = {
 };
 
 const scenarios: Scenario[] = [
+  // Beginner
   { id: "gasStation", icon: "⛽", titleKey: "practice.scenarios.gasStation.title", descriptionKey: "practice.scenarios.gasStation.description", difficultyKey: "practice.scenarios.gasStation.difficulty", image: gasStationImage },
+  { id: "restaurant", icon: "🍽️", titleKey: "practice.scenarios.restaurant.title", descriptionKey: "practice.scenarios.restaurant.description", difficultyKey: "practice.scenarios.restaurant.difficulty", image: restaurantImage },
+  { id: "facilities", icon: "🚿", titleKey: "practice.scenarios.facilities.title", descriptionKey: "practice.scenarios.facilities.description", difficultyKey: "practice.scenarios.facilities.difficulty", image: facilitiesImage },
+  { id: "hotel", icon: "🏨", titleKey: "practice.scenarios.hotel.title", descriptionKey: "practice.scenarios.hotel.description", difficultyKey: "practice.scenarios.hotel.difficulty", image: hotelImage },
+  
+  // Intermediate
   { id: "dispatcher", icon: "📞", titleKey: "practice.scenarios.dispatcher.title", descriptionKey: "practice.scenarios.dispatcher.description", difficultyKey: "practice.scenarios.dispatcher.difficulty", image: dispatcherImage },
   { id: "delivery", icon: "📦", titleKey: "practice.scenarios.delivery.title", descriptionKey: "practice.scenarios.delivery.description", difficultyKey: "practice.scenarios.delivery.difficulty", image: deliveryImage },
   { id: "police", icon: "🚔", titleKey: "practice.scenarios.police.title", descriptionKey: "practice.scenarios.police.description", difficultyKey: "practice.scenarios.police.difficulty", image: policeImage },
+  { id: "mechanic", icon: "🔧", titleKey: "practice.scenarios.mechanic.title", descriptionKey: "practice.scenarios.mechanic.description", difficultyKey: "practice.scenarios.mechanic.difficulty", image: mechanicImage },
+  { id: "loadingProblem", icon: "⚠️", titleKey: "practice.scenarios.loadingProblem.title", descriptionKey: "practice.scenarios.loadingProblem.description", difficultyKey: "practice.scenarios.loadingProblem.difficulty", image: loadingProblemImage },
+  { id: "parking", icon: "🅿️", titleKey: "practice.scenarios.parking.title", descriptionKey: "practice.scenarios.parking.description", difficultyKey: "practice.scenarios.parking.difficulty", image: parkingImage },
+  
+  // Professional
   { id: "weighStation", icon: "⚖️", titleKey: "practice.scenarios.weighStation.title", descriptionKey: "practice.scenarios.weighStation.description", difficultyKey: "practice.scenarios.weighStation.difficulty", image: weighStationImage },
   { id: "border", icon: "🛂", titleKey: "practice.scenarios.border.title", descriptionKey: "practice.scenarios.border.description", difficultyKey: "practice.scenarios.border.difficulty", image: borderImage },
+  { id: "accident", icon: "🚨", titleKey: "practice.scenarios.accident.title", descriptionKey: "practice.scenarios.accident.description", difficultyKey: "practice.scenarios.accident.difficulty", image: accidentImage },
+  { id: "cbRadio", icon: "📻", titleKey: "practice.scenarios.cbRadio.title", descriptionKey: "practice.scenarios.cbRadio.description", difficultyKey: "practice.scenarios.cbRadio.difficulty", image: cbRadioImage },
+  { id: "contract", icon: "📋", titleKey: "practice.scenarios.contract.title", descriptionKey: "practice.scenarios.contract.description", difficultyKey: "practice.scenarios.contract.difficulty", image: contractImage },
 ];
 
 const Practice = () => {

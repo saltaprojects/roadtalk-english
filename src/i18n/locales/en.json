@@ -303,10 +303,45 @@
         "description": "Communicate at fuel stations and rest stops",
         "difficulty": "Beginner"
       },
+      "restaurant": {
+        "title": "Restaurant Order",
+        "description": "Order food at truck stop diners and cafes",
+        "difficulty": "Beginner"
+      },
+      "facilities": {
+        "title": "Truck Stop Facilities",
+        "description": "Ask about showers, laundry, and amenities",
+        "difficulty": "Beginner"
+      },
+      "hotel": {
+        "title": "Hotel Check-in",
+        "description": "Check into motels and handle accommodation",
+        "difficulty": "Beginner"
+      },
       "dispatcher": {
         "title": "Dispatcher Communication",
         "description": "Report status and handle route changes",
-        "difficulty": "Beginner"
+        "difficulty": "Intermediate"
+      },
+      "delivery": {
+        "title": "Delivery Site",
+        "description": "Communicate with receivers and complete paperwork",
+        "difficulty": "Intermediate"
+      },
+      "mechanic": {
+        "title": "Truck Repair",
+        "description": "Discuss mechanical issues and repair needs",
+        "difficulty": "Intermediate"
+      },
+      "loadingProblem": {
+        "title": "Loading Dock Issue",
+        "description": "Handle cargo problems and documentation issues",
+        "difficulty": "Intermediate"
+      },
+      "parking": {
+        "title": "Driver Chat",
+        "description": "Casual conversation with other drivers",
+        "difficulty": "Intermediate"
       },
       "border": {
         "title": "Border Crossing",
@@ -316,12 +351,22 @@
       "weighStation": {
         "title": "Weigh Station",
         "description": "Handle inspections and logbook checks",
-        "difficulty": "Intermediate"
+        "difficulty": "Professional"
       },
-      "delivery": {
-        "title": "Delivery Site",
-        "description": "Communicate with receivers and complete paperwork",
-        "difficulty": "Beginner"
+      "accident": {
+        "title": "Accident Report",
+        "description": "Handle accidents and insurance claims",
+        "difficulty": "Professional"
+      },
+      "cbRadio": {
+        "title": "CB Radio Talk",
+        "description": "Communicate with drivers on CB radio",
+        "difficulty": "Professional"
+      },
+      "contract": {
+        "title": "Contract Negotiation",
+        "description": "Discuss rates and contract terms",
+        "difficulty": "Professional"
       }
     },
     "chat": {
@@ -333,7 +378,8 @@
       "scenarioContext": "Scenario Context",
       "error": "Something went wrong. Please try again.",
       "speaking": "Speaking...",
-      "you": "You"
+      "you": "You",
+      "suggestedQuestions": "Suggested questions:"
     }
   },
   "roadSigns": {

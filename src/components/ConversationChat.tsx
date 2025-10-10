@@ -25,12 +25,26 @@ type ConversationChatProps = {
 };
 
 const scenarioCharacters: Record<string, { ai: string; aiVoice: string; user: string }> = {
-  police: { ai: policeOfficer, aiVoice: "onyx", user: truckDriver },
+  // Beginner
   gasStation: { ai: gasAttendant, aiVoice: "echo", user: truckDriver },
+  restaurant: { ai: gasAttendant, aiVoice: "nova", user: truckDriver },
+  facilities: { ai: gasAttendant, aiVoice: "echo", user: truckDriver },
+  hotel: { ai: gasAttendant, aiVoice: "shimmer", user: truckDriver },
+  
+  // Intermediate
   dispatcher: { ai: dispatcher, aiVoice: "nova", user: truckDriver },
+  delivery: { ai: warehouseWorker, aiVoice: "fable", user: truckDriver },
+  police: { ai: policeOfficer, aiVoice: "onyx", user: truckDriver },
+  mechanic: { ai: gasAttendant, aiVoice: "onyx", user: truckDriver },
+  loadingProblem: { ai: warehouseWorker, aiVoice: "echo", user: truckDriver },
+  parking: { ai: truckDriver, aiVoice: "onyx", user: truckDriver },
+  
+  // Professional
   border: { ai: borderOfficer, aiVoice: "onyx", user: truckDriver },
   weighStation: { ai: weighInspector, aiVoice: "echo", user: truckDriver },
-  delivery: { ai: warehouseWorker, aiVoice: "fable", user: truckDriver },
+  accident: { ai: policeOfficer, aiVoice: "onyx", user: truckDriver },
+  cbRadio: { ai: truckDriver, aiVoice: "alloy", user: truckDriver },
+  contract: { ai: dispatcher, aiVoice: "echo", user: truckDriver },
 };
 
 export const ConversationChat = ({
