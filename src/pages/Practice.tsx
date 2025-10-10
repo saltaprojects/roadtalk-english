@@ -6,9 +6,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft } from "lucide-react";
 import { ConversationChat } from "@/components/ConversationChat";
-import { useSubscription } from "@/hooks/useSubscription";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
 import policeImage from "@/assets/scenarios/police-conversation.jpg";
 import gasStationImage from "@/assets/scenarios/gas-station-conversation.jpg";
 import dispatcherImage from "@/assets/scenarios/dispatcher-conversation.jpg";
@@ -38,40 +35,6 @@ const Practice = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(null);
-  const { subscribed, loading } = useSubscription();
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p>{t("dashboard.progress.title")}</p>
-      </div>
-    );
-  }
-
-  if (!subscribed) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-background to-muted p-6">
-        <div className="container mx-auto max-w-2xl">
-          <Button
-            variant="ghost"
-            onClick={() => navigate("/dashboard")}
-            className="mb-6"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            {t("contact.back")}
-          </Button>
-
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>{t("dashboard.subscription.requiredShort")}</AlertTitle>
-            <AlertDescription>
-              {t("dashboard.subscription.description")}
-            </AlertDescription>
-          </Alert>
-        </div>
-      </div>
-    );
-  }
 
   if (selectedScenario) {
     return (
