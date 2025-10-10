@@ -7,6 +7,7 @@ import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useTranslation } from "react-i18next";
 import { Loader2, Send, X, Volume2 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 import policeOfficer from "@/assets/characters/police-officer.png";
 import truckDriver from "@/assets/characters/truck-driver.png";
 import gasAttendant from "@/assets/characters/gas-attendant.png";
@@ -87,6 +88,11 @@ export const ConversationChat = ({
     onEnd();
   };
 
+  const userMessages = messages.filter(m => m.role === "user");
+  const aiMessages = messages.filter(m => m.role === "assistant");
+  const lastAiMessage = aiMessages[aiMessages.length - 1]?.content || "";
+  const lastUserMessage = userMessages[userMessages.length - 1]?.content || "";
+
   return (
     <div className="flex flex-col h-screen bg-background">
       {/* Header */}
@@ -102,64 +108,74 @@ export const ConversationChat = ({
         </div>
       </div>
 
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4">
-        <div className="container mx-auto max-w-3xl space-y-4">
-          {error && (
-            <Alert variant="destructive">
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
+      {error && (
+        <Alert variant="destructive" className="m-4">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
 
-          {messages.map((msg, idx) => (
-            <div
-              key={idx}
-              className={`flex gap-3 items-start ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}
-            >
-              {/* Character Avatar */}
-              <div className={`flex-shrink-0 ${isPlaying && idx === messages.length - 1 && msg.role === "assistant" ? "animate-bounce" : ""}`}>
-                <div className="relative">
-                  <img
-                    src={msg.role === "user" ? characters.user : characters.ai}
-                    alt={msg.role === "user" ? "Driver" : "Character"}
-                    className="w-16 h-16 rounded-full object-cover border-2 border-primary shadow-lg"
-                  />
-                  {isPlaying && idx === messages.length - 1 && msg.role === "assistant" && (
-                    <div className="absolute -bottom-1 -right-1 bg-primary rounded-full p-1">
-                      <Volume2 className="w-4 h-4 text-primary-foreground animate-pulse" />
-                    </div>
-                  )}
-                </div>
+      {/* Split Screen Layout */}
+      <div className="flex-1 overflow-hidden">
+        <ResizablePanelGroup direction="horizontal" className="h-full">
+          {/* AI Character Panel */}
+          <ResizablePanel defaultSize={50} minSize={30}>
+            <div className="h-full flex flex-col items-center justify-center bg-gradient-to-br from-muted/30 to-background p-8 relative">
+              <div className={`relative ${isPlaying ? "animate-bounce" : ""}`}>
+                <img
+                  src={characters.ai}
+                  alt="AI Character"
+                  className="w-48 h-48 rounded-full object-cover border-4 border-primary shadow-2xl"
+                />
+                {isPlaying && (
+                  <div className="absolute -bottom-2 -right-2 bg-primary rounded-full p-3">
+                    <Volume2 className="w-6 h-6 text-primary-foreground animate-pulse" />
+                  </div>
+                )}
+              </div>
+              
+              {/* AI Speech Bubble */}
+              {lastAiMessage && (
+                <Card className="mt-8 p-6 max-w-md bg-card shadow-xl relative">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-transparent border-b-card"></div>
+                  <p className="text-lg whitespace-pre-wrap break-words">{lastAiMessage}</p>
+                </Card>
+              )}
+
+              {isLoading && !lastAiMessage && (
+                <Card className="mt-8 p-6 max-w-md bg-muted shadow-xl relative">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-transparent border-b-muted"></div>
+                  <div className="flex items-center gap-2">
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    <span className="text-sm">{t("practice.chat.typing")}</span>
+                  </div>
+                </Card>
+              )}
+            </div>
+          </ResizablePanel>
+
+          <ResizableHandle withHandle />
+
+          {/* User Character Panel */}
+          <ResizablePanel defaultSize={50} minSize={30}>
+            <div className="h-full flex flex-col items-center justify-center bg-gradient-to-bl from-primary/5 to-background p-8 relative">
+              <div className="relative">
+                <img
+                  src={characters.user}
+                  alt="Your Character"
+                  className="w-48 h-48 rounded-full object-cover border-4 border-primary shadow-2xl"
+                />
               </div>
 
-              {/* Message Bubble */}
-              <Card
-                className={`max-w-[70%] p-4 ${
-                  msg.role === "user"
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-muted"
-                }`}
-              >
-                <p className="whitespace-pre-wrap break-words">{msg.content}</p>
-              </Card>
+              {/* User Speech Bubble */}
+              {lastUserMessage && (
+                <Card className="mt-8 p-6 max-w-md bg-primary text-primary-foreground shadow-xl relative">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-transparent border-b-primary"></div>
+                  <p className="text-lg whitespace-pre-wrap break-words">{lastUserMessage}</p>
+                </Card>
+              )}
             </div>
-          ))}
-
-          {isLoading && (
-            <div className="flex justify-start">
-              <Card className="max-w-[80%] p-4 bg-muted">
-                <div className="flex items-center gap-2">
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  <span className="text-sm text-muted-foreground">
-                    {t("practice.chat.typing")}
-                  </span>
-                </div>
-              </Card>
-            </div>
-          )}
-
-          <div ref={messagesEndRef} />
-        </div>
+          </ResizablePanel>
+        </ResizablePanelGroup>
       </div>
 
       {/* Input */}
@@ -180,6 +196,8 @@ export const ConversationChat = ({
           </div>
         </div>
       </div>
+
+      <div ref={messagesEndRef} />
     </div>
   );
 };
