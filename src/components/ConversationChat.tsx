@@ -40,8 +40,6 @@ export const ConversationChat = ({
 }: ConversationChatProps) => {
   const { t } = useTranslation();
   const [input, setInput] = useState("");
-  const [currentCardIndex, setCurrentCardIndex] = useState(0);
-  const [showResponseSide, setShowResponseSide] = useState(false);
   const { messages, isLoading, error, sendMessage, resetConversation } = useConversationChat();
   const { playText, isPlaying, stop } = useTextToSpeech();
   const lastMessageRef = useRef<string>("");
@@ -54,7 +52,6 @@ export const ConversationChat = ({
     if (lastMessage && lastMessage.role === "assistant" && lastMessage.content !== lastMessageRef.current) {
       lastMessageRef.current = lastMessage.content;
       playText(lastMessage.content, characters.aiVoice);
-      setShowResponseSide(false);
     }
   }, [messages, playText, characters.aiVoice]);
 
@@ -69,8 +66,6 @@ export const ConversationChat = ({
     if (!input.trim() || isLoading) return;
     sendMessage(input, scenario);
     setInput("");
-    setCurrentCardIndex(prev => prev + 1);
-    setShowResponseSide(false);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -86,31 +81,16 @@ export const ConversationChat = ({
     onEnd();
   };
 
-  const handleFlipCard = () => {
-    if (!isLoading) {
-      setShowResponseSide(!showResponseSide);
-    }
-  };
-
-  // Group messages into pairs (AI message + user response)
-  const conversationPairs: Array<{ ai: string; user?: string }> = [];
-  for (let i = 0; i < messages.length; i += 2) {
-    if (messages[i]?.role === "assistant") {
-      conversationPairs.push({
-        ai: messages[i].content,
-        user: messages[i + 1]?.content,
-      });
-    }
-  }
-
-  const currentPair = conversationPairs[currentCardIndex] || { ai: messages[messages.length - 1]?.content || "" };
-  const isLastCard = currentCardIndex === conversationPairs.length - 1;
-  const canGoBack = currentCardIndex > 0;
+  // Get latest messages for each side
+  const aiMessages = messages.filter(m => m.role === "assistant");
+  const userMessages = messages.filter(m => m.role === "user");
+  const latestAIMessage = aiMessages[aiMessages.length - 1]?.content || "";
+  const latestUserMessage = userMessages[userMessages.length - 1]?.content || "";
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-br from-background via-muted/20 to-background">
+    <div className="flex flex-col h-screen bg-background">
       {/* Header */}
-      <div className="bg-card/80 backdrop-blur-sm border-b border-border p-4 flex items-center justify-between">
+      <div className="bg-card border-b border-border p-4 flex items-center justify-between">
         <div className="flex-1">
           <h2 className="text-lg font-semibold">{scenarioTitle}</h2>
           <p className="text-sm text-muted-foreground">{scenarioDescription}</p>
@@ -126,160 +106,93 @@ export const ConversationChat = ({
         </Alert>
       )}
 
-      {/* Card Display Area */}
-      <div className="flex-1 flex items-center justify-center p-4 md:p-8">
-        <div className="w-full max-w-2xl">
-          {/* Progress Indicator */}
-          <div className="text-center mb-6">
-            <p className="text-sm text-muted-foreground">
-              Exchange {currentCardIndex + 1} of {Math.max(conversationPairs.length, 1)}
-            </p>
-            <div className="flex justify-center gap-2 mt-2">
-              {conversationPairs.map((_, idx) => (
-                <div
-                  key={idx}
-                  className={`h-2 rounded-full transition-all ${
-                    idx === currentCardIndex
-                      ? "w-8 bg-primary"
-                      : idx < currentCardIndex
-                      ? "w-2 bg-primary/50"
-                      : "w-2 bg-muted"
-                  }`}
-                />
-              ))}
-            </div>
+      {/* Split Screen - Two Characters Side by Side */}
+      <div className="flex-1 flex">
+        {/* Left Side - AI Character */}
+        <div className="flex-1 flex flex-col items-center justify-center p-8 border-r border-border bg-gradient-to-br from-primary/5 to-transparent">
+          <div className={`transition-all duration-500 ${isPlaying ? "scale-105" : ""}`}>
+            <img
+              src={characters.ai}
+              alt={scenarioTitle}
+              className="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover border-8 border-primary shadow-2xl mb-6"
+            />
           </div>
-
-          {/* Flippable Card */}
-          <Card
-            className={`relative min-h-[400px] transition-all duration-500 cursor-pointer ${
-              showResponseSide ? "shadow-2xl scale-105" : "shadow-xl"
-            }`}
-            style={{
-              transformStyle: "preserve-3d",
-              transform: showResponseSide ? "rotateY(180deg)" : "rotateY(0deg)",
-            }}
-            onClick={isLastCard && !isLoading ? handleFlipCard : undefined}
-          >
-            {/* Front Side - AI Message */}
-            <div
-              className="absolute inset-0 p-6 md:p-8 backface-hidden"
-              style={{ backfaceVisibility: "hidden" }}
-            >
-              <div className="flex flex-col h-full">
-                <div className="flex items-center gap-4 mb-6">
-                  <img
-                    src={characters.ai}
-                    alt={scenarioTitle}
-                    className="w-16 h-16 rounded-full object-cover border-4 border-primary"
-                  />
-                  <div>
-                    <h3 className="font-bold text-lg">{scenarioTitle.split(" ")[0]}</h3>
-                    {isPlaying && isLastCard && (
-                      <div className="flex items-center gap-2 text-primary text-sm">
-                        <Volume2 className="w-4 h-4 animate-pulse" />
-                        <span>Speaking...</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="flex-1 flex items-center">
-                  <p className="text-lg leading-relaxed whitespace-pre-wrap break-words">
-                    {currentPair.ai}
-                  </p>
-                </div>
-
-                {isLastCard && !isLoading && (
-                  <div className="text-center text-sm text-muted-foreground mt-4">
-                    Click to respond →
-                  </div>
-                )}
-              </div>
+          
+          <h3 className="text-xl font-bold mb-2">{scenarioTitle.split(" ")[0]}</h3>
+          
+          {isPlaying && (
+            <div className="flex items-center gap-2 text-primary mb-4">
+              <Volume2 className="w-5 h-5 animate-pulse" />
+              <span className="text-sm font-medium">Speaking...</span>
             </div>
+          )}
 
-            {/* Back Side - Response Input */}
-            <div
-              className="absolute inset-0 p-6 md:p-8 backface-hidden"
-              style={{
-                backfaceVisibility: "hidden",
-                transform: "rotateY(180deg)",
-              }}
-            >
-              <div className="flex flex-col h-full">
-                <div className="flex items-center gap-4 mb-6">
-                  <img
-                    src={characters.user}
-                    alt="You"
-                    className="w-16 h-16 rounded-full object-cover border-4 border-secondary"
-                  />
-                  <h3 className="font-bold text-lg">Your Response</h3>
-                </div>
-
-                <div className="flex-1">
-                  <p className="text-sm text-muted-foreground mb-4">
-                    What will you say?
-                  </p>
-                  <Input
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder={t("practice.chat.inputPlaceholder")}
-                    disabled={isLoading}
-                    className="mb-4"
-                    autoFocus
-                  />
-                  {currentPair.user && (
-                    <div className="mt-6 p-4 bg-muted rounded-lg">
-                      <p className="text-sm text-muted-foreground mb-2">You said:</p>
-                      <p className="text-base">{currentPair.user}</p>
-                    </div>
-                  )}
-                </div>
-
-                <Button
-                  onClick={handleSend}
-                  disabled={!input.trim() || isLoading}
-                  className="w-full"
-                  size="lg"
-                >
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      {t("practice.chat.typing")}
-                    </>
-                  ) : (
-                    <>
-                      <Send className="mr-2 h-4 w-4" />
-                      Send Response
-                    </>
-                  )}
-                </Button>
+          {/* AI Speech Bubble */}
+          {latestAIMessage && (
+            <div className="relative max-w-md mt-6 animate-fade-in">
+              <div className="bg-card border-2 border-primary rounded-3xl rounded-tl-none p-6 shadow-lg">
+                <p className="text-base leading-relaxed whitespace-pre-wrap break-words">
+                  {latestAIMessage}
+                </p>
               </div>
+              {/* Triangle pointer */}
+              <div className="absolute -top-2 left-4 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[20px] border-b-primary" />
+              <div className="absolute -top-1 left-5 w-0 h-0 border-l-[18px] border-l-transparent border-r-[18px] border-r-transparent border-b-[18px] border-b-card" />
             </div>
-          </Card>
+          )}
 
-          {/* Navigation */}
-          <div className="flex justify-between items-center mt-6">
+          {isLoading && (
+            <div className="flex items-center gap-2 mt-4 text-muted-foreground">
+              <Loader2 className="h-5 w-5 animate-spin" />
+              <span>{t("practice.chat.typing")}</span>
+            </div>
+          )}
+        </div>
+
+        {/* Right Side - User Character */}
+        <div className="flex-1 flex flex-col items-center justify-center p-8 bg-gradient-to-bl from-secondary/5 to-transparent">
+          <img
+            src={characters.user}
+            alt="You"
+            className="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover border-8 border-secondary shadow-2xl mb-6"
+          />
+          
+          <h3 className="text-xl font-bold mb-2">You</h3>
+
+          {/* User Speech Bubble */}
+          {latestUserMessage && (
+            <div className="relative max-w-md mt-6 animate-fade-in">
+              <div className="bg-card border-2 border-secondary rounded-3xl rounded-tr-none p-6 shadow-lg">
+                <p className="text-base leading-relaxed whitespace-pre-wrap break-words">
+                  {latestUserMessage}
+                </p>
+              </div>
+              {/* Triangle pointer */}
+              <div className="absolute -top-2 right-4 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[20px] border-b-secondary" />
+              <div className="absolute -top-1 right-5 w-0 h-0 border-l-[18px] border-l-transparent border-r-[18px] border-r-transparent border-b-[18px] border-b-card" />
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Input Area - Bottom Fixed */}
+      <div className="border-t border-border bg-card p-4">
+        <div className="container mx-auto max-w-3xl">
+          <div className="flex gap-2">
+            <Input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder={t("practice.chat.inputPlaceholder")}
+              disabled={isLoading}
+              className="flex-1"
+            />
             <Button
-              variant="outline"
-              onClick={() => {
-                setCurrentCardIndex(prev => Math.max(0, prev - 1));
-                setShowResponseSide(false);
-              }}
-              disabled={!canGoBack}
+              onClick={handleSend}
+              disabled={!input.trim() || isLoading}
+              size="icon"
             >
-              ← Previous
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setCurrentCardIndex(prev => Math.min(conversationPairs.length - 1, prev + 1));
-                setShowResponseSide(false);
-              }}
-              disabled={currentCardIndex >= conversationPairs.length - 1}
-            >
-              Next →
+              <Send className="h-4 w-4" />
             </Button>
           </div>
         </div>
