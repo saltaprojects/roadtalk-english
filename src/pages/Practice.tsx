@@ -47,6 +47,7 @@ const Practice = () => {
         scenario={selectedScenario.id}
         scenarioTitle={t(selectedScenario.titleKey)}
         scenarioDescription={t(selectedScenario.descriptionKey)}
+        difficulty={t(selectedScenario.difficultyKey)}
         onEnd={() => setSelectedScenario(null)}
       />
     );

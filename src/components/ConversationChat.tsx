@@ -20,6 +20,7 @@ type ConversationChatProps = {
   scenario: string;
   scenarioTitle: string;
   scenarioDescription: string;
+  difficulty: string;
   onEnd: () => void;
 };
 
@@ -36,15 +37,18 @@ export const ConversationChat = ({
   scenario,
   scenarioTitle,
   scenarioDescription,
+  difficulty,
   onEnd,
 }: ConversationChatProps) => {
   const { t, i18n } = useTranslation();
   const [input, setInput] = useState("");
+  const [suggestedResponses, setSuggestedResponses] = useState<string[]>([]);
   const { messages, isLoading, error, sendMessage, resetConversation } = useConversationChat();
   const { playText, isPlaying, stop } = useTextToSpeech();
   const lastMessageRef = useRef<string>("");
   
   const characters = scenarioCharacters[scenario] || scenarioCharacters.police;
+  const isBeginner = difficulty === t("practice.scenarios.gasStation.difficulty");
 
   useEffect(() => {
     // Auto-play TTS for new AI messages - use English version for TTS
@@ -54,9 +58,38 @@ export const ConversationChat = ({
       if (textToPlay !== lastMessageRef.current) {
         lastMessageRef.current = textToPlay;
         playText(textToPlay, characters.aiVoice);
+        
+        // Generate suggested responses for beginner level
+        if (isBeginner && !isLoading) {
+          generateSuggestedResponses(textToPlay);
+        }
       }
     }
-  }, [messages, playText, characters.aiVoice]);
+  }, [messages, playText, characters.aiVoice, isBeginner, isLoading]);
+
+  const generateSuggestedResponses = async (aiMessage: string) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/generate-suggestions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`
+        },
+        body: JSON.stringify({
+          scenario,
+          aiMessage,
+          language: i18n.language
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setSuggestedResponses(data.suggestions || []);
+      }
+    } catch (error) {
+      console.error('Error generating suggestions:', error);
+    }
+  };
 
   useEffect(() => {
     // Send initial AI greeting when conversation starts
@@ -65,10 +98,12 @@ export const ConversationChat = ({
     }
   }, []);
 
-  const handleSend = () => {
-    if (!input.trim() || isLoading) return;
-    sendMessage(input, scenario, i18n.language);
+  const handleSend = (message?: string) => {
+    const textToSend = message || input.trim();
+    if (!textToSend || isLoading) return;
+    sendMessage(textToSend, scenario, i18n.language);
     setInput("");
+    setSuggestedResponses([]);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -198,7 +233,23 @@ export const ConversationChat = ({
 
       {/* Input Area - Bottom Fixed */}
       <div className="border-t border-border bg-card p-4">
-        <div className="container mx-auto max-w-3xl">
+        <div className="container mx-auto max-w-3xl space-y-3">
+          {/* Suggested responses for beginners */}
+          {isBeginner && suggestedResponses.length > 0 && !isLoading && (
+            <div className="flex flex-wrap gap-2">
+              {suggestedResponses.map((suggestion, index) => (
+                <Button
+                  key={index}
+                  variant="outline"
+                  onClick={() => handleSend(suggestion)}
+                  className="text-sm"
+                >
+                  {suggestion}
+                </Button>
+              ))}
+            </div>
+          )}
+          
           <div className="flex gap-2">
             <Input
               value={input}
@@ -209,7 +260,7 @@ export const ConversationChat = ({
               className="flex-1"
             />
             <Button
-              onClick={handleSend}
+              onClick={() => handleSend()}
               disabled={!input.trim() || isLoading}
               size="icon"
             >
