@@ -123,7 +123,7 @@ export const ConversationChat = ({
           {isPlaying && (
             <div className="flex items-center gap-2 text-primary mb-4">
               <Volume2 className="w-5 h-5 animate-pulse" />
-              <span className="text-sm font-medium">Speaking...</span>
+              <span className="text-sm font-medium">{t("practice.chat.speaking")}</span>
             </div>
           )}
 
@@ -153,11 +153,11 @@ export const ConversationChat = ({
         <div className="flex-1 flex flex-col items-center justify-center p-8 bg-gradient-to-bl from-secondary/5 to-transparent">
           <img
             src={characters.user}
-            alt="You"
+            alt={t("practice.chat.you")}
             className="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover border-8 border-secondary shadow-2xl mb-6"
           />
           
-          <h3 className="text-xl font-bold mb-2">You</h3>
+          <h3 className="text-xl font-bold mb-2">{t("practice.chat.you")}</h3>
 
           {/* User Speech Bubble */}
           {latestUserMessage && (

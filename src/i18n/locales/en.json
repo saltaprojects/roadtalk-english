@@ -317,7 +317,9 @@
       "inputPlaceholder": "Type your message...",
       "send": "Send",
       "scenarioContext": "Scenario Context",
-      "error": "Something went wrong. Please try again."
+      "error": "Something went wrong. Please try again.",
+      "speaking": "Speaking...",
+      "you": "You"
     }
   },
   "roadSigns": {
