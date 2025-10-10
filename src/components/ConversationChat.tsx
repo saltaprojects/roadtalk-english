@@ -94,14 +94,14 @@ export const ConversationChat = ({
   useEffect(() => {
     // Send initial AI greeting when conversation starts
     if (messages.length === 0) {
-      sendMessage("Hello", scenario, i18n.language);
+      sendMessage("Hello", scenario, i18n.language, difficulty);
     }
   }, []);
 
   const handleSend = (message?: string) => {
     const textToSend = message || input.trim();
     if (!textToSend || isLoading) return;
-    sendMessage(textToSend, scenario, i18n.language);
+    sendMessage(textToSend, scenario, i18n.language, difficulty);
     setInput("");
     setSuggestedResponses([]);
   };

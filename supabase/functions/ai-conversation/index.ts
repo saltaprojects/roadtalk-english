@@ -26,7 +26,7 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, scenario, language = 'en' } = await req.json();
+    const { messages, scenario, language = 'en', difficulty } = await req.json();
     
     if (!scenario || !scenarioPrompts[scenario]) {
       return new Response(
@@ -54,7 +54,18 @@ Format your response EXACTLY like this:
 Always include both [EN] and [RU] sections in every response. This is mandatory.
 `;
 
-    const systemPrompt = bilingualInstruction + '\n\n' + scenarioPrompts[scenario];
+    // Add beginner-specific instructions
+    const beginnerInstruction = difficulty === "Beginner" || difficulty === "Начинающий" ? `
+
+IMPORTANT FOR BEGINNER LEVEL:
+- Keep your questions SHORT (5-8 words maximum)
+- Use SIMPLE vocabulary
+- Ask ONE thing at a time
+- Avoid complex grammar structures
+- Be patient and encouraging
+` : "";
+
+    const systemPrompt = bilingualInstruction + beginnerInstruction + '\n\n' + scenarioPrompts[scenario];
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
