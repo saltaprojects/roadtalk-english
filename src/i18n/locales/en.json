@@ -278,6 +278,20 @@
   "practice": {
     "title": "AI Conversation Practice",
     "subtitle": "Practice real-life situations with AI",
+    "levels": {
+      "beginner": {
+        "title": "Beginner Level",
+        "description": "Start with basic everyday situations and simple conversations"
+      },
+      "intermediate": {
+        "title": "Intermediate Level",
+        "description": "Practice more complex scenarios with official interactions"
+      },
+      "professional": {
+        "title": "Professional Level",
+        "description": "Master advanced situations requiring formal communication"
+      }
+    },
     "scenarios": {
       "police": {
         "title": "Police Inspection",

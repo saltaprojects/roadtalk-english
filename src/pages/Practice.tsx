@@ -23,18 +23,23 @@ type Scenario = {
 };
 
 const scenarios: Scenario[] = [
-  { id: "police", icon: "🚔", titleKey: "practice.scenarios.police.title", descriptionKey: "practice.scenarios.police.description", difficultyKey: "practice.scenarios.police.difficulty", image: policeImage },
   { id: "gasStation", icon: "⛽", titleKey: "practice.scenarios.gasStation.title", descriptionKey: "practice.scenarios.gasStation.description", difficultyKey: "practice.scenarios.gasStation.difficulty", image: gasStationImage },
   { id: "dispatcher", icon: "📞", titleKey: "practice.scenarios.dispatcher.title", descriptionKey: "practice.scenarios.dispatcher.description", difficultyKey: "practice.scenarios.dispatcher.difficulty", image: dispatcherImage },
-  { id: "border", icon: "🛂", titleKey: "practice.scenarios.border.title", descriptionKey: "practice.scenarios.border.description", difficultyKey: "practice.scenarios.border.difficulty", image: borderImage },
-  { id: "weighStation", icon: "⚖️", titleKey: "practice.scenarios.weighStation.title", descriptionKey: "practice.scenarios.weighStation.description", difficultyKey: "practice.scenarios.weighStation.difficulty", image: weighStationImage },
   { id: "delivery", icon: "📦", titleKey: "practice.scenarios.delivery.title", descriptionKey: "practice.scenarios.delivery.description", difficultyKey: "practice.scenarios.delivery.difficulty", image: deliveryImage },
+  { id: "police", icon: "🚔", titleKey: "practice.scenarios.police.title", descriptionKey: "practice.scenarios.police.description", difficultyKey: "practice.scenarios.police.difficulty", image: policeImage },
+  { id: "weighStation", icon: "⚖️", titleKey: "practice.scenarios.weighStation.title", descriptionKey: "practice.scenarios.weighStation.description", difficultyKey: "practice.scenarios.weighStation.difficulty", image: weighStationImage },
+  { id: "border", icon: "🛂", titleKey: "practice.scenarios.border.title", descriptionKey: "practice.scenarios.border.description", difficultyKey: "practice.scenarios.border.difficulty", image: borderImage },
 ];
 
 const Practice = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(null);
+
+  // Group scenarios by difficulty
+  const beginnerScenarios = scenarios.filter(s => t(s.difficultyKey) === t("practice.scenarios.gasStation.difficulty"));
+  const intermediateScenarios = scenarios.filter(s => t(s.difficultyKey) === t("practice.scenarios.police.difficulty"));
+  const professionalScenarios = scenarios.filter(s => t(s.difficultyKey) === t("practice.scenarios.border.difficulty"));
 
   if (selectedScenario) {
     return (
@@ -64,32 +69,109 @@ const Practice = () => {
           <p className="text-muted-foreground text-lg">{t("practice.subtitle")}</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {scenarios.map((scenario) => (
-            <Card key={scenario.id} className="hover:shadow-lg transition-all hover:scale-105 overflow-hidden cursor-pointer" onClick={() => setSelectedScenario(scenario)}>
-              <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={scenario.image} 
-                  alt={t(scenario.titleKey)}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-3 left-3 text-4xl">{scenario.icon}</div>
-              </div>
-              <CardHeader>
-                <CardTitle>{t(scenario.titleKey)}</CardTitle>
-                <CardDescription>{t(scenario.descriptionKey)}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center justify-between">
-                  <Badge variant="secondary">{t(scenario.difficultyKey)}</Badge>
-                  <Button>
-                    {t("practice.chat.startConversation")}
-                  </Button>
+        {/* Beginner Level */}
+        <div className="mb-12">
+          <div className="mb-6">
+            <h2 className="text-3xl font-bold mb-2">{t("practice.levels.beginner.title")}</h2>
+            <p className="text-muted-foreground">{t("practice.levels.beginner.description")}</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {beginnerScenarios.map((scenario) => (
+              <Card key={scenario.id} className="hover:shadow-lg transition-all hover:scale-105 overflow-hidden cursor-pointer" onClick={() => setSelectedScenario(scenario)}>
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={scenario.image} 
+                    alt={t(scenario.titleKey)}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-3 left-3 text-4xl">{scenario.icon}</div>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
+                <CardHeader>
+                  <CardTitle>{t(scenario.titleKey)}</CardTitle>
+                  <CardDescription>{t(scenario.descriptionKey)}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center justify-between">
+                    <Badge variant="secondary">{t(scenario.difficultyKey)}</Badge>
+                    <Button>
+                      {t("practice.chat.startConversation")}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+
+        {/* Intermediate Level */}
+        <div className="mb-12">
+          <div className="mb-6">
+            <h2 className="text-3xl font-bold mb-2">{t("practice.levels.intermediate.title")}</h2>
+            <p className="text-muted-foreground">{t("practice.levels.intermediate.description")}</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {intermediateScenarios.map((scenario) => (
+              <Card key={scenario.id} className="hover:shadow-lg transition-all hover:scale-105 overflow-hidden cursor-pointer" onClick={() => setSelectedScenario(scenario)}>
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={scenario.image} 
+                    alt={t(scenario.titleKey)}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-3 left-3 text-4xl">{scenario.icon}</div>
+                </div>
+                <CardHeader>
+                  <CardTitle>{t(scenario.titleKey)}</CardTitle>
+                  <CardDescription>{t(scenario.descriptionKey)}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center justify-between">
+                    <Badge variant="secondary">{t(scenario.difficultyKey)}</Badge>
+                    <Button>
+                      {t("practice.chat.startConversation")}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+
+        {/* Professional Level */}
+        <div className="mb-12">
+          <div className="mb-6">
+            <h2 className="text-3xl font-bold mb-2">{t("practice.levels.professional.title")}</h2>
+            <p className="text-muted-foreground">{t("practice.levels.professional.description")}</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {professionalScenarios.map((scenario) => (
+              <Card key={scenario.id} className="hover:shadow-lg transition-all hover:scale-105 overflow-hidden cursor-pointer" onClick={() => setSelectedScenario(scenario)}>
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={scenario.image} 
+                    alt={t(scenario.titleKey)}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-3 left-3 text-4xl">{scenario.icon}</div>
+                </div>
+                <CardHeader>
+                  <CardTitle>{t(scenario.titleKey)}</CardTitle>
+                  <CardDescription>{t(scenario.descriptionKey)}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center justify-between">
+                    <Badge variant="secondary">{t(scenario.difficultyKey)}</Badge>
+                    <Button>
+                      {t("practice.chat.startConversation")}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     </div>
