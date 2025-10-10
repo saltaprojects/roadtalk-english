@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowLeft, CheckCircle2, XCircle, ChevronRight, RotateCcw, Trophy, AlertTriangle, Ban, Info } from "lucide-react";
@@ -1358,6 +1359,7 @@ const SignShape = ({ sign }: { sign: QuizQuestion }) => {
 const RoadSigns = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
@@ -1376,13 +1378,13 @@ const RoadSigns = () => {
     if (answerIndex === question.correctAnswer) {
       setScore(score + 1);
       toast({
-        title: "✓ Correct!",
-        description: "Great job!",
+        title: `✓ ${t('roadSigns.correct')}`,
+        description: t('roadSigns.correct'),
       });
     } else {
       toast({
-        title: "Incorrect",
-        description: "Review the explanation",
+        title: t('roadSigns.incorrect'),
+        description: t('roadSigns.incorrect'),
         variant: "destructive",
       });
     }
@@ -1429,11 +1431,10 @@ const RoadSigns = () => {
           <Card className="p-12 text-center bg-white/95 backdrop-blur">
             <Trophy className={`w-24 h-24 mx-auto mb-6 ${passed ? 'text-green-500' : 'text-orange-500'}`} />
             <h1 className="text-4xl font-bold mb-4">
-              {passed ? "Congratulations! 🎉" : "Good Try! 💪"}
+              {passed ? "🎉" : "💪"}
             </h1>
             <p className="text-2xl mb-8 text-muted-foreground">
-              You scored <span className="font-bold text-primary">{score}</span> out of{" "}
-              <span className="font-bold">{quizQuestions.length}</span>
+              {t('roadSigns.score')}: <span className="font-bold text-primary">{score}</span> / <span className="font-bold">{quizQuestions.length}</span>
             </p>
             <div className="mb-8">
               <Progress value={percentage} className="h-4 mb-2" />
@@ -1441,8 +1442,8 @@ const RoadSigns = () => {
             </div>
             <p className="text-lg mb-8">
               {passed 
-                ? "Excellent work! You have a strong understanding of US road signs for truck drivers."
-                : "Keep practicing! Review the signs and try again to improve your score."}
+                ? t('roadSigns.passMessage') || "Excellent work! You have a strong understanding of US road signs for truck drivers."
+                : t('roadSigns.tryAgainMessage') || "Keep practicing! Review the signs and try again to improve your score."}
             </p>
             <div className="flex gap-4 justify-center">
               <Button
@@ -1451,14 +1452,14 @@ const RoadSigns = () => {
                 className="bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700"
               >
                 <RotateCcw className="mr-2 h-5 w-5" />
-                Try Again
+                {t('roadSigns.tryAgain') || "Try Again"}
               </Button>
               <Button
                 onClick={() => navigate("/dashboard")}
                 size="lg"
                 variant="outline"
               >
-                Back to Dashboard
+                {t('roadSigns.backToDashboard')}
               </Button>
             </div>
           </Card>
@@ -1494,16 +1495,16 @@ const RoadSigns = () => {
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div className="text-right">
-              <p className="text-sm text-white/80">Your Score</p>
+              <p className="text-sm text-white/80">{t('roadSigns.score')}</p>
               <p className="text-2xl font-bold">{score} / {quizQuestions.length}</p>
             </div>
           </div>
-          <h1 className="text-3xl font-bold mb-2">🚦 US Road Signs Practice - 100 Signs</h1>
-          <p className="text-white/90 mb-4">Master MUTCD road signs for commercial truck drivers</p>
+          <h1 className="text-3xl font-bold mb-2">🚦 {t('roadSigns.title')}</h1>
+          <p className="text-white/90 mb-4">{t('roadSigns.subtitle')}</p>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
-              <span>Question {currentQuestion + 1} of {quizQuestions.length}</span>
-              <span>{Math.round(progressPercentage)}% Complete</span>
+              <span>{t('roadSigns.questionLabel')} {currentQuestion + 1} / {quizQuestions.length}</span>
+              <span>{Math.round(progressPercentage)}% {t('roadSigns.progress')}</span>
             </div>
             <Progress value={progressPercentage} className="h-2 bg-white/20" />
           </div>
@@ -1578,12 +1579,12 @@ const RoadSigns = () => {
                   {selectedAnswer === question.correctAnswer ? (
                     <>
                       <CheckCircle2 className="h-5 w-5 text-green-600" />
-                      Correct!
+                      {t('roadSigns.correct')}
                     </>
                   ) : (
                     <>
                       <Info className="h-5 w-5 text-blue-600" />
-                      Explanation:
+                      {t('roadSigns.incorrect')}
                     </>
                   )}
                 </p>
@@ -1600,12 +1601,12 @@ const RoadSigns = () => {
               >
                 {currentQuestion < quizQuestions.length - 1 ? (
                   <>
-                    Next Question
+                    {t('roadSigns.nextQuestion')}
                     <ChevronRight className="ml-2 h-5 w-5" />
                   </>
                 ) : (
                   <>
-                    See Results
+                    {t('roadSigns.finishQuiz')}
                     <Trophy className="ml-2 h-5 w-5" />
                   </>
                 )}

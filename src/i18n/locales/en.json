@@ -301,5 +301,21 @@
       "scenarioContext": "Scenario Context",
       "error": "Something went wrong. Please try again."
     }
+  },
+  "roadSigns": {
+    "title": "Road Signs Quiz",
+    "subtitle": "Test your knowledge of U.S. traffic signs",
+    "backToDashboard": "Back to Dashboard",
+    "questionLabel": "Question",
+    "selectAnswer": "Select an answer",
+    "correct": "Correct!",
+    "incorrect": "Incorrect. The correct answer is:",
+    "nextQuestion": "Next Question",
+    "finishQuiz": "Finish Quiz",
+    "score": "Score",
+    "progress": "Progress",
+    "tryAgain": "Try Again",
+    "passMessage": "Excellent work! You have a strong understanding of US road signs for truck drivers.",
+    "tryAgainMessage": "Keep practicing! Review the signs and try again to improve your score."
   }
 }
