@@ -26,7 +26,7 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, scenario } = await req.json();
+    const { messages, scenario, language = 'en' } = await req.json();
     
     if (!scenario || !scenarioPrompts[scenario]) {
       return new Response(
@@ -44,6 +44,10 @@ serve(async (req) => {
       );
     }
 
+    const languageInstruction = language === 'ru' 
+      ? '\n\nIMPORTANT: Respond ONLY in Russian language. All your responses must be in Russian.'
+      : '\n\nIMPORTANT: Respond ONLY in English language. All your responses must be in English.';
+
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -53,7 +57,7 @@ serve(async (req) => {
       body: JSON.stringify({
         model: "google/gemini-2.5-flash",
         messages: [
-          { role: "system", content: scenarioPrompts[scenario] },
+          { role: "system", content: scenarioPrompts[scenario] + languageInstruction },
           ...messages,
         ],
         stream: true,

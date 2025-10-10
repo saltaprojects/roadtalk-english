@@ -10,7 +10,7 @@ export const useConversationChat = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const sendMessage = async (userMessage: string, scenario: string) => {
+  const sendMessage = async (userMessage: string, scenario: string, language = 'en') => {
     const userMsg: Message = { role: "user", content: userMessage };
     setMessages((prev) => [...prev, userMsg]);
     setIsLoading(true);
@@ -28,6 +28,7 @@ export const useConversationChat = () => {
         body: JSON.stringify({
           messages: [...messages, userMsg],
           scenario,
+          language,
         }),
       });
 

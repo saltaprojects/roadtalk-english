@@ -38,7 +38,7 @@ export const ConversationChat = ({
   scenarioDescription,
   onEnd,
 }: ConversationChatProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [input, setInput] = useState("");
   const { messages, isLoading, error, sendMessage, resetConversation } = useConversationChat();
   const { playText, isPlaying, stop } = useTextToSpeech();
@@ -58,13 +58,13 @@ export const ConversationChat = ({
   useEffect(() => {
     // Send initial AI greeting when conversation starts
     if (messages.length === 0) {
-      sendMessage("Hello", scenario);
+      sendMessage("Hello", scenario, i18n.language);
     }
   }, []);
 
   const handleSend = () => {
     if (!input.trim() || isLoading) return;
-    sendMessage(input, scenario);
+    sendMessage(input, scenario, i18n.language);
     setInput("");
   };
 
