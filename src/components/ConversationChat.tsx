@@ -96,103 +96,116 @@ export const ConversationChat = ({
   const speakerName = currentSpeaker === "ai" ? scenarioTitle.split(" ")[0] : "You";
 
   return (
-    <div className="flex flex-col h-screen bg-black">
-      {/* Cinematic Header */}
-      <div className="bg-gradient-to-b from-black/80 to-transparent absolute top-0 left-0 right-0 z-10 p-4">
-        <div className="container mx-auto flex items-center justify-between">
-          <div className="flex-1">
-            <h2 className="text-white text-lg font-semibold mb-1">{scenarioTitle}</h2>
-            <p className="text-white/70 text-sm">{scenarioDescription}</p>
-          </div>
-          <Button variant="ghost" size="icon" onClick={handleEnd} className="text-white hover:bg-white/20">
-            <X className="h-5 w-5" />
-          </Button>
+    <div className="flex flex-col h-screen bg-background">
+      {/* Header */}
+      <div className="bg-card border-b border-border p-4 flex items-center justify-between">
+        <div className="flex-1">
+          <h2 className="text-lg font-semibold">{scenarioTitle}</h2>
+          <p className="text-sm text-muted-foreground">{scenarioDescription}</p>
         </div>
+        <Button variant="ghost" size="icon" onClick={handleEnd}>
+          <X className="h-5 w-5" />
+        </Button>
       </div>
 
       {error && (
-        <Alert variant="destructive" className="m-4 z-20">
+        <Alert variant="destructive" className="m-4">
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
 
-      {/* Main Theater Stage */}
-      <div className="flex-1 relative overflow-hidden bg-gradient-to-b from-black via-muted/10 to-black">
-        {/* Character Display - Cinematic View */}
-        <div className="absolute inset-0 flex items-center justify-center p-8">
-          <div className={`relative transition-all duration-500 ${isPlaying && currentSpeaker === "ai" ? "scale-105" : ""}`}>
-            <img
-              src={currentCharacter}
-              alt="Current Speaker"
-              className="w-64 h-64 md:w-96 md:h-96 rounded-full object-cover border-8 border-primary/50 shadow-2xl"
-            />
-            
-            {/* Speaking Indicator */}
-            {isPlaying && currentSpeaker === "ai" && (
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-primary rounded-full px-6 py-3 shadow-lg">
-                <div className="flex items-center gap-2">
-                  <Volume2 className="w-5 h-5 text-primary-foreground animate-pulse" />
-                  <span className="text-primary-foreground text-sm font-medium">Speaking...</span>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
+      {/* Chat Messages Area */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        {messages.map((message, index) => {
+          const isAI = message.role === "assistant";
+          const avatar = isAI ? characters.ai : characters.user;
+          const name = isAI ? scenarioTitle.split(" ")[0] : "You";
 
-        {/* Loading Indicator */}
-        {isLoading && (
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30">
-            <div className="bg-primary/90 backdrop-blur-sm rounded-full px-6 py-3 shadow-2xl">
-              <div className="flex items-center gap-3">
-                <Loader2 className="h-6 w-6 animate-spin text-primary-foreground" />
-                <span className="text-primary-foreground font-medium">{t("practice.chat.typing")}</span>
+          return (
+            <div
+              key={index}
+              className={`flex gap-3 animate-fade-in ${!isAI ? "flex-row-reverse" : ""}`}
+            >
+              {/* Avatar */}
+              <div className="flex-shrink-0">
+                <img
+                  src={avatar}
+                  alt={name}
+                  className={`w-10 h-10 rounded-full object-cover border-2 ${
+                    isAI ? "border-primary" : "border-secondary"
+                  }`}
+                />
               </div>
+
+              {/* Message Bubble */}
+              <div className={`flex flex-col ${!isAI ? "items-end" : "items-start"} max-w-[70%]`}>
+                <span className="text-xs text-muted-foreground mb-1">{name}</span>
+                <div
+                  className={`rounded-2xl px-4 py-3 ${
+                    isAI
+                      ? "bg-card border border-border rounded-tl-none"
+                      : "bg-primary text-primary-foreground rounded-tr-none"
+                  }`}
+                >
+                  <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">
+                    {message.content}
+                  </p>
+                </div>
+
+                {/* Speaking indicator for AI messages */}
+                {isAI && isPlaying && index === messages.length - 1 && (
+                  <div className="flex items-center gap-2 mt-2 text-primary">
+                    <Volume2 className="w-4 h-4 animate-pulse" />
+                    <span className="text-xs">Speaking...</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        })}
+
+        {/* Loading indicator */}
+        {isLoading && (
+          <div className="flex gap-3 animate-fade-in">
+            <div className="flex-shrink-0">
+              <img
+                src={characters.ai}
+                alt="AI"
+                className="w-10 h-10 rounded-full object-cover border-2 border-primary"
+              />
+            </div>
+            <div className="flex items-center gap-2 bg-card border border-border rounded-2xl rounded-tl-none px-4 py-3">
+              <Loader2 className="h-4 w-4 animate-spin text-primary" />
+              <span className="text-sm text-muted-foreground">{t("practice.chat.typing")}</span>
             </div>
           </div>
         )}
+
+        <div ref={messagesEndRef} />
       </div>
 
-      {/* Subtitle Bar - Fixed at Bottom */}
-      <div className="bg-gradient-to-t from-black/95 via-black/90 to-transparent backdrop-blur-sm p-6 pb-32">
-        <div className="container mx-auto max-w-4xl">
-          {currentMessage && (
-            <div className="bg-black/80 backdrop-blur-md rounded-lg p-6 mb-4 border border-white/10 animate-fade-in">
-              <div className="flex items-start gap-3 mb-3">
-                <div className="text-primary font-bold text-lg">{speakerName}:</div>
-              </div>
-              <p className="text-white text-lg leading-relaxed whitespace-pre-wrap break-words">
-                {currentMessage}
-              </p>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Input Controls - Overlay */}
-      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+      {/* Input Area */}
+      <div className="border-t border-border bg-card p-4">
         <div className="container mx-auto max-w-3xl">
-          <div className="flex gap-2 bg-black/50 backdrop-blur-md rounded-lg p-2 border border-white/10">
+          <div className="flex gap-2">
             <Input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder={t("practice.chat.inputPlaceholder")}
               disabled={isLoading}
-              className="flex-1 bg-white/10 border-white/20 text-white placeholder:text-white/50"
+              className="flex-1"
             />
-            <Button 
-              onClick={handleSend} 
-              disabled={!input.trim() || isLoading} 
+            <Button
+              onClick={handleSend}
+              disabled={!input.trim() || isLoading}
               size="icon"
-              className="bg-primary hover:bg-primary/80"
             >
               <Send className="h-4 w-4" />
             </Button>
           </div>
         </div>
       </div>
-
-      <div ref={messagesEndRef} />
     </div>
   );
 };
