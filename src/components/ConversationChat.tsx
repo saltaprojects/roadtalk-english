@@ -47,11 +47,14 @@ export const ConversationChat = ({
   const characters = scenarioCharacters[scenario] || scenarioCharacters.police;
 
   useEffect(() => {
-    // Auto-play TTS for new AI messages
+    // Auto-play TTS for new AI messages - use English version for TTS
     const lastMessage = messages[messages.length - 1];
-    if (lastMessage && lastMessage.role === "assistant" && lastMessage.content !== lastMessageRef.current) {
-      lastMessageRef.current = lastMessage.content;
-      playText(lastMessage.content, characters.aiVoice);
+    if (lastMessage && lastMessage.role === "assistant") {
+      const textToPlay = (lastMessage as any).contentEn || lastMessage.content;
+      if (textToPlay !== lastMessageRef.current) {
+        lastMessageRef.current = textToPlay;
+        playText(textToPlay, characters.aiVoice);
+      }
     }
   }, [messages, playText, characters.aiVoice]);
 
@@ -84,7 +87,7 @@ export const ConversationChat = ({
   // Get latest messages for each side
   const aiMessages = messages.filter(m => m.role === "assistant");
   const userMessages = messages.filter(m => m.role === "user");
-  const latestAIMessage = aiMessages[aiMessages.length - 1]?.content || "";
+  const latestAIMessage = aiMessages[aiMessages.length - 1];
   const latestUserMessage = userMessages[userMessages.length - 1]?.content || "";
 
   return (
@@ -130,10 +133,28 @@ export const ConversationChat = ({
           {/* AI Speech Bubble */}
           {latestAIMessage && (
             <div className="relative max-w-md mt-6 animate-fade-in">
-              <div className="bg-card border-2 border-primary rounded-3xl rounded-tl-none p-6 shadow-lg">
-                <p className="text-base leading-relaxed whitespace-pre-wrap break-words">
-                  {latestAIMessage}
-                </p>
+              <div className="bg-card border-2 border-primary rounded-3xl rounded-tl-none p-6 shadow-lg space-y-4">
+                {latestAIMessage.contentEn && (
+                  <div>
+                    <div className="text-xs font-semibold text-primary mb-1">English:</div>
+                    <p className="text-base leading-relaxed whitespace-pre-wrap break-words">
+                      {latestAIMessage.contentEn}
+                    </p>
+                  </div>
+                )}
+                {latestAIMessage.contentRu && (
+                  <div>
+                    <div className="text-xs font-semibold text-secondary mb-1">Русский:</div>
+                    <p className="text-base leading-relaxed whitespace-pre-wrap break-words">
+                      {latestAIMessage.contentRu}
+                    </p>
+                  </div>
+                )}
+                {!latestAIMessage.contentEn && !latestAIMessage.contentRu && (
+                  <p className="text-base leading-relaxed whitespace-pre-wrap break-words">
+                    {latestAIMessage.content}
+                  </p>
+                )}
               </div>
               {/* Triangle pointer */}
               <div className="absolute -top-2 left-4 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[20px] border-b-primary" />

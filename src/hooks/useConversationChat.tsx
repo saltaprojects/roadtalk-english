@@ -3,6 +3,8 @@ import { useState } from "react";
 type Message = {
   role: "user" | "assistant";
   content: string;
+  contentEn?: string;
+  contentRu?: string;
 };
 
 export const useConversationChat = () => {
@@ -79,14 +81,25 @@ export const useConversationChat = () => {
             const content = parsed.choices?.[0]?.delta?.content as string | undefined;
             if (content) {
               assistantContent += content;
+              
+              // Parse bilingual content
+              const enMatch = assistantContent.match(/\[EN\]\s*([\s\S]*?)(?=\[RU\]|$)/);
+              const ruMatch = assistantContent.match(/\[RU\]\s*([\s\S]*?)$/);
+              
               setMessages((prev) => {
                 const last = prev[prev.length - 1];
+                const messageUpdate = {
+                  content: assistantContent,
+                  contentEn: enMatch ? enMatch[1].trim() : undefined,
+                  contentRu: ruMatch ? ruMatch[1].trim() : undefined,
+                };
+                
                 if (last?.role === "assistant") {
                   return prev.map((m, i) =>
-                    i === prev.length - 1 ? { ...m, content: assistantContent } : m
+                    i === prev.length - 1 ? { ...m, ...messageUpdate } : m
                   );
                 }
-                return [...prev, { role: "assistant", content: assistantContent }];
+                return [...prev, { role: "assistant", ...messageUpdate }];
               });
             }
           } catch {
@@ -108,14 +121,25 @@ export const useConversationChat = () => {
             const content = parsed.choices?.[0]?.delta?.content as string | undefined;
             if (content) {
               assistantContent += content;
+              
+              // Parse bilingual content
+              const enMatch = assistantContent.match(/\[EN\]\s*([\s\S]*?)(?=\[RU\]|$)/);
+              const ruMatch = assistantContent.match(/\[RU\]\s*([\s\S]*?)$/);
+              
               setMessages((prev) => {
                 const last = prev[prev.length - 1];
+                const messageUpdate = {
+                  content: assistantContent,
+                  contentEn: enMatch ? enMatch[1].trim() : undefined,
+                  contentRu: ruMatch ? ruMatch[1].trim() : undefined,
+                };
+                
                 if (last?.role === "assistant") {
                   return prev.map((m, i) =>
-                    i === prev.length - 1 ? { ...m, content: assistantContent } : m
+                    i === prev.length - 1 ? { ...m, ...messageUpdate } : m
                   );
                 }
-                return [...prev, { role: "assistant", content: assistantContent }];
+                return [...prev, { role: "assistant", ...messageUpdate }];
               });
             }
           } catch {

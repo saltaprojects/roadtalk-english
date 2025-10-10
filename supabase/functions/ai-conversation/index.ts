@@ -44,13 +44,17 @@ serve(async (req) => {
       );
     }
 
-    const languageInstruction = language === 'ru' 
-      ? 'CRITICAL: You MUST respond ONLY in Russian language. Every single word in your responses must be in Russian. Do not use English at all.'
-      : 'You must respond in English language.';
+    const bilingualInstruction = `
+CRITICAL INSTRUCTION: You MUST provide your response in BOTH English and Russian.
+Format your response EXACTLY like this:
 
-    const systemPrompt = language === 'ru'
-      ? languageInstruction + '\n\n' + scenarioPrompts[scenario]
-      : scenarioPrompts[scenario];
+[EN] Your English response here
+[RU] Ваш русский ответ здесь
+
+Always include both [EN] and [RU] sections in every response. This is mandatory.
+`;
+
+    const systemPrompt = bilingualInstruction + '\n\n' + scenarioPrompts[scenario];
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
