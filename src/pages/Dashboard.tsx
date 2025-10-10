@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, Trophy, Clock, Play, LogOut, CreditCard, AlertCircle, MessageSquare, OctagonAlert } from "lucide-react";
+import { BookOpen, Trophy, Clock, Play, LogOut, CreditCard, AlertCircle, MessageSquare, OctagonAlert, Bot, Mic } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { supabase } from "@/integrations/supabase/client";
@@ -156,7 +156,7 @@ const Dashboard = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t">
             {/* AI Conversation Practice */}
             <div className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer">
-              <div className="text-3xl mb-2">💬</div>
+              <Bot className="w-8 h-8 mx-auto mb-2 text-primary" />
               <h3 className="font-semibold text-sm mb-1">AI Conversation Practice</h3>
               <p className="text-xs text-muted-foreground">Practice real scenarios</p>
             </div>
@@ -166,7 +166,7 @@ const Dashboard = () => {
               className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer"
               onClick={() => navigate("/pronunciation-help")}
             >
-              <div className="text-3xl mb-2">🎤</div>
+              <Mic className="w-8 h-8 mx-auto mb-2 text-primary" />
               <h3 className="font-semibold text-sm mb-1">Pronunciation Help</h3>
               <p className="text-xs text-muted-foreground">Learn correct sounds</p>
             </div>
@@ -186,7 +186,7 @@ const Dashboard = () => {
               className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer"
               onClick={() => navigate("/road-signs")}
             >
-              <OctagonAlert className="w-8 h-8 mx-auto mb-2 text-red-500" />
+              <OctagonAlert className="w-8 h-8 mx-auto mb-2 text-primary" />
               <h3 className="font-semibold text-sm mb-1">Road Signs Practice</h3>
               <p className="text-xs text-muted-foreground">Learn traffic signs</p>
             </div>
