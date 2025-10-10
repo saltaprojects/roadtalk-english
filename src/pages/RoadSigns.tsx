@@ -23,162 +23,242 @@ const quizQuestions: QuizQuestion[] = [
   {
     id: 1,
     signEmoji: "🛑",
-    signName: "Stop Sign",
-    question: "What must you do when you see this sign?",
+    signName: "Stop Sign (R1-1)",
+    question: "What must you do when you see this octagonal red sign?",
     answers: [
       "Slow down and proceed with caution",
-      "Come to a complete stop",
-      "Yield to oncoming traffic",
-      "Stop only if cars are coming"
+      "Come to a complete stop before the stop line",
+      "Yield to oncoming traffic only",
+      "Stop only if other vehicles are present"
     ],
     correctAnswer: 1,
     category: "Regulatory",
-    color: "bg-red-500",
-    explanation: "You must come to a complete stop at the stop line, crosswalk, or intersection, whichever comes first."
+    color: "bg-red-600",
+    explanation: "MUTCD R1-1: You must come to a complete stop at the stop line, crosswalk, or intersection before proceeding. This is mandatory for all vehicles including trucks."
   },
   {
     id: 2,
     signEmoji: "⚠️",
-    signName: "Yield Sign",
-    question: "What does this sign require you to do?",
+    signName: "Yield Sign (R1-2)",
+    question: "What action is required when approaching this triangular sign?",
     answers: [
-      "Stop completely",
-      "Speed up to merge",
-      "Slow down and give right of way",
-      "Honk your horn"
+      "Stop completely like a stop sign",
+      "Speed up to merge quickly",
+      "Slow down and give right of way to other traffic",
+      "Honk horn and proceed"
     ],
     correctAnswer: 2,
     category: "Regulatory",
-    color: "bg-yellow-500",
-    explanation: "Yield means slow down and give the right of way to traffic and pedestrians."
+    color: "bg-red-500",
+    explanation: "MUTCD R1-2: Yield means slow down, be prepared to stop if necessary, and give the right of way to traffic and pedestrians. Proceed only when safe."
   },
   {
     id: 3,
-    signEmoji: "⚖️",
-    signName: "Weight Limit",
-    question: "As a truck driver, what should you do when you see this sign?",
+    signEmoji: "🚫",
+    signName: "Commercial Vehicles Excluded (R5-4)",
+    question: "What does this sign mean for truck drivers?",
     answers: [
-      "Ignore it if your load is light",
-      "Check your truck's weight and comply with the limit",
-      "Speed up before the weigh station",
-      "Only commercial trucks need to follow this"
+      "Trucks under 10,000 lbs can proceed",
+      "All commercial vehicles are prohibited from this road",
+      "Only delivery trucks excluded",
+      "Trucks must use right lane only"
     ],
     correctAnswer: 1,
     category: "Truck-Specific",
-    color: "bg-orange-500",
-    explanation: "Always check your truck's total weight (including cargo) and ensure it's within the posted limit."
+    color: "bg-red-500",
+    explanation: "MUTCD R5-4: This sign prohibits all commercial vehicles from using the road ahead. You must find an alternate route."
   },
   {
     id: 4,
-    signEmoji: "📏",
-    signName: "Height Restriction",
-    question: "Why is this sign critical for truck drivers?",
+    signEmoji: "⬇️",
+    signName: "Steep Hill/Grade Warning (W7-1)",
+    question: "As a truck driver approaching a steep downgrade, what should you do?",
     answers: [
-      "It's just a suggestion",
-      "It indicates the maximum safe height clearance",
-      "Only applies to buses",
-      "You can ignore it if moving slowly"
+      "Rely on service brakes only",
+      "Shift to lower gear before descending to control speed",
+      "Increase speed to maintain momentum",
+      "Turn on cruise control"
     ],
     correctAnswer: 1,
-    category: "Truck-Specific",
-    color: "bg-orange-500",
-    explanation: "Height restrictions prevent trucks from hitting low bridges or overpasses. Always know your truck's height!"
+    category: "Warning",
+    color: "bg-yellow-500",
+    explanation: "MUTCD W7-1: Use a lower gear before descending to avoid brake overheating. Check brakes at the top. Never rely solely on service brakes on long grades."
   },
   {
     id: 5,
-    signEmoji: "🏪",
-    signName: "Weigh Station Ahead",
-    question: "What must commercial truck drivers do at a weigh station?",
+    signEmoji: "🔃",
+    signName: "Sharp Curve Warning (W1-2)",
+    question: "How should truck drivers approach a sharp curve ahead?",
     answers: [
-      "Drive past if there's no line",
-      "Stop only if the lights are flashing",
-      "All commercial trucks must stop unless sign says open/closed",
-      "Only stop during business hours"
+      "Maintain current highway speed",
+      "Reduce speed before entering the curve",
+      "Accelerate through the curve",
+      "Apply brakes in the middle of curve"
     ],
-    correctAnswer: 2,
-    category: "Truck-Specific",
-    color: "bg-blue-500",
-    explanation: "Commercial trucks must stop at weigh stations unless signs indicate the station is closed or you're exempt."
+    correctAnswer: 1,
+    category: "Warning",
+    color: "bg-yellow-500",
+    explanation: "MUTCD W1-2: Slow down BEFORE the curve. Trucks have a higher center of gravity and can rollover on curves taken too fast. Never brake in the curve."
   },
   {
     id: 6,
-    signEmoji: "🛣️",
-    signName: "Truck Route",
-    question: "What does this sign indicate?",
-    answers: [
-      "Trucks are prohibited",
-      "This is a designated route for trucks",
-      "Trucks must exit here",
-      "Truck parking available"
-    ],
-    correctAnswer: 1,
-    category: "Guide",
-    color: "bg-green-500",
-    explanation: "This sign marks a designated route for trucks, often to avoid residential areas or weight-restricted roads."
-  },
-  {
-    id: 7,
     signEmoji: "🔀",
-    signName: "Merge Sign",
-    question: "What should you do when you see this warning sign?",
+    signName: "Merge Sign (W4-1)",
+    question: "What should you do when you see this sign?",
     answers: [
-      "Speed up to pass merging traffic",
-      "Stop and wait",
-      "Prepare for traffic merging from the side",
+      "Speed up to prevent others from merging",
+      "Stop and wait for a gap",
+      "Be prepared for traffic merging into your lane",
       "Change lanes immediately"
     ],
     correctAnswer: 2,
     category: "Warning",
     color: "bg-yellow-500",
-    explanation: "Be prepared for traffic merging into your lane. Adjust speed and position to allow safe merging."
+    explanation: "MUTCD W4-1: Be prepared for traffic entering from the side. Adjust speed and position to allow safe merging. For trucks, allow extra space."
+  },
+  {
+    id: 7,
+    signEmoji: "⛔",
+    signName: "Do Not Enter (R5-1)",
+    question: "What does this sign indicate?",
+    answers: [
+      "One-way street, wrong direction",
+      "Road closed to all traffic",
+      "Trucks only prohibited",
+      "Parking not allowed"
+    ],
+    correctAnswer: 0,
+    category: "Regulatory",
+    color: "bg-red-600",
+    explanation: "MUTCD R5-1: This sign means you are going the wrong way on a one-way street or exit ramp. Stop and turn around immediately."
   },
   {
     id: 8,
-    signEmoji: "⛰️",
-    signName: "Steep Hill",
-    question: "For truck drivers, this sign means:",
+    signEmoji: "🚧",
+    signName: "Road Work Ahead (W20-1)",
+    question: "What should truck drivers do when seeing this sign?",
     answers: [
-      "Use lower gear to control speed downhill",
-      "Speed up going downhill",
-      "Turn on hazard lights",
-      "Avoid using brakes"
+      "Maintain speed, workers will move",
+      "Slow down and be alert for workers and equipment",
+      "Use shoulder to pass",
+      "Turn on high beams"
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     category: "Warning",
-    color: "bg-yellow-500",
-    explanation: "Use a lower gear going downhill to avoid overheating brakes. Check your brakes before descending."
+    color: "bg-orange-500",
+    explanation: "MUTCD W20-1: Reduce speed, stay alert for workers, equipment, and changing road conditions. Follow all construction zone speed limits."
   },
   {
     id: 9,
-    signEmoji: "🚛",
-    signName: "No Trucks",
-    question: "What does this sign mean?",
+    signEmoji: "🦌",
+    signName: "Deer Crossing (W11-3)",
+    question: "Why is this sign especially important for truck drivers at night?",
     answers: [
-      "Trucks under 5 tons allowed",
-      "No trucks allowed on this road",
-      "Trucks must use right lane",
-      "Truck parking prohibited"
-    ],
-    correctAnswer: 1,
-    category: "Regulatory",
-    color: "bg-red-400",
-    explanation: "This sign prohibits trucks from using the road ahead. Find an alternate route."
-  },
-  {
-    id: 10,
-    signEmoji: "↪️",
-    signName: "Sharp Curve",
-    question: "How should truck drivers approach this sign?",
-    answers: [
-      "Maintain current speed",
-      "Reduce speed before the curve",
-      "Speed up to get through quickly",
-      "Use horn continuously"
+      "Deer only cross during daylight",
+      "Deer are most active at dawn/dusk and can cause serious accidents",
+      "Sign is just decorative",
+      "Only small vehicles need to worry"
     ],
     correctAnswer: 1,
     category: "Warning",
     color: "bg-yellow-500",
-    explanation: "Slow down before the curve. Trucks have higher centers of gravity and can tip on sharp curves at high speeds."
+    explanation: "MUTCD W11-3: Deer are most active at dawn and dusk. A collision with a deer can cause serious damage to a truck and injury. Reduce speed in these areas."
+  },
+  {
+    id: 10,
+    signEmoji: "❌",
+    signName: "Divided Highway Ends (W6-2)",
+    question: "What does this sign warn you about?",
+    answers: [
+      "Highway is ending, exit required",
+      "Divided highway ahead",
+      "Two-way traffic ahead on undivided road",
+      "Road narrows to one lane"
+    ],
+    correctAnswer: 2,
+    category: "Warning",
+    color: "bg-yellow-500",
+    explanation: "MUTCD W6-2: The median is ending and you'll be on an undivided road with two-way traffic. Be prepared for oncoming traffic in the opposite lane."
+  },
+  {
+    id: 11,
+    signEmoji: "🌉",
+    signName: "Bridge Ices Before Road (W8-13)",
+    question: "Why should truck drivers be especially careful with this sign?",
+    answers: [
+      "Bridges only ice in summer",
+      "Bridges freeze before road surfaces, creating slippery conditions",
+      "Sign only applies to cars",
+      "Speed up to cross bridge quickly"
+    ],
+    correctAnswer: 1,
+    category: "Warning",
+    color: "bg-yellow-500",
+    explanation: "MUTCD W8-13: Bridge surfaces freeze before regular roads due to cold air on both sides. Reduce speed and avoid sudden braking or steering on bridges in cold weather."
+  },
+  {
+    id: 12,
+    signEmoji: "🔄",
+    signName: "Roundabout Ahead (W2-6)",
+    question: "How should trucks navigate a roundabout?",
+    answers: [
+      "Speed up to enter quickly",
+      "Yield to traffic already in the roundabout, proceed counterclockwise",
+      "Stop in the roundabout and wait",
+      "Drive clockwise around the circle"
+    ],
+    correctAnswer: 1,
+    category: "Warning",
+    color: "bg-yellow-500",
+    explanation: "MUTCD W2-6: Slow down before entering. Yield to vehicles already in the roundabout. Travel counterclockwise. Large trucks may need extra space and multiple lanes."
+  },
+  {
+    id: 13,
+    signEmoji: "💨",
+    signName: "Bump Ahead (W8-1)",
+    question: "Why is this warning especially important for loaded trucks?",
+    answers: [
+      "Bumps don't affect trucks",
+      "Sudden bumps can shift cargo and cause loss of control",
+      "Only applies to empty trucks",
+      "Increase speed to smooth out bump"
+    ],
+    correctAnswer: 1,
+    category: "Warning",
+    color: "bg-yellow-500",
+    explanation: "MUTCD W8-1: Reduce speed before bump. Sudden jolts can shift cargo, damage suspension, or cause loss of control, especially with heavy loads."
+  },
+  {
+    id: 14,
+    signEmoji: "🏗️",
+    signName: "Low Clearance (W12-2)",
+    question: "What must truck drivers do when seeing a low clearance sign?",
+    answers: [
+      "Proceed if moving slowly",
+      "Know your vehicle height and find alternate route if too tall",
+      "Only applies to double-decker buses",
+      "Air can be released from tires to lower truck"
+    ],
+    correctAnswer: 1,
+    category: "Truck-Specific",
+    color: "bg-orange-500",
+    explanation: "MUTCD W12-2: Know your truck's height including any cargo or equipment. If your vehicle exceeds the posted clearance, you MUST find another route. Striking an overpass is extremely dangerous and costly."
+  },
+  {
+    id: 15,
+    signEmoji: "💺",
+    signName: "Seatbelt Required (R16-1)",
+    question: "What is the law regarding seatbelts in commercial vehicles?",
+    answers: [
+      "Seatbelts optional for experienced drivers",
+      "Required for all occupants in commercial vehicles",
+      "Only passenger vehicles require seatbelts",
+      "Required only on highways"
+    ],
+    correctAnswer: 1,
+    category: "Regulatory",
+    color: "bg-red-500",
+    explanation: "MUTCD R16-1: Federal law requires all occupants of commercial vehicles to wear seatbelts at all times while the vehicle is in motion. Violations can result in fines and CSA points."
   }
 ];
 
