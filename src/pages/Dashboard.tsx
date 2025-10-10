@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, Trophy, Clock, Play, LogOut, CreditCard, AlertCircle } from "lucide-react";
+import { BookOpen, Trophy, Clock, Play, LogOut, CreditCard, AlertCircle, MessageSquare, OctagonAlert } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { supabase } from "@/integrations/supabase/client";
@@ -176,7 +176,7 @@ const Dashboard = () => {
               className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer"
               onClick={() => navigate("/driver-chat")}
             >
-              <div className="text-3xl mb-2">🤖</div>
+              <MessageSquare className="w-8 h-8 mx-auto mb-2 text-primary" />
               <h3 className="font-semibold text-sm mb-1">Driver Chat with AI</h3>
               <p className="text-xs text-muted-foreground">Ask questions anytime</p>
             </div>
@@ -186,7 +186,7 @@ const Dashboard = () => {
               className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer"
               onClick={() => navigate("/road-signs")}
             >
-              <div className="text-3xl mb-2">🚦</div>
+              <OctagonAlert className="w-8 h-8 mx-auto mb-2 text-red-500" />
               <h3 className="font-semibold text-sm mb-1">Road Signs Practice</h3>
               <p className="text-xs text-muted-foreground">Learn traffic signs</p>
             </div>
