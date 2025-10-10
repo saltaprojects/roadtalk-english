@@ -119,19 +119,20 @@ export const ConversationChat = ({
     onEnd();
   };
 
-  // Get latest messages for each side
-  const aiMessages = messages.filter(m => m.role === "assistant");
-  const userMessages = messages.filter(m => m.role === "user");
-  const latestAIMessage = aiMessages[aiMessages.length - 1];
-  const latestUserMessage = userMessages[userMessages.length - 1]?.content || "";
-
   return (
     <div className="flex flex-col h-screen bg-background">
       {/* Header */}
       <div className="bg-card border-b border-border p-4 flex items-center justify-between">
-        <div className="flex-1">
-          <h2 className="text-lg font-semibold">{scenarioTitle}</h2>
-          <p className="text-sm text-muted-foreground">{scenarioDescription}</p>
+        <div className="flex items-center gap-4 flex-1">
+          <img
+            src={characters.ai}
+            alt={scenarioTitle}
+            className="w-12 h-12 rounded-full object-cover border-2 border-primary"
+          />
+          <div>
+            <h2 className="text-lg font-semibold">{scenarioTitle}</h2>
+            <p className="text-sm text-muted-foreground">{scenarioDescription}</p>
+          </div>
         </div>
         <Button variant="ghost" size="icon" onClick={handleEnd}>
           <X className="h-5 w-5" />
@@ -144,91 +145,91 @@ export const ConversationChat = ({
         </Alert>
       )}
 
-      {/* Split Screen - Two Characters Side by Side */}
-      <div className="flex-1 flex">
-        {/* Left Side - AI Character */}
-        <div className="flex-1 flex flex-col items-center justify-center p-8 border-r border-border bg-gradient-to-br from-primary/5 to-transparent">
-          <div className={`transition-all duration-500 ${isPlaying ? "scale-105" : ""}`}>
+      {/* Messages Area */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        {messages.map((message, index) => (
+          <div
+            key={index}
+            className={`flex gap-3 ${
+              message.role === "assistant" ? "justify-start" : "justify-end"
+            }`}
+          >
+            {message.role === "assistant" && (
+              <img
+                src={characters.ai}
+                alt={scenarioTitle}
+                className="w-10 h-10 rounded-full object-cover border-2 border-primary flex-shrink-0"
+              />
+            )}
+            
+            <div
+              className={`max-w-[70%] rounded-2xl p-4 ${
+                message.role === "assistant"
+                  ? "bg-primary/10 border border-primary/20"
+                  : "bg-secondary/10 border border-secondary/20"
+              }`}
+            >
+              {message.role === "assistant" ? (
+                <div className="space-y-3">
+                  {message.contentEn && (
+                    <div>
+                      <div className="text-xs font-semibold text-primary mb-1">English:</div>
+                      <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                        {message.contentEn}
+                      </p>
+                    </div>
+                  )}
+                  {message.contentRu && (
+                    <div>
+                      <div className="text-xs font-semibold text-muted-foreground mb-1">Русский:</div>
+                      <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                        {message.contentRu}
+                      </p>
+                    </div>
+                  )}
+                  {!message.contentEn && !message.contentRu && (
+                    <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                      {message.content}
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                  {message.content}
+                </p>
+              )}
+            </div>
+
+            {message.role === "user" && (
+              <img
+                src={characters.user}
+                alt={t("practice.chat.you")}
+                className="w-10 h-10 rounded-full object-cover border-2 border-secondary flex-shrink-0"
+              />
+            )}
+          </div>
+        ))}
+
+        {isLoading && (
+          <div className="flex gap-3 justify-start">
             <img
               src={characters.ai}
               alt={scenarioTitle}
-              className="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover border-8 border-primary shadow-2xl mb-6"
+              className="w-10 h-10 rounded-full object-cover border-2 border-primary flex-shrink-0"
             />
+            <div className="bg-primary/10 border border-primary/20 rounded-2xl p-4 flex items-center gap-2">
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <span className="text-sm text-muted-foreground">{t("practice.chat.typing")}</span>
+            </div>
           </div>
-          
-          <h3 className="text-xl font-bold mb-2">{scenarioTitle.split(" ")[0]}</h3>
-          
-          {isPlaying && (
-            <div className="flex items-center gap-2 text-primary mb-4">
-              <Volume2 className="w-5 h-5 animate-pulse" />
-              <span className="text-sm font-medium">{t("practice.chat.speaking")}</span>
-            </div>
-          )}
+        )}
 
-          {/* AI Speech Bubble */}
-          {latestAIMessage && (
-            <div className="relative max-w-md mt-6 animate-fade-in">
-              <div className="bg-card border-2 border-primary rounded-3xl rounded-tl-none p-6 shadow-lg space-y-4">
-                {latestAIMessage.contentEn && (
-                  <div>
-                    <div className="text-xs font-semibold text-primary mb-1">English:</div>
-                    <p className="text-base leading-relaxed whitespace-pre-wrap break-words">
-                      {latestAIMessage.contentEn}
-                    </p>
-                  </div>
-                )}
-                {latestAIMessage.contentRu && (
-                  <div>
-                    <div className="text-xs font-semibold text-secondary mb-1">Русский:</div>
-                    <p className="text-base leading-relaxed whitespace-pre-wrap break-words">
-                      {latestAIMessage.contentRu}
-                    </p>
-                  </div>
-                )}
-                {!latestAIMessage.contentEn && !latestAIMessage.contentRu && (
-                  <p className="text-base leading-relaxed whitespace-pre-wrap break-words">
-                    {latestAIMessage.content}
-                  </p>
-                )}
-              </div>
-              {/* Triangle pointer */}
-              <div className="absolute -top-2 left-4 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[20px] border-b-primary" />
-              <div className="absolute -top-1 left-5 w-0 h-0 border-l-[18px] border-l-transparent border-r-[18px] border-r-transparent border-b-[18px] border-b-card" />
-            </div>
-          )}
-
-          {isLoading && (
-            <div className="flex items-center gap-2 mt-4 text-muted-foreground">
-              <Loader2 className="h-5 w-5 animate-spin" />
-              <span>{t("practice.chat.typing")}</span>
-            </div>
-          )}
-        </div>
-
-        {/* Right Side - User Character */}
-        <div className="flex-1 flex flex-col items-center justify-center p-8 bg-gradient-to-bl from-secondary/5 to-transparent">
-          <img
-            src={characters.user}
-            alt={t("practice.chat.you")}
-            className="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover border-8 border-secondary shadow-2xl mb-6"
-          />
-          
-          <h3 className="text-xl font-bold mb-2">{t("practice.chat.you")}</h3>
-
-          {/* User Speech Bubble */}
-          {latestUserMessage && (
-            <div className="relative max-w-md mt-6 animate-fade-in">
-              <div className="bg-card border-2 border-secondary rounded-3xl rounded-tr-none p-6 shadow-lg">
-                <p className="text-base leading-relaxed whitespace-pre-wrap break-words">
-                  {latestUserMessage}
-                </p>
-              </div>
-              {/* Triangle pointer */}
-              <div className="absolute -top-2 right-4 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[20px] border-b-secondary" />
-              <div className="absolute -top-1 right-5 w-0 h-0 border-l-[18px] border-l-transparent border-r-[18px] border-r-transparent border-b-[18px] border-b-card" />
-            </div>
-          )}
-        </div>
+        {isPlaying && (
+          <div className="flex items-center gap-2 justify-center text-primary">
+            <Volume2 className="w-5 h-5 animate-pulse" />
+            <span className="text-sm font-medium">{t("practice.chat.speaking")}</span>
+          </div>
+        )}
       </div>
 
       {/* Input Area - Bottom Fixed */}
