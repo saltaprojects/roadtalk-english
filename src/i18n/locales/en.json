@@ -317,5 +317,35 @@
     "tryAgain": "Try Again",
     "passMessage": "Excellent work! You have a strong understanding of US road signs for truck drivers.",
     "tryAgainMessage": "Keep practicing! Review the signs and try again to improve your score."
+  },
+  "pronunciation": {
+    "title": "Pronunciation Practice",
+    "subtitle": "Practice essential English phrases for truck drivers",
+    "backToDashboard": "Back to Dashboard",
+    "categories": {
+      "all": "All Phrases",
+      "navigation": "Navigation",
+      "delivery": "Delivery",
+      "border": "Border Crossing",
+      "emergency": "Emergency",
+      "dispatch": "Dispatch Communication",
+      "mechanics": "Mechanics & Maintenance"
+    },
+    "difficulty": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "actions": {
+      "playAudio": "Listen",
+      "playing": "Playing...",
+      "loading": "Generating audio..."
+    },
+    "feedback": {
+      "audioGenerated": "Audio ready",
+      "audioError": "Failed to generate audio. Please try again.",
+      "rateLimit": "Too many requests. Please wait a moment.",
+      "noPhrasesInCategory": "No phrases in this category yet"
+    }
   }
 }

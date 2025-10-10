@@ -162,7 +162,10 @@ const Dashboard = () => {
             </div>
 
             {/* Pronunciation Help */}
-            <div className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer">
+            <div 
+              className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer"
+              onClick={() => navigate("/pronunciation-help")}
+            >
               <div className="text-3xl mb-2">🎤</div>
               <h3 className="font-semibold text-sm mb-1">Pronunciation Help</h3>
               <p className="text-xs text-muted-foreground">Learn correct sounds</p>
