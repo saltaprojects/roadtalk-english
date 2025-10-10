@@ -39,48 +39,35 @@ const PronunciationHelp = () => {
     { value: 'mechanics', label: t('pronunciation.categories.mechanics') },
   ];
 
-  const handlePlayAudio = async (phraseId: string) => {
+  const handlePlayAudio = (phraseId: string) => {
     const phrase = phrases.find(p => p.id === phraseId);
     if (!phrase) return;
 
-    // Stop any currently playing audio
-    const audioElements = document.querySelectorAll('audio');
-    audioElements.forEach(audio => {
-      audio.pause();
-      audio.currentTime = 0;
-    });
-    
-    setPlayingPhraseId(phraseId);
+    // Stop any currently playing speech
+    window.speechSynthesis.cancel();
     
     try {
-      const { supabase } = await import('@/integrations/supabase/client');
+      const utterance = new SpeechSynthesisUtterance(phrase.english);
+      utterance.lang = 'en-US';
+      utterance.rate = 0.75;
       
-      const { data, error } = await supabase.functions.invoke('text-to-speech', {
-        body: { text: phrase.english, voice: 'echo' }
-      });
-
-      if (error) throw error;
-
-      if (data?.audioContent) {
-        const audio = new Audio(`data:audio/mp3;base64,${data.audioContent}`);
-        
-        audio.onended = () => {
-          setPlayingPhraseId(null);
-        };
-        
-        audio.onerror = () => {
-          setPlayingPhraseId(null);
-          toast({
-            title: t('pronunciation.feedback.audioError'),
-            variant: "destructive",
-          });
-        };
-        
-        await audio.play();
-      }
+      setPlayingPhraseId(phraseId);
+      
+      utterance.onend = () => {
+        setPlayingPhraseId(null);
+      };
+      
+      utterance.onerror = () => {
+        setPlayingPhraseId(null);
+        toast({
+          title: t('pronunciation.feedback.audioError'),
+          variant: "destructive",
+        });
+      };
+      
+      window.speechSynthesis.speak(utterance);
     } catch (error) {
-      console.error('Error with text-to-speech:', error);
-      setPlayingPhraseId(null);
+      console.error('Error with speech synthesis:', error);
       toast({
         title: t('pronunciation.feedback.audioError'),
         variant: "destructive",
