@@ -79,7 +79,7 @@ const PhraseCard = ({ phrase, onPlay, isPlaying, isLoading, onPractice, isRecord
             onClick={() => onPlay(phrase.id)}
             disabled={isLoading || isRecording || isAnalyzing}
             className="w-full"
-            variant={isPlaying ? "default" : "outline"}
+            variant="default"
           >
             {isLoading ? (
               <>
@@ -102,8 +102,8 @@ const PhraseCard = ({ phrase, onPlay, isPlaying, isLoading, onPractice, isRecord
           <Button
             onClick={() => onPractice(phrase.id)}
             disabled={isLoading || isPlaying}
-            className="w-full"
-            variant={isRecording ? "destructive" : "secondary"}
+            className="w-full bg-green-600 hover:bg-green-700 text-white"
+            variant={isRecording ? "destructive" : "default"}
           >
             {isAnalyzing ? (
               <>
