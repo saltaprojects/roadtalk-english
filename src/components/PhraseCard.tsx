@@ -60,8 +60,8 @@ const PhraseCard = ({ phrase, onPlay, isPlaying, isLoading, onPractice, isRecord
             {phrase.english}
           </p>
           
-          {/* Cyrillic transcription - only show in Russian mode */}
-          {isRussian && (
+          {/* Cyrillic transcription - hide when Russian is selected */}
+          {!isRussian && (
             <p className="text-sm text-muted-foreground italic mb-2">
               {phrase.transcription}
             </p>
