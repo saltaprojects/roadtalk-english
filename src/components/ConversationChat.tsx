@@ -49,6 +49,7 @@ export const ConversationChat = ({
   
   const characters = scenarioCharacters[scenario] || scenarioCharacters.police;
   const isBeginner = difficulty === t("practice.scenarios.gasStation.difficulty");
+  const isIntermediate = difficulty === t("practice.scenarios.border.difficulty");
 
   useEffect(() => {
     // Auto-play TTS for new AI messages - use English version for TTS
@@ -67,7 +68,15 @@ export const ConversationChat = ({
     }
   }, [messages, playText, characters.aiVoice, isBeginner, isLoading]);
 
-  const generateSuggestedResponses = async (aiMessage: string) => {
+  // Generate suggested questions for intermediate level while AI is typing
+  useEffect(() => {
+    if (isIntermediate && isLoading && messages.length > 0) {
+      const lastUserMessage = messages.filter(m => m.role === "user").pop()?.content || "";
+      generateSuggestedResponses(lastUserMessage, "questions");
+    }
+  }, [isLoading, isIntermediate, scenario, i18n.language]);
+
+  const generateSuggestedResponses = async (aiMessage: string, type: string = "responses") => {
     try {
       const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/generate-suggestions`, {
         method: 'POST',
@@ -78,7 +87,8 @@ export const ConversationChat = ({
         body: JSON.stringify({
           scenario,
           aiMessage,
-          language: i18n.language
+          language: i18n.language,
+          type
         })
       });
 
@@ -247,6 +257,27 @@ export const ConversationChat = ({
                 >
                   <div className="space-y-1 w-full">
                     <div className="font-medium">{suggestion.en}</div>
+                    <div className="text-xs text-muted-foreground">{suggestion.ru}</div>
+                  </div>
+                </Button>
+              ))}
+            </div>
+          )}
+
+          {/* Suggested questions for intermediate while AI is typing */}
+          {isIntermediate && suggestedResponses.length > 0 && isLoading && (
+            <div className="flex flex-col gap-2">
+              <p className="text-sm text-muted-foreground mb-2">{t("practice.chat.suggestedQuestions") || "Suggested questions:"}</p>
+              {suggestedResponses.map((suggestion, index) => (
+                <Button
+                  key={index}
+                  variant="ghost"
+                  onClick={() => handleSend(suggestion.en)}
+                  className="text-left h-auto py-2 px-3 whitespace-normal justify-start"
+                  disabled={isLoading}
+                >
+                  <div className="space-y-1 w-full">
+                    <div className="text-sm">{suggestion.en}</div>
                     <div className="text-xs text-muted-foreground">{suggestion.ru}</div>
                   </div>
                 </Button>

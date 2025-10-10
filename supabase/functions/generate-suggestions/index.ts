@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { scenario, aiMessage, language } = await req.json();
+    const { scenario, aiMessage, language, type = "responses" } = await req.json();
     
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
@@ -23,7 +23,27 @@ serve(async (req) => {
       );
     }
 
-    const systemPrompt = `You are helping a beginner truck driver practice English conversations. 
+    const systemPrompt = type === "questions" 
+      ? `You are helping an intermediate truck driver practice English conversations. 
+Given the context of a ${scenario} scenario, generate 3-4 relevant questions that an intermediate-level truck driver might want to ask next.
+
+The questions should be:
+- Relevant to the ${scenario} scenario
+- Appropriate for intermediate English level
+- Natural and conversational
+- Useful follow-up questions a driver would ask
+- Varied in topic
+
+CRITICAL: Return ONLY a JSON array of objects with "en" and "ru" fields for English and Russian translations.
+Format: [{"en": "English question", "ru": "Russian question"}, ...]
+
+Example for gas station:
+[
+  {"en": "Where can I park my truck?", "ru": "Где я могу припарковать свой грузовик?"},
+  {"en": "Do you have a restroom?", "ru": "У вас есть туалет?"},
+  {"en": "How much for diesel?", "ru": "Сколько стоит дизель?"}
+]`
+      : `You are helping a beginner truck driver practice English conversations. 
 Given the AI's message in a ${scenario} scenario, generate 3-4 simple, appropriate response options that a beginner truck driver could choose from.
 
 The responses should be:
@@ -43,6 +63,10 @@ Example:
   {"en": "Let me get those for you", "ru": "Сейчас достану их для вас"}
 ]`;
 
+    const userPrompt = type === "questions"
+      ? `Context: ${scenario} scenario. Last user message: "${aiMessage}"\n\nGenerate 3-4 relevant questions the driver might ask next.`
+      : `AI said: "${aiMessage}"\n\nGenerate 3-4 appropriate response options for a beginner driver.`;
+
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -53,7 +77,7 @@ Example:
         model: "google/gemini-2.5-flash",
         messages: [
           { role: "system", content: systemPrompt },
-          { role: "user", content: `AI said: "${aiMessage}"\n\nGenerate 3-4 appropriate response options for a beginner driver.` },
+          { role: "user", content: userPrompt },
         ],
       }),
     });
