@@ -73,6 +73,24 @@
       "streak": "Day Streak",
       "minutesLearned": "Minutes Learned"
     },
+    "practiceSections": {
+      "aiConversation": {
+        "title": "AI Conversation Practice",
+        "description": "Practice real scenarios"
+      },
+      "pronunciation": {
+        "title": "Pronunciation Help",
+        "description": "Learn correct sounds"
+      },
+      "driverChat": {
+        "title": "Driver Chat with AI",
+        "description": "Ask questions anytime"
+      },
+      "roadSigns": {
+        "title": "Road Signs Practice",
+        "description": "Learn traffic signs"
+      }
+    },
     "todayLesson": {
       "badge": "Today's Lesson",
       "title": "Highway Communication",

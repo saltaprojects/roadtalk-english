@@ -73,6 +73,24 @@
       "streak": "Дней подряд",
       "minutesLearned": "Минут обучения"
     },
+    "practiceSections": {
+      "aiConversation": {
+        "title": "Практика разговора с ИИ",
+        "description": "Практикуйте реальные сценарии"
+      },
+      "pronunciation": {
+        "title": "Помощь с произношением",
+        "description": "Изучайте правильные звуки"
+      },
+      "driverChat": {
+        "title": "Чат водителя с ИИ",
+        "description": "Задавайте вопросы в любое время"
+      },
+      "roadSigns": {
+        "title": "Практика дорожных знаков",
+        "description": "Изучайте дорожные знаки"
+      }
+    },
     "todayLesson": {
       "badge": "Урок дня",
       "title": "Общение на дороге",

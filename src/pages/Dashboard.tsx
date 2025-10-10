@@ -157,8 +157,8 @@ const Dashboard = () => {
             {/* AI Conversation Practice */}
             <div className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer">
               <Bot className="w-8 h-8 mx-auto mb-2 text-primary" />
-              <h3 className="font-semibold text-sm mb-1">AI Conversation Practice</h3>
-              <p className="text-xs text-muted-foreground">Practice real scenarios</p>
+              <h3 className="font-semibold text-sm mb-1">{t('dashboard.practiceSections.aiConversation.title')}</h3>
+              <p className="text-xs text-muted-foreground">{t('dashboard.practiceSections.aiConversation.description')}</p>
             </div>
 
             {/* Pronunciation Help */}
@@ -167,8 +167,8 @@ const Dashboard = () => {
               onClick={() => navigate("/pronunciation-help")}
             >
               <Mic className="w-8 h-8 mx-auto mb-2 text-primary" />
-              <h3 className="font-semibold text-sm mb-1">Pronunciation Help</h3>
-              <p className="text-xs text-muted-foreground">Learn correct sounds</p>
+              <h3 className="font-semibold text-sm mb-1">{t('dashboard.practiceSections.pronunciation.title')}</h3>
+              <p className="text-xs text-muted-foreground">{t('dashboard.practiceSections.pronunciation.description')}</p>
             </div>
 
             {/* Driver Chat with AI */}
@@ -177,8 +177,8 @@ const Dashboard = () => {
               onClick={() => navigate("/driver-chat")}
             >
               <MessageSquare className="w-8 h-8 mx-auto mb-2 text-primary" />
-              <h3 className="font-semibold text-sm mb-1">Driver Chat with AI</h3>
-              <p className="text-xs text-muted-foreground">Ask questions anytime</p>
+              <h3 className="font-semibold text-sm mb-1">{t('dashboard.practiceSections.driverChat.title')}</h3>
+              <p className="text-xs text-muted-foreground">{t('dashboard.practiceSections.driverChat.description')}</p>
             </div>
 
             {/* Road Signs Practice */}
@@ -187,8 +187,8 @@ const Dashboard = () => {
               onClick={() => navigate("/road-signs")}
             >
               <OctagonAlert className="w-8 h-8 mx-auto mb-2 text-primary" />
-              <h3 className="font-semibold text-sm mb-1">Road Signs Practice</h3>
-              <p className="text-xs text-muted-foreground">Learn traffic signs</p>
+              <h3 className="font-semibold text-sm mb-1">{t('dashboard.practiceSections.roadSigns.title')}</h3>
+              <p className="text-xs text-muted-foreground">{t('dashboard.practiceSections.roadSigns.description')}</p>
             </div>
           </div>
         </Card>
