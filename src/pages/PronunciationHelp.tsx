@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,6 @@ import { useToast } from "@/hooks/use-toast";
 import PhraseCard from "@/components/PhraseCard";
 import { getPhrasesByCategory, type PhraseCategory } from "@/data/pronunciationPhrases";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
-import { supabase } from "@/integrations/supabase/client";
 
 type CategoryFilter = 'all' | PhraseCategory;
 
@@ -17,10 +16,7 @@ const PronunciationHelp = () => {
   const { toast } = useToast();
   
   const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>('all');
-  const [audioCache, setAudioCache] = useState<Map<string, string>>(new Map());
-  const [loadingPhrases, setLoadingPhrases] = useState<Set<string>>(new Set());
   const [playingPhraseId, setPlayingPhraseId] = useState<string | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const phrases = getPhrasesByCategory(selectedCategory);
 
@@ -34,89 +30,40 @@ const PronunciationHelp = () => {
     { value: 'mechanics', label: t('pronunciation.categories.mechanics') },
   ];
 
-  const handlePlayAudio = async (phraseId: string) => {
+  const handlePlayAudio = (phraseId: string) => {
     const phrase = phrases.find(p => p.id === phraseId);
     if (!phrase) return;
 
-    // Stop any currently playing audio
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current = null;
-    }
-    setPlayingPhraseId(null);
-
-    // Check if audio is cached
-    if (audioCache.has(phraseId)) {
-      playAudioFromCache(phraseId);
-      return;
-    }
-
-    // Generate new audio
-    setLoadingPhrases(prev => new Set(prev).add(phraseId));
-
+    // Stop any currently playing speech
+    window.speechSynthesis.cancel();
+    
     try {
-      const { data, error } = await supabase.functions.invoke('text-to-speech', {
-        body: { text: phrase.english }
-      });
-
-      if (error) {
-        throw error;
-      }
-
-      if (!data || !data.audioContent) {
-        throw new Error('Failed to generate audio');
-      }
+      const utterance = new SpeechSynthesisUtterance(phrase.english);
+      utterance.lang = 'en-US';
+      utterance.rate = 0.9;
       
-      // Cache the audio
-      setAudioCache(prev => new Map(prev).set(phraseId, data.audioContent));
+      setPlayingPhraseId(phraseId);
       
-      // Play the audio
-      playAudio(data.audioContent, phraseId);
-
-      toast({
-        title: t('pronunciation.feedback.audioGenerated'),
-      });
-    } catch (error: any) {
-      console.error('Error generating audio:', error);
-      toast({
-        title: error?.message || t('pronunciation.feedback.audioError'),
-        variant: "destructive",
-      });
-    } finally {
-      setLoadingPhrases(prev => {
-        const newSet = new Set(prev);
-        newSet.delete(phraseId);
-        return newSet;
-      });
-    }
-  };
-
-  const playAudioFromCache = (phraseId: string) => {
-    const audioContent = audioCache.get(phraseId);
-    if (!audioContent) return;
-    playAudio(audioContent, phraseId);
-  };
-
-  const playAudio = (base64Audio: string, phraseId: string) => {
-    const audio = new Audio(`data:audio/mp3;base64,${base64Audio}`);
-    audioRef.current = audio;
-    setPlayingPhraseId(phraseId);
-
-    audio.onended = () => {
-      setPlayingPhraseId(null);
-      audioRef.current = null;
-    };
-
-    audio.onerror = () => {
-      setPlayingPhraseId(null);
-      audioRef.current = null;
+      utterance.onend = () => {
+        setPlayingPhraseId(null);
+      };
+      
+      utterance.onerror = () => {
+        setPlayingPhraseId(null);
+        toast({
+          title: t('pronunciation.feedback.audioError'),
+          variant: "destructive",
+        });
+      };
+      
+      window.speechSynthesis.speak(utterance);
+    } catch (error) {
+      console.error('Error with speech synthesis:', error);
       toast({
         title: t('pronunciation.feedback.audioError'),
         variant: "destructive",
       });
-    };
-
-    audio.play();
+    }
   };
 
   return (
@@ -176,7 +123,7 @@ const PronunciationHelp = () => {
                 phrase={phrase}
                 onPlay={handlePlayAudio}
                 isPlaying={playingPhraseId === phrase.id}
-                isLoading={loadingPhrases.has(phrase.id)}
+                isLoading={false}
               />
             ))}
           </div>
