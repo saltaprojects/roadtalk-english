@@ -12,6 +12,7 @@ import Practice from "./pages/Practice";
 import RoadSigns from "./pages/RoadSigns";
 import DriverChat from "./pages/DriverChat";
 import PronunciationHelp from "./pages/PronunciationHelp";
+import EssentialPhrases from "./pages/EssentialPhrases";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/road-signs" element={<RoadSigns />} />
           <Route path="/driver-chat" element={<DriverChat />} />
           <Route path="/pronunciation-help" element={<PronunciationHelp />} />
+          <Route path="/essential-phrases" element={<EssentialPhrases />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
