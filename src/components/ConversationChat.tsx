@@ -254,23 +254,25 @@ export const ConversationChat = ({
             </div>
           )}
           
-          <div className="flex gap-2">
-            <Input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder={t("practice.chat.inputPlaceholder")}
-              disabled={isLoading}
-              className="flex-1"
-            />
-            <Button
-              onClick={() => handleSend()}
-              disabled={!input.trim() || isLoading}
-              size="icon"
-            >
-              <Send className="h-4 w-4" />
-            </Button>
-          </div>
+          {!isBeginner && (
+            <div className="flex gap-2">
+              <Input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder={t("practice.chat.inputPlaceholder")}
+                disabled={isLoading}
+                className="flex-1"
+              />
+              <Button
+                onClick={() => handleSend()}
+                disabled={!input.trim() || isLoading}
+                size="icon"
+              >
+                <Send className="h-4 w-4" />
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </div>
