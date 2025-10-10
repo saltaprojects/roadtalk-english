@@ -54,18 +54,42 @@ Format your response EXACTLY like this:
 Always include both [EN] and [RU] sections in every response. This is mandatory.
 `;
 
-    // Add beginner-specific instructions
-    const beginnerInstruction = difficulty === "Beginner" || difficulty === "Начинающий" ? `
-
+    // Add difficulty-specific instructions
+    let difficultyInstruction = "";
+    
+    if (difficulty === "Beginner" || difficulty === "Начинающий") {
+      difficultyInstruction = `
 IMPORTANT FOR BEGINNER LEVEL:
 - Keep your questions SHORT (5-8 words maximum)
 - Use SIMPLE vocabulary
 - Ask ONE thing at a time
 - Avoid complex grammar structures
 - Be patient and encouraging
-` : "";
+`;
+    } else if (difficulty === "Intermediate" || difficulty === "Средний") {
+      difficultyInstruction = `
+IMPORTANT FOR INTERMEDIATE LEVEL:
+- Use moderate complexity in sentences
+- Introduce some professional terminology
+- Ask 1-2 things at a time
+- Use common phrasal verbs and idioms naturally
+- Provide helpful corrections when needed
+`;
+    } else if (difficulty === "Professional" || difficulty === "Профессиональный") {
+      difficultyInstruction = `
+IMPORTANT FOR PROFESSIONAL LEVEL:
+- Use advanced vocabulary and complex sentence structures
+- Speak as you would with a native English speaker
+- Use industry-specific terminology naturally
+- Include idioms, phrasal verbs, and colloquialisms
+- Discuss nuanced topics and details
+- Expect sophisticated responses and engage in detailed conversations
+- Do NOT simplify your language or provide corrections
+- Have natural, professional-level dialogue
+`;
+    }
 
-    const systemPrompt = bilingualInstruction + beginnerInstruction + '\n\n' + scenarioPrompts[scenario];
+    const systemPrompt = bilingualInstruction + difficultyInstruction + '\n\n' + scenarioPrompts[scenario];
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
