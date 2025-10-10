@@ -33,8 +33,15 @@ The responses should be:
 - Varied (don't make them all similar)
 - Realistic things a driver would actually say
 
-Return ONLY a JSON array of strings, nothing else. Example:
-["Yes, here are my documents", "I have my license and registration", "Let me get those for you"]`;
+CRITICAL: Return ONLY a JSON array of objects with "en" and "ru" fields for English and Russian translations.
+Format: [{"en": "English text", "ru": "Russian text"}, ...]
+
+Example:
+[
+  {"en": "Yes, here are my documents", "ru": "Да, вот мои документы"},
+  {"en": "I have my license and registration", "ru": "У меня есть права и регистрация"},
+  {"en": "Let me get those for you", "ru": "Сейчас достану их для вас"}
+]`;
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -64,23 +71,20 @@ Return ONLY a JSON array of strings, nothing else. Example:
     const content = data.choices[0].message.content;
     
     // Parse the JSON array from the response
-    let suggestions: string[] = [];
+    let suggestions: Array<{en: string, ru: string}> = [];
     try {
       // Try to extract JSON array from the response
       const jsonMatch = content.match(/\[[\s\S]*\]/);
       if (jsonMatch) {
         suggestions = JSON.parse(jsonMatch[0]);
-      } else {
-        // Fallback: split by lines and clean up
-        suggestions = content
-          .split('\n')
-          .filter((line: string) => line.trim().length > 0 && !line.includes('[') && !line.includes(']'))
-          .map((line: string) => line.replace(/^[\d\.\-\*\"]+ /, '').replace(/["]/g, '').trim())
-          .slice(0, 4);
       }
     } catch (parseError) {
       console.error("Error parsing suggestions:", parseError);
-      suggestions = ["I understand", "Could you repeat that?", "Yes, of course"];
+      suggestions = [
+        {en: "I understand", ru: "Я понимаю"},
+        {en: "Could you repeat that?", ru: "Не могли бы вы повторить?"},
+        {en: "Yes, of course", ru: "Да, конечно"}
+      ];
     }
 
     return new Response(

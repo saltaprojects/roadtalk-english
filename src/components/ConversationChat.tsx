@@ -42,7 +42,7 @@ export const ConversationChat = ({
 }: ConversationChatProps) => {
   const { t, i18n } = useTranslation();
   const [input, setInput] = useState("");
-  const [suggestedResponses, setSuggestedResponses] = useState<string[]>([]);
+  const [suggestedResponses, setSuggestedResponses] = useState<Array<{en: string, ru: string}>>([]);
   const { messages, isLoading, error, sendMessage, resetConversation } = useConversationChat();
   const { playText, isPlaying, stop } = useTextToSpeech();
   const lastMessageRef = useRef<string>("");
@@ -236,15 +236,18 @@ export const ConversationChat = ({
         <div className="container mx-auto max-w-3xl space-y-3">
           {/* Suggested responses for beginners */}
           {isBeginner && suggestedResponses.length > 0 && !isLoading && (
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-col gap-2">
               {suggestedResponses.map((suggestion, index) => (
                 <Button
                   key={index}
                   variant="outline"
-                  onClick={() => handleSend(suggestion)}
-                  className="text-sm"
+                  onClick={() => handleSend(suggestion.en)}
+                  className="text-left h-auto py-3 px-4 whitespace-normal"
                 >
-                  {suggestion}
+                  <div className="space-y-1 w-full">
+                    <div className="font-medium">{suggestion.en}</div>
+                    <div className="text-xs text-muted-foreground">{suggestion.ru}</div>
+                  </div>
                 </Button>
               ))}
             </div>
