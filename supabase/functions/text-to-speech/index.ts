@@ -9,6 +9,8 @@ const corsHeaders = {
 };
 
 serve(async (req) => {
+  console.log('[TTS] Function invoked');
+  
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -16,6 +18,7 @@ serve(async (req) => {
 
   try {
     const { text } = await req.json();
+    console.log('[TTS] Processing text:', text);
 
     if (!text) {
       console.error('No text provided');
@@ -69,8 +72,9 @@ serve(async (req) => {
     );
   } catch (error) {
     console.error('Error in text-to-speech function:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
     return new Response(
-      JSON.stringify({ error: error.message || 'Unknown error occurred' }),
+      JSON.stringify({ error: errorMessage }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
