@@ -40,7 +40,7 @@ const PronunciationHelp = () => {
     try {
       const utterance = new SpeechSynthesisUtterance(phrase.english);
       utterance.lang = 'en-US';
-      utterance.rate = 0.7;
+      utterance.rate = 0.6;
       
       setPlayingPhraseId(phraseId);
       
