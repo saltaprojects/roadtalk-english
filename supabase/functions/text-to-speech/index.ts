@@ -17,7 +17,7 @@ serve(async (req) => {
   }
 
   try {
-    const { text } = await req.json();
+    const { text, voice } = await req.json();
     console.log('[TTS] Processing text:', text);
 
     if (!text) {
@@ -28,7 +28,10 @@ serve(async (req) => {
       );
     }
 
-    console.log('Generating speech for text:', text);
+    // Use 'echo' voice for clearer, more neutral pronunciation
+    // Available voices: alloy, echo, fable, onyx, nova, shimmer
+    const selectedVoice = voice || 'echo';
+    console.log('Generating speech for text:', text, 'with voice:', selectedVoice);
 
     const response = await fetch('https://api.openai.com/v1/audio/speech', {
       method: 'POST',
@@ -37,10 +40,11 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'tts-1',
+        model: 'tts-1-hd',
         input: text,
-        voice: 'alloy',
+        voice: selectedVoice,
         response_format: 'mp3',
+        speed: 0.85,
       }),
     });
 
