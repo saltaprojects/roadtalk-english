@@ -207,7 +207,7 @@ const Dashboard = () => {
             {/* Essential Phrases */}
             <Card 
               className="p-6 card-elevated hover:scale-105 transition-transform cursor-pointer"
-              onClick={() => navigate("/practice")}
+              onClick={() => toast({ title: "Coming Soon", description: "Essential phrases and short tests will be available soon!" })}
             >
               <Book className="w-10 h-10 mb-3 text-primary" />
               <h3 className="text-lg font-bold mb-2">Essential Phrases & Short Tests</h3>
