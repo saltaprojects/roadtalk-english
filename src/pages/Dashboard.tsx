@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, Trophy, Clock, Play, LogOut, CreditCard, AlertCircle, MessageSquare, OctagonAlert, Bot, Mic } from "lucide-react";
+import { BookOpen, Trophy, Clock, Play, LogOut, CreditCard, AlertCircle, MessageSquare, OctagonAlert, Bot, Mic, Book, GraduationCap, Headphones, Gamepad2, Library, Speech } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { supabase } from "@/integrations/supabase/client";
@@ -195,6 +195,88 @@ const Dashboard = () => {
             </div>
           </div>
         </Card>
+
+        {/* Everyday English for Truck Drivers */}
+        <div className="space-y-6">
+          <div>
+            <h2 className="text-3xl font-bold mb-2">Everyday English for Truck Drivers</h2>
+            <p className="text-muted-foreground">Essential English skills for your daily trucking routine</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* Essential Phrases */}
+            <Card 
+              className="p-6 card-elevated hover:scale-105 transition-transform cursor-pointer"
+              onClick={() => navigate("/practice")}
+            >
+              <Book className="w-10 h-10 mb-3 text-primary" />
+              <h3 className="text-lg font-bold mb-2">Essential Phrases & Short Tests</h3>
+              <p className="text-sm text-muted-foreground">
+                Highway communication, navigation, delivery documentation, and essential truck driver phrases
+              </p>
+            </Card>
+
+            {/* Mini Grammar */}
+            <Card 
+              className="p-6 card-elevated hover:scale-105 transition-transform cursor-pointer"
+              onClick={() => toast({ title: "Coming Soon", description: "Mini grammar lessons will be available soon!" })}
+            >
+              <GraduationCap className="w-10 h-10 mb-3 text-primary" />
+              <h3 className="text-lg font-bold mb-2">Mini Grammar</h3>
+              <p className="text-sm text-muted-foreground">
+                Quick grammar lessons tailored for truck drivers - verb tenses, prepositions, and more
+              </p>
+            </Card>
+
+            {/* Listening Practice */}
+            <Card 
+              className="p-6 card-elevated hover:scale-105 transition-transform cursor-pointer"
+              onClick={() => toast({ title: "Coming Soon", description: "Listening practice will be available soon!" })}
+            >
+              <Headphones className="w-10 h-10 mb-3 text-primary" />
+              <h3 className="text-lg font-bold mb-2">Listening Practice</h3>
+              <p className="text-sm text-muted-foreground">
+                Real-world audio scenarios - CB radio, dispatch calls, and roadside conversations
+              </p>
+            </Card>
+
+            {/* Mini Games */}
+            <Card 
+              className="p-6 card-elevated hover:scale-105 transition-transform cursor-pointer"
+              onClick={() => toast({ title: "Coming Soon", description: "Mini games will be available soon!" })}
+            >
+              <Gamepad2 className="w-10 h-10 mb-3 text-primary" />
+              <h3 className="text-lg font-bold mb-2">Mini Games</h3>
+              <p className="text-sm text-muted-foreground">
+                Fun word games, matching exercises, and interactive challenges to boost your English
+              </p>
+            </Card>
+
+            {/* Vocabulary Builder */}
+            <Card 
+              className="p-6 card-elevated hover:scale-105 transition-transform cursor-pointer"
+              onClick={() => toast({ title: "Coming Soon", description: "Vocabulary builder will be available soon!" })}
+            >
+              <Library className="w-10 h-10 mb-3 text-primary" />
+              <h3 className="text-lg font-bold mb-2">Vocabulary Builder</h3>
+              <p className="text-sm text-muted-foreground">
+                Expand your truck driving vocabulary with flashcards and spaced repetition learning
+              </p>
+            </Card>
+
+            {/* Speaking Practice */}
+            <Card 
+              className="p-6 card-elevated hover:scale-105 transition-transform cursor-pointer"
+              onClick={() => navigate("/pronunciation-help")}
+            >
+              <Speech className="w-10 h-10 mb-3 text-primary" />
+              <h3 className="text-lg font-bold mb-2">Speaking Practice</h3>
+              <p className="text-sm text-muted-foreground">
+                Practice pronunciation and speaking with AI feedback on common trucker phrases
+              </p>
+            </Card>
+          </div>
+        </div>
 
         {/* Today's Lesson */}
         <Card className="p-8 card-elevated border-accent/20 border-2">
