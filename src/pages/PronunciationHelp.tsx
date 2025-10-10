@@ -7,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import PhraseCard from "@/components/PhraseCard";
 import { getPhrasesByCategory, type PhraseCategory } from "@/data/pronunciationPhrases";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { supabase } from "@/integrations/supabase/client";
 
 type CategoryFilter = 'all' | PhraseCategory;
 
@@ -54,30 +55,17 @@ const PronunciationHelp = () => {
     setLoadingPhrases(prev => new Set(prev).add(phraseId));
 
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/text-to-speech`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-          },
-          body: JSON.stringify({ text: phrase.english }),
-        }
-      );
+      const { data, error } = await supabase.functions.invoke('text-to-speech', {
+        body: { text: phrase.english }
+      });
 
-      if (!response.ok) {
-        if (response.status === 429) {
-          toast({
-            title: t('pronunciation.feedback.rateLimit'),
-            variant: "destructive",
-          });
-          return;
-        }
-        throw new Error('Failed to generate audio');
+      if (error) {
+        throw error;
       }
 
-      const data = await response.json();
+      if (!data || !data.audioContent) {
+        throw new Error('Failed to generate audio');
+      }
       
       // Cache the audio
       setAudioCache(prev => new Map(prev).set(phraseId, data.audioContent));
@@ -88,10 +76,10 @@ const PronunciationHelp = () => {
       toast({
         title: t('pronunciation.feedback.audioGenerated'),
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error generating audio:', error);
       toast({
-        title: t('pronunciation.feedback.audioError'),
+        title: error?.message || t('pronunciation.feedback.audioError'),
         variant: "destructive",
       });
     } finally {
