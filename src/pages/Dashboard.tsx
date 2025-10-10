@@ -199,8 +199,8 @@ const Dashboard = () => {
         {/* Everyday English for Truck Drivers */}
         <div className="space-y-6">
           <div>
-            <h2 className="text-3xl font-bold mb-2">Everyday English for Truck Drivers</h2>
-            <p className="text-muted-foreground">Essential English skills for your daily trucking routine</p>
+            <h2 className="text-3xl font-bold mb-2">{t('everydayEnglish.title')}</h2>
+            <p className="text-muted-foreground">{t('everydayEnglish.subtitle')}</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -210,57 +210,57 @@ const Dashboard = () => {
               onClick={() => navigate("/essential-phrases")}
             >
               <Book className="w-10 h-10 mb-3 text-primary" />
-              <h3 className="text-lg font-bold mb-2">Essential Phrases & Short Tests</h3>
+              <h3 className="text-lg font-bold mb-2">{t('everydayEnglish.essentialPhrases.title')}</h3>
               <p className="text-sm text-muted-foreground">
-                Highway communication, navigation, delivery documentation, and essential truck driver phrases
+                {t('everydayEnglish.essentialPhrases.description')}
               </p>
             </Card>
 
             {/* Mini Grammar */}
             <Card 
               className="p-6 card-elevated hover:scale-105 transition-transform cursor-pointer"
-              onClick={() => toast({ title: "Coming Soon", description: "Mini grammar lessons will be available soon!" })}
+              onClick={() => toast({ title: t('everydayEnglish.comingSoon'), description: t('everydayEnglish.comingSoonDescription') })}
             >
               <GraduationCap className="w-10 h-10 mb-3 text-primary" />
-              <h3 className="text-lg font-bold mb-2">Mini Grammar</h3>
+              <h3 className="text-lg font-bold mb-2">{t('everydayEnglish.miniGrammar.title')}</h3>
               <p className="text-sm text-muted-foreground">
-                Quick grammar lessons tailored for truck drivers - verb tenses, prepositions, and more
+                {t('everydayEnglish.miniGrammar.description')}
               </p>
             </Card>
 
             {/* Listening Practice */}
             <Card 
               className="p-6 card-elevated hover:scale-105 transition-transform cursor-pointer"
-              onClick={() => toast({ title: "Coming Soon", description: "Listening practice will be available soon!" })}
+              onClick={() => toast({ title: t('everydayEnglish.comingSoon'), description: t('everydayEnglish.comingSoonDescription') })}
             >
               <Headphones className="w-10 h-10 mb-3 text-primary" />
-              <h3 className="text-lg font-bold mb-2">Listening Practice</h3>
+              <h3 className="text-lg font-bold mb-2">{t('everydayEnglish.listening.title')}</h3>
               <p className="text-sm text-muted-foreground">
-                Real-world audio scenarios - CB radio, dispatch calls, and roadside conversations
+                {t('everydayEnglish.listening.description')}
               </p>
             </Card>
 
             {/* Mini Games */}
             <Card 
               className="p-6 card-elevated hover:scale-105 transition-transform cursor-pointer"
-              onClick={() => toast({ title: "Coming Soon", description: "Mini games will be available soon!" })}
+              onClick={() => toast({ title: t('everydayEnglish.comingSoon'), description: t('everydayEnglish.comingSoonDescription') })}
             >
               <Gamepad2 className="w-10 h-10 mb-3 text-primary" />
-              <h3 className="text-lg font-bold mb-2">Mini Games</h3>
+              <h3 className="text-lg font-bold mb-2">{t('everydayEnglish.miniGames.title')}</h3>
               <p className="text-sm text-muted-foreground">
-                Fun word games, matching exercises, and interactive challenges to boost your English
+                {t('everydayEnglish.miniGames.description')}
               </p>
             </Card>
 
             {/* Vocabulary Builder */}
             <Card 
               className="p-6 card-elevated hover:scale-105 transition-transform cursor-pointer"
-              onClick={() => toast({ title: "Coming Soon", description: "Vocabulary builder will be available soon!" })}
+              onClick={() => toast({ title: t('everydayEnglish.comingSoon'), description: t('everydayEnglish.comingSoonDescription') })}
             >
               <Library className="w-10 h-10 mb-3 text-primary" />
-              <h3 className="text-lg font-bold mb-2">Vocabulary Builder</h3>
+              <h3 className="text-lg font-bold mb-2">{t('everydayEnglish.vocabulary.title')}</h3>
               <p className="text-sm text-muted-foreground">
-                Expand your truck driving vocabulary with flashcards and spaced repetition learning
+                {t('everydayEnglish.vocabulary.description')}
               </p>
             </Card>
 
@@ -270,9 +270,9 @@ const Dashboard = () => {
               onClick={() => navigate("/pronunciation-help")}
             >
               <Speech className="w-10 h-10 mb-3 text-primary" />
-              <h3 className="text-lg font-bold mb-2">Speaking Practice</h3>
+              <h3 className="text-lg font-bold mb-2">{t('everydayEnglish.speaking.title')}</h3>
               <p className="text-sm text-muted-foreground">
-                Practice pronunciation and speaking with AI feedback on common trucker phrases
+                {t('everydayEnglish.speaking.description')}
               </p>
             </Card>
           </div>

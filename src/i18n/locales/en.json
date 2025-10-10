@@ -440,5 +440,35 @@
       "noSpeechDetected": "No speech detected. Please speak clearly.",
       "notSupported": "Speech recognition is not supported in this browser."
     }
+  },
+  "everydayEnglish": {
+    "title": "Everyday English for Truck Drivers",
+    "subtitle": "Essential English skills for your daily trucking routine",
+    "essentialPhrases": {
+      "title": "Essential Phrases & Short Tests",
+      "description": "Highway communication, navigation, delivery documentation, and essential truck driver phrases"
+    },
+    "miniGrammar": {
+      "title": "Mini Grammar",
+      "description": "Quick grammar lessons tailored for truck drivers - verb tenses, prepositions, and more"
+    },
+    "listening": {
+      "title": "Listening Practice",
+      "description": "Real-world audio scenarios - CB radio, dispatch calls, and roadside conversations"
+    },
+    "miniGames": {
+      "title": "Mini Games",
+      "description": "Fun word games, matching exercises, and interactive challenges to boost your English"
+    },
+    "vocabulary": {
+      "title": "Vocabulary Builder",
+      "description": "Expand your truck driving vocabulary with flashcards and spaced repetition learning"
+    },
+    "speaking": {
+      "title": "Speaking Practice",
+      "description": "Practice pronunciation and speaking with AI feedback on common trucker phrases"
+    },
+    "comingSoon": "Coming Soon",
+    "comingSoonDescription": "This feature will be available soon!"
   }
 }
