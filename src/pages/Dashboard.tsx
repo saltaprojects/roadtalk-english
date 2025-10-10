@@ -155,7 +155,10 @@ const Dashboard = () => {
           {/* Practice Sections */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t">
             {/* AI Conversation Practice */}
-            <div className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer">
+            <div 
+              className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer"
+              onClick={() => navigate("/practice")}
+            >
               <Bot className="w-8 h-8 mx-auto mb-2 text-primary" />
               <h3 className="font-semibold text-sm mb-1">{t('dashboard.practiceSections.aiConversation.title')}</h3>
               <p className="text-xs text-muted-foreground">{t('dashboard.practiceSections.aiConversation.description')}</p>
