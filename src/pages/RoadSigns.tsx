@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
@@ -7,6 +7,7 @@ import { ArrowLeft, CheckCircle2, XCircle, ChevronRight, RotateCcw, Trophy, Aler
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { getQuizQuestions } from "@/data/roadSignsQuestions";
 
 type QuizQuestion = {
   id: number;
@@ -22,7 +23,7 @@ type QuizQuestion = {
   explanation: string;
 };
 
-const quizQuestions: QuizQuestion[] = [
+const _quizQuestions: QuizQuestion[] = [
   // REGULATORY SIGNS (Red/White) - 25 signs
   {
     id: 1,
@@ -1359,13 +1360,14 @@ const SignShape = ({ sign }: { sign: QuizQuestion }) => {
 const RoadSigns = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [quizComplete, setQuizComplete] = useState(false);
 
+  const quizQuestions = useMemo(() => getQuizQuestions(i18n.language), [i18n.language]);
   const question = quizQuestions[currentQuestion];
   const progressPercentage = ((currentQuestion + 1) / quizQuestions.length) * 100;
 
