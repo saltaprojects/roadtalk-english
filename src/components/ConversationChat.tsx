@@ -40,25 +40,21 @@ export const ConversationChat = ({
 }: ConversationChatProps) => {
   const { t } = useTranslation();
   const [input, setInput] = useState("");
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [showResponseSide, setShowResponseSide] = useState(false);
   const { messages, isLoading, error, sendMessage, resetConversation } = useConversationChat();
   const { playText, isPlaying, stop } = useTextToSpeech();
-  const messagesEndRef = useRef<HTMLDivElement>(null);
   const lastMessageRef = useRef<string>("");
   
   const characters = scenarioCharacters[scenario] || scenarioCharacters.police;
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
   useEffect(() => {
-    scrollToBottom();
-    
     // Auto-play TTS for new AI messages
     const lastMessage = messages[messages.length - 1];
     if (lastMessage && lastMessage.role === "assistant" && lastMessage.content !== lastMessageRef.current) {
       lastMessageRef.current = lastMessage.content;
       playText(lastMessage.content, characters.aiVoice);
+      setShowResponseSide(false);
     }
   }, [messages, playText, characters.aiVoice]);
 
@@ -73,6 +69,8 @@ export const ConversationChat = ({
     if (!input.trim() || isLoading) return;
     sendMessage(input, scenario);
     setInput("");
+    setCurrentCardIndex(prev => prev + 1);
+    setShowResponseSide(false);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -88,17 +86,31 @@ export const ConversationChat = ({
     onEnd();
   };
 
-  // Get the current speaker and their message
-  const lastMessage = messages[messages.length - 1];
-  const currentSpeaker = lastMessage?.role === "assistant" ? "ai" : "user";
-  const currentMessage = lastMessage?.content || "";
-  const currentCharacter = currentSpeaker === "ai" ? characters.ai : characters.user;
-  const speakerName = currentSpeaker === "ai" ? scenarioTitle.split(" ")[0] : "You";
+  const handleFlipCard = () => {
+    if (!isLoading) {
+      setShowResponseSide(!showResponseSide);
+    }
+  };
+
+  // Group messages into pairs (AI message + user response)
+  const conversationPairs: Array<{ ai: string; user?: string }> = [];
+  for (let i = 0; i < messages.length; i += 2) {
+    if (messages[i]?.role === "assistant") {
+      conversationPairs.push({
+        ai: messages[i].content,
+        user: messages[i + 1]?.content,
+      });
+    }
+  }
+
+  const currentPair = conversationPairs[currentCardIndex] || { ai: messages[messages.length - 1]?.content || "" };
+  const isLastCard = currentCardIndex === conversationPairs.length - 1;
+  const canGoBack = currentCardIndex > 0;
 
   return (
-    <div className="flex flex-col h-screen bg-background">
+    <div className="flex flex-col h-screen bg-gradient-to-br from-background via-muted/20 to-background">
       {/* Header */}
-      <div className="bg-card border-b border-border p-4 flex items-center justify-between">
+      <div className="bg-card/80 backdrop-blur-sm border-b border-border p-4 flex items-center justify-between">
         <div className="flex-1">
           <h2 className="text-lg font-semibold">{scenarioTitle}</h2>
           <p className="text-sm text-muted-foreground">{scenarioDescription}</p>
@@ -114,94 +126,160 @@ export const ConversationChat = ({
         </Alert>
       )}
 
-      {/* Chat Messages Area */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {messages.map((message, index) => {
-          const isAI = message.role === "assistant";
-          const avatar = isAI ? characters.ai : characters.user;
-          const name = isAI ? scenarioTitle.split(" ")[0] : "You";
-
-          return (
-            <div
-              key={index}
-              className={`flex gap-3 animate-fade-in ${!isAI ? "flex-row-reverse" : ""}`}
-            >
-              {/* Avatar */}
-              <div className="flex-shrink-0">
-                <img
-                  src={avatar}
-                  alt={name}
-                  className={`w-10 h-10 rounded-full object-cover border-2 ${
-                    isAI ? "border-primary" : "border-secondary"
+      {/* Card Display Area */}
+      <div className="flex-1 flex items-center justify-center p-4 md:p-8">
+        <div className="w-full max-w-2xl">
+          {/* Progress Indicator */}
+          <div className="text-center mb-6">
+            <p className="text-sm text-muted-foreground">
+              Exchange {currentCardIndex + 1} of {Math.max(conversationPairs.length, 1)}
+            </p>
+            <div className="flex justify-center gap-2 mt-2">
+              {conversationPairs.map((_, idx) => (
+                <div
+                  key={idx}
+                  className={`h-2 rounded-full transition-all ${
+                    idx === currentCardIndex
+                      ? "w-8 bg-primary"
+                      : idx < currentCardIndex
+                      ? "w-2 bg-primary/50"
+                      : "w-2 bg-muted"
                   }`}
                 />
-              </div>
+              ))}
+            </div>
+          </div>
 
-              {/* Message Bubble */}
-              <div className={`flex flex-col ${!isAI ? "items-end" : "items-start"} max-w-[70%]`}>
-                <span className="text-xs text-muted-foreground mb-1">{name}</span>
-                <div
-                  className={`rounded-2xl px-4 py-3 ${
-                    isAI
-                      ? "bg-card border border-border rounded-tl-none"
-                      : "bg-primary text-primary-foreground rounded-tr-none"
-                  }`}
-                >
-                  <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">
-                    {message.content}
+          {/* Flippable Card */}
+          <Card
+            className={`relative min-h-[400px] transition-all duration-500 cursor-pointer ${
+              showResponseSide ? "shadow-2xl scale-105" : "shadow-xl"
+            }`}
+            style={{
+              transformStyle: "preserve-3d",
+              transform: showResponseSide ? "rotateY(180deg)" : "rotateY(0deg)",
+            }}
+            onClick={isLastCard && !isLoading ? handleFlipCard : undefined}
+          >
+            {/* Front Side - AI Message */}
+            <div
+              className="absolute inset-0 p-6 md:p-8 backface-hidden"
+              style={{ backfaceVisibility: "hidden" }}
+            >
+              <div className="flex flex-col h-full">
+                <div className="flex items-center gap-4 mb-6">
+                  <img
+                    src={characters.ai}
+                    alt={scenarioTitle}
+                    className="w-16 h-16 rounded-full object-cover border-4 border-primary"
+                  />
+                  <div>
+                    <h3 className="font-bold text-lg">{scenarioTitle.split(" ")[0]}</h3>
+                    {isPlaying && isLastCard && (
+                      <div className="flex items-center gap-2 text-primary text-sm">
+                        <Volume2 className="w-4 h-4 animate-pulse" />
+                        <span>Speaking...</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex-1 flex items-center">
+                  <p className="text-lg leading-relaxed whitespace-pre-wrap break-words">
+                    {currentPair.ai}
                   </p>
                 </div>
 
-                {/* Speaking indicator for AI messages */}
-                {isAI && isPlaying && index === messages.length - 1 && (
-                  <div className="flex items-center gap-2 mt-2 text-primary">
-                    <Volume2 className="w-4 h-4 animate-pulse" />
-                    <span className="text-xs">Speaking...</span>
+                {isLastCard && !isLoading && (
+                  <div className="text-center text-sm text-muted-foreground mt-4">
+                    Click to respond →
                   </div>
                 )}
               </div>
             </div>
-          );
-        })}
 
-        {/* Loading indicator */}
-        {isLoading && (
-          <div className="flex gap-3 animate-fade-in">
-            <div className="flex-shrink-0">
-              <img
-                src={characters.ai}
-                alt="AI"
-                className="w-10 h-10 rounded-full object-cover border-2 border-primary"
-              />
-            </div>
-            <div className="flex items-center gap-2 bg-card border border-border rounded-2xl rounded-tl-none px-4 py-3">
-              <Loader2 className="h-4 w-4 animate-spin text-primary" />
-              <span className="text-sm text-muted-foreground">{t("practice.chat.typing")}</span>
-            </div>
-          </div>
-        )}
-
-        <div ref={messagesEndRef} />
-      </div>
-
-      {/* Input Area */}
-      <div className="border-t border-border bg-card p-4">
-        <div className="container mx-auto max-w-3xl">
-          <div className="flex gap-2">
-            <Input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder={t("practice.chat.inputPlaceholder")}
-              disabled={isLoading}
-              className="flex-1"
-            />
-            <Button
-              onClick={handleSend}
-              disabled={!input.trim() || isLoading}
-              size="icon"
+            {/* Back Side - Response Input */}
+            <div
+              className="absolute inset-0 p-6 md:p-8 backface-hidden"
+              style={{
+                backfaceVisibility: "hidden",
+                transform: "rotateY(180deg)",
+              }}
             >
-              <Send className="h-4 w-4" />
+              <div className="flex flex-col h-full">
+                <div className="flex items-center gap-4 mb-6">
+                  <img
+                    src={characters.user}
+                    alt="You"
+                    className="w-16 h-16 rounded-full object-cover border-4 border-secondary"
+                  />
+                  <h3 className="font-bold text-lg">Your Response</h3>
+                </div>
+
+                <div className="flex-1">
+                  <p className="text-sm text-muted-foreground mb-4">
+                    What will you say?
+                  </p>
+                  <Input
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    placeholder={t("practice.chat.inputPlaceholder")}
+                    disabled={isLoading}
+                    className="mb-4"
+                    autoFocus
+                  />
+                  {currentPair.user && (
+                    <div className="mt-6 p-4 bg-muted rounded-lg">
+                      <p className="text-sm text-muted-foreground mb-2">You said:</p>
+                      <p className="text-base">{currentPair.user}</p>
+                    </div>
+                  )}
+                </div>
+
+                <Button
+                  onClick={handleSend}
+                  disabled={!input.trim() || isLoading}
+                  className="w-full"
+                  size="lg"
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      {t("practice.chat.typing")}
+                    </>
+                  ) : (
+                    <>
+                      <Send className="mr-2 h-4 w-4" />
+                      Send Response
+                    </>
+                  )}
+                </Button>
+              </div>
+            </div>
+          </Card>
+
+          {/* Navigation */}
+          <div className="flex justify-between items-center mt-6">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setCurrentCardIndex(prev => Math.max(0, prev - 1));
+                setShowResponseSide(false);
+              }}
+              disabled={!canGoBack}
+            >
+              ← Previous
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setCurrentCardIndex(prev => Math.min(conversationPairs.length - 1, prev + 1));
+                setShowResponseSide(false);
+              }}
+              disabled={currentCardIndex >= conversationPairs.length - 1}
+            >
+              Next →
             </Button>
           </div>
         </div>
