@@ -18,6 +18,12 @@
         "description": "See your improvement with every completed lesson. Stay motivated!"
       }
     },
+    "about": {
+      "title": "Meet Your Instructor",
+      "description": "Hi, I'm [Your Name]. As an English teacher with years of experience working with truck drivers, I understand the unique challenges you face on the road. I created RoadTalk English because I believe every driver deserves access to practical, job-specific English training that fits into their busy schedule.",
+      "credentials": "✓ Years of experience teaching English to professional drivers\n✓ Specialized in practical communication skills\n✓ Deep understanding of trucking industry needs",
+      "quote": "Learning English shouldn't stop your journey—it should be part of it."
+    },
     "cta": {
       "title": "Ready to Improve Your English?",
       "subtitle": "Join drivers learning practical English for the road",

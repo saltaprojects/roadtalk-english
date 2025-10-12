@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
-import { Truck, BookOpen, Award, Clock, Mail } from "lucide-react";
+import { Truck, BookOpen, Award, Clock, Mail, User } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import heroImage from "@/assets/hero-truck.jpg";
 const Home = () => {
   const navigate = useNavigate();
@@ -72,6 +73,40 @@ const Home = () => {
                 {t('home.features.progress.description')}
               </p>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* About Me Section */}
+      <section className="py-20 px-4 bg-muted/30">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Left side - Avatar/Image */}
+            <div className="flex justify-center animate-fade-in">
+              <Avatar className="w-48 h-48 md:w-64 md:h-64 border-4 border-primary shadow-xl">
+                <AvatarFallback className="bg-primary text-white text-6xl">
+                  <User className="w-24 h-24" />
+                </AvatarFallback>
+              </Avatar>
+            </div>
+
+            {/* Right side - Content */}
+            <div className="space-y-6 animate-fade-in">
+              <h2 className="text-4xl font-bold">
+                {t('home.about.title')}
+              </h2>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                {t('home.about.description')}
+              </p>
+              <div className="space-y-3">
+                <p className="text-base whitespace-pre-line text-muted-foreground">
+                  {t('home.about.credentials')}
+                </p>
+              </div>
+              <blockquote className="border-l-4 border-primary pl-4 italic text-lg text-muted-foreground">
+                "{t('home.about.quote')}"
+              </blockquote>
+            </div>
           </div>
         </div>
       </section>
