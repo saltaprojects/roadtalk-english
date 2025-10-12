@@ -12,6 +12,13 @@ import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import truckLogo from "@/assets/truck-logo.png";
 import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
+
+const passwordSchema = z.string()
+  .min(8, "Password must be at least 8 characters")
+  .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+  .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+  .regex(/[0-9]/, "Password must contain at least one number");
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -66,6 +73,18 @@ const Auth = () => {
     const password = formData.get("password") as string;
     const firstName = formData.get("first_name") as string;
     const lastName = formData.get("last_name") as string;
+
+    // Validate password strength
+    const passwordValidation = passwordSchema.safeParse(password);
+    if (!passwordValidation.success) {
+      toast({
+        title: "Weak Password",
+        description: passwordValidation.error.errors[0].message,
+        variant: "destructive",
+      });
+      setIsLoading(false);
+      return;
+    }
 
     const { error } = await supabase.auth.signUp({
       email,
@@ -232,6 +251,9 @@ const Auth = () => {
                     required
                     className="h-12 text-lg"
                   />
+                  <p className="text-xs text-muted-foreground">
+                    Password must be at least 8 characters with uppercase, lowercase, and number
+                  </p>
                 </div>
                 <Button
                   type="submit"
