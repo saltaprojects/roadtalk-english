@@ -5,8 +5,9 @@ import { Truck, BookOpen, Award, Clock, Mail, User } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import heroImage from "@/assets/hero-truck.jpg";
+import profileImage from "@/assets/profile-picture.jpg";
 const Home = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -83,8 +84,9 @@ const Home = () => {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Left side - Avatar/Image */}
             <div className="flex justify-center animate-fade-in">
-              <Avatar className="w-48 h-48 md:w-64 md:h-64 border-4 border-primary shadow-xl">
-                <AvatarFallback className="bg-primary text-white text-6xl">
+              <Avatar className="w-48 h-48 md:w-64 md:h-64 border-4 border-primary shadow-xl rounded-xl">
+                <AvatarImage src={profileImage} alt="Profile" className="object-cover" />
+                <AvatarFallback className="bg-primary text-white text-6xl rounded-xl">
                   <User className="w-24 h-24" />
                 </AvatarFallback>
               </Avatar>
