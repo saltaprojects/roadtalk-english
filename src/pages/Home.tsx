@@ -83,7 +83,7 @@ const Home = () => {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Left side - Avatar/Image */}
-            <div className="flex justify-center animate-fade-in">
+            <div className="flex justify-center">
               <Avatar className="w-48 h-48 md:w-64 md:h-64 border-4 border-primary shadow-xl rounded-xl">
                 <AvatarImage src={profileImage} alt="Profile" className="object-cover" />
                 <AvatarFallback className="bg-primary text-white text-6xl rounded-xl">
@@ -93,7 +93,7 @@ const Home = () => {
             </div>
 
             {/* Right side - Content */}
-            <div className="space-y-6 animate-fade-in">
+            <div className="space-y-6">
               <h2 className="text-4xl font-bold">
                 {t('home.about.title')}
               </h2>
