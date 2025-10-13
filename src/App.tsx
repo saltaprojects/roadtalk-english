@@ -14,6 +14,8 @@ import RoadSigns from "./pages/RoadSigns";
 import DriverChat from "./pages/DriverChat";
 import PronunciationHelp from "./pages/PronunciationHelp";
 import EssentialPhrases from "./pages/EssentialPhrases";
+import MiniGrammar from "./pages/MiniGrammar";
+import { GrammarLesson } from "./components/GrammarLesson";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +37,8 @@ const App = () => (
           <Route path="/driver-chat" element={<DriverChat />} />
           <Route path="/pronunciation-help" element={<PronunciationHelp />} />
           <Route path="/essential-phrases" element={<EssentialPhrases />} />
+          <Route path="/mini-grammar" element={<MiniGrammar />} />
+          <Route path="/mini-grammar/:topicId" element={<GrammarLesson />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

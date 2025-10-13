@@ -219,7 +219,7 @@ const Dashboard = () => {
             {/* Mini Grammar */}
             <Card 
               className="p-6 card-elevated hover:scale-105 transition-transform cursor-pointer"
-              onClick={() => toast({ title: t('everydayEnglish.comingSoon'), description: t('everydayEnglish.comingSoonDescription') })}
+              onClick={() => navigate('/mini-grammar')}
             >
               <GraduationCap className="w-10 h-10 mb-3 text-primary" />
               <h3 className="text-lg font-bold mb-2">{t('everydayEnglish.miniGrammar.title')}</h3>
