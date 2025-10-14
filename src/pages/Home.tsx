@@ -80,7 +80,7 @@ const Home = () => {
       </section>
 
       {/* About Me Section */}
-      <section className="pt-8 pb-20 px-4 bg-muted/30">
+      <section className="py-20 px-4 bg-muted/30">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold mb-8 py-0 my-[13px] mx-0 text-left">
             {t('home.about.title')}
@@ -97,7 +97,7 @@ const Home = () => {
 
             {/* Content - Wraps around image */}
             <div className="space-y-6">
-              <p className="text-muted-foreground leading-relaxed text-lg">
+              <p className="text-muted-foreground leading-relaxed text-lg text-justify">
                 {t('home.about.description')}
               </p>
               <blockquote className="border-l-4 border-primary pl-4 italic text-lg text-muted-foreground">
