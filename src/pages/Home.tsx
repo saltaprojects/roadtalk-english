@@ -2,8 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
-import { Truck, BookOpen, Award, Clock, Mail, User, Newspaper, ExternalLink } from "lucide-react";
+import { Truck, BookOpen, Award, Clock, Mail, User, Newspaper, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -16,6 +17,17 @@ const Home = () => {
     t,
     i18n
   } = useTranslation();
+  const [currentNewsIndex, setCurrentNewsIndex] = useState(0);
+
+  const nextNews = () => {
+    setCurrentNewsIndex((prev) => (prev + 1) % industryNews.length);
+  };
+
+  const prevNews = () => {
+    setCurrentNewsIndex((prev) => (prev - 1 + industryNews.length) % industryNews.length);
+  };
+
+  const currentNews = industryNews[currentNewsIndex];
   return <div className="min-h-screen">
       {/* Language Switcher */}
       <div className="absolute top-4 right-4 z-20">
@@ -112,8 +124,8 @@ const Home = () => {
       </section>
 
       {/* News Section */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-20 px-4 bg-gradient-to-br from-background to-muted/30">
+        <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <div className="flex justify-center mb-4">
               <Newspaper className="w-12 h-12 text-accent" />
@@ -126,42 +138,78 @@ const Home = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {industryNews.map((news) => (
-              <Card key={news.id} className="p-6 card-elevated hover:scale-105 transition-transform duration-200 flex flex-col">
-                <div className="flex items-center gap-2 mb-3">
-                  <Badge variant="secondary" className="text-xs">
-                    {t(`home.news.categories.${news.category.toLowerCase()}`)}
-                  </Badge>
-                  <span className="text-xs text-muted-foreground">
-                    {new Date(news.date).toLocaleDateString()}
-                  </span>
-                </div>
-                
-                <h3 className="text-xl font-bold mb-3 line-clamp-2">
-                  {news.title[i18n.language as 'en' | 'ru'] || news.title.en}
-                </h3>
-                
-                <p className="text-muted-foreground mb-4 line-clamp-3 flex-grow">
-                  {news.excerpt[i18n.language as 'en' | 'ru'] || news.excerpt.en}
-                </p>
-                
-                <div className="flex items-center justify-between mt-auto pt-4 border-t">
-                  <span className="text-sm text-muted-foreground">
-                    {news.source}
-                  </span>
-                  <a 
-                    href={news.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-primary hover:text-primary/80 transition-colors flex items-center gap-1 text-sm font-medium"
-                  >
-                    {t('home.news.readMore')}
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                </div>
-              </Card>
-            ))}
+          <div className="relative">
+            <div className="bg-card rounded-lg p-8 shadow-lg border">
+              <div className="flex items-start gap-3 mb-6">
+                <Badge variant="secondary" className="text-sm">
+                  {t(`home.news.categories.${currentNews.category.toLowerCase()}`)}
+                </Badge>
+                <span className="text-sm text-muted-foreground">
+                  {new Date(currentNews.date).toLocaleDateString()}
+                </span>
+              </div>
+              
+              <h3 className="text-3xl font-bold mb-4">
+                {currentNews.title[i18n.language as 'en' | 'ru'] || currentNews.title.en}
+              </h3>
+              
+              <p className="text-muted-foreground text-lg leading-relaxed mb-6">
+                {currentNews.excerpt[i18n.language as 'en' | 'ru'] || currentNews.excerpt.en}
+              </p>
+              
+              <div className="flex items-center justify-between pt-6 border-t">
+                <span className="text-sm text-muted-foreground font-medium">
+                  {currentNews.source}
+                </span>
+                <a 
+                  href={currentNews.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-primary hover:text-primary/80 transition-colors flex items-center gap-2 font-medium"
+                >
+                  {t('home.news.readMore')}
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              </div>
+            </div>
+
+            {/* Navigation */}
+            <div className="flex items-center justify-between mt-8">
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={prevNews}
+                className="flex items-center gap-2"
+              >
+                <ChevronLeft className="w-5 h-5" />
+                {t('home.news.previous')}
+              </Button>
+              
+              <div className="flex gap-2">
+                {industryNews.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentNewsIndex(index)}
+                    className={`w-2 h-2 rounded-full transition-all ${
+                      index === currentNewsIndex 
+                        ? 'bg-primary w-8' 
+                        : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                    }`}
+                    aria-label={`Go to news ${index + 1}`}
+                  />
+                ))}
+              </div>
+
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={nextNews}
+                className="flex items-center gap-2"
+              >
+                {t('home.news.next')}
+                <ChevronRight className="w-5 h-5" />
+              </Button>
+            </div>
           </div>
         </div>
       </section>

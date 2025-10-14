@@ -44,7 +44,9 @@
         "regulations": "Regulations"
       },
       "readMore": "Read More",
-      "viewAll": "View All News"
+      "viewAll": "View All News",
+      "previous": "Previous",
+      "next": "Next"
     }
   },
   "auth": {
