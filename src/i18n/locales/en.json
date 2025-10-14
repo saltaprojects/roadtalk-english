@@ -32,6 +32,19 @@
     "footer": "© 2025 RoadTalk English. Built for drivers, by language experts.",
     "fab": {
       "tooltip": "Contact Us"
+    },
+    "news": {
+      "title": "Industry News & Updates",
+      "subtitle": "Stay informed about the latest regulations and industry developments",
+      "categories": {
+        "fmcsa": "FMCSA",
+        "dot": "DOT",
+        "industry": "Industry",
+        "safety": "Safety",
+        "regulations": "Regulations"
+      },
+      "readMore": "Read More",
+      "viewAll": "View All News"
     }
   },
   "auth": {

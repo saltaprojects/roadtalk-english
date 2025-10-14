@@ -1,13 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
-import { Truck, BookOpen, Award, Clock, Mail, User } from "lucide-react";
+import { Truck, BookOpen, Award, Clock, Mail, User, Newspaper, ExternalLink } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import heroImage from "@/assets/hero-truck.jpg";
 import profileImage from "@/assets/profile-picture.jpg";
+import { industryNews } from "@/data/industryNews";
 const Home = () => {
   const navigate = useNavigate();
   const {
@@ -104,6 +106,61 @@ const Home = () => {
                 "{t('home.about.quote')}"
               </blockquote>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* News Section */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="flex justify-center mb-4">
+              <Newspaper className="w-12 h-12 text-accent" />
+            </div>
+            <h2 className="text-4xl font-bold mb-4">
+              {t('home.news.title')}
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              {t('home.news.subtitle')}
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {industryNews.map((news) => (
+              <Card key={news.id} className="p-6 card-elevated hover:scale-105 transition-transform duration-200 flex flex-col">
+                <div className="flex items-center gap-2 mb-3">
+                  <Badge variant="secondary" className="text-xs">
+                    {t(`home.news.categories.${news.category.toLowerCase()}`)}
+                  </Badge>
+                  <span className="text-xs text-muted-foreground">
+                    {new Date(news.date).toLocaleDateString()}
+                  </span>
+                </div>
+                
+                <h3 className="text-xl font-bold mb-3 line-clamp-2">
+                  {news.title}
+                </h3>
+                
+                <p className="text-muted-foreground mb-4 line-clamp-3 flex-grow">
+                  {news.excerpt}
+                </p>
+                
+                <div className="flex items-center justify-between mt-auto pt-4 border-t">
+                  <span className="text-sm text-muted-foreground">
+                    {news.source}
+                  </span>
+                  <a 
+                    href={news.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-primary hover:text-primary/80 transition-colors flex items-center gap-1 text-sm font-medium"
+                  >
+                    {t('home.news.readMore')}
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
