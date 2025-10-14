@@ -80,7 +80,7 @@ const Home = () => {
       </section>
 
       {/* About Me Section */}
-      <section className="py-20 px-4 bg-muted/30">
+      <section className="pt-8 pb-20 px-4 bg-muted/30">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold mb-8 py-0 my-[13px] mx-0 text-left">
             {t('home.about.title')}
