@@ -13,7 +13,8 @@ import { industryNews } from "@/data/industryNews";
 const Home = () => {
   const navigate = useNavigate();
   const {
-    t
+    t,
+    i18n
   } = useTranslation();
   return <div className="min-h-screen">
       {/* Language Switcher */}
@@ -138,11 +139,11 @@ const Home = () => {
                 </div>
                 
                 <h3 className="text-xl font-bold mb-3 line-clamp-2">
-                  {news.title}
+                  {news.title[i18n.language as 'en' | 'ru'] || news.title.en}
                 </h3>
                 
                 <p className="text-muted-foreground mb-4 line-clamp-3 flex-grow">
-                  {news.excerpt}
+                  {news.excerpt[i18n.language as 'en' | 'ru'] || news.excerpt.en}
                 </p>
                 
                 <div className="flex items-center justify-between mt-auto pt-4 border-t">
