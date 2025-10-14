@@ -98,7 +98,7 @@ const Home = () => {
               <h2 className="text-4xl font-bold">
                 {t('home.about.title')}
               </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-muted-foreground leading-relaxed text-lg">
                 {t('home.about.description')}
               </p>
               <div className="space-y-3">
