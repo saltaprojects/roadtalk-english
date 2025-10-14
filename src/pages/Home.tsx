@@ -10,8 +10,9 @@ import heroImage from "@/assets/hero-truck.jpg";
 import profileImage from "@/assets/profile-picture.jpg";
 const Home = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
-  
+  const {
+    t
+  } = useTranslation();
   return <div className="min-h-screen">
       {/* Language Switcher */}
       <div className="absolute top-4 right-4 z-20">
@@ -101,9 +102,7 @@ const Home = () => {
                 {t('home.about.description')}
               </p>
               <div className="space-y-3">
-                <p className="text-base whitespace-pre-line text-muted-foreground">
-                  {t('home.about.credentials')}
-                </p>
+                
               </div>
               <blockquote className="border-l-4 border-primary pl-4 italic text-lg text-muted-foreground">
                 "{t('home.about.quote')}"
@@ -138,11 +137,7 @@ const Home = () => {
       {/* Floating Action Button */}
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button
-            onClick={() => navigate("/contact")}
-            className="btn-hero fixed bottom-6 right-6 h-16 w-16 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse z-50"
-            size="icon"
-          >
+          <Button onClick={() => navigate("/contact")} className="btn-hero fixed bottom-6 right-6 h-16 w-16 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse z-50" size="icon">
             <Mail className="h-6 w-6" />
           </Button>
         </TooltipTrigger>
