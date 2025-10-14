@@ -82,28 +82,24 @@ const Home = () => {
       {/* About Me Section */}
       <section className="py-20 px-4 bg-muted/30">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            {/* Left side - Avatar/Image */}
-            <div className="flex justify-center">
-              <Avatar className="w-48 h-48 md:w-64 md:h-64 border-4 border-primary shadow-xl rounded-xl">
-                <AvatarImage src={profileImage} alt="Profile" className="object-cover" />
-                <AvatarFallback className="bg-primary text-white text-6xl rounded-xl">
-                  <User className="w-24 h-24" />
-                </AvatarFallback>
-              </Avatar>
-            </div>
+          <h2 className="text-4xl font-bold mb-8">
+            {t('home.about.title')}
+          </h2>
+          
+          <div className="relative">
+            {/* Avatar/Image - Floated */}
+            <Avatar className="w-48 h-48 md:w-64 md:h-64 border-4 border-primary shadow-xl rounded-xl float-left mr-8 mb-6">
+              <AvatarImage src={profileImage} alt="Profile" className="object-cover" />
+              <AvatarFallback className="bg-primary text-white text-6xl rounded-xl">
+                <User className="w-24 h-24" />
+              </AvatarFallback>
+            </Avatar>
 
-            {/* Right side - Content */}
+            {/* Content - Wraps around image */}
             <div className="space-y-6">
-              <h2 className="text-4xl font-bold">
-                {t('home.about.title')}
-              </h2>
               <p className="text-muted-foreground leading-relaxed text-lg">
                 {t('home.about.description')}
               </p>
-              <div className="space-y-3">
-                
-              </div>
               <blockquote className="border-l-4 border-primary pl-4 italic text-lg text-muted-foreground">
                 "{t('home.about.quote')}"
               </blockquote>
