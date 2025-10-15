@@ -17,6 +17,7 @@ import EssentialPhrases from "./pages/EssentialPhrases";
 import MiniGrammar from "./pages/MiniGrammar";
 import { GrammarLesson } from "./components/GrammarLesson";
 import MiniGames from "./pages/MiniGames";
+import PlayMiniGame from "./pages/PlayMiniGame";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -41,6 +42,7 @@ const App = () => (
           <Route path="/mini-grammar" element={<MiniGrammar />} />
           <Route path="/mini-grammar/:topicId" element={<GrammarLesson />} />
           <Route path="/mini-games" element={<MiniGames />} />
+          <Route path="/mini-games/play" element={<PlayMiniGame />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

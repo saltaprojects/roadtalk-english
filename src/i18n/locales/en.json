@@ -170,12 +170,13 @@
     "incorrect": "Not quite. The correct answer is"
   },
   "miniGames": {
-    "title": "Mini Games",
-    "subtitle": "Learn English through fun and interactive games",
+    "title": "Quick Response Challenge",
+    "subtitle": "Practice real trucking scenarios with time-pressured responses",
     "backToDashboard": "Back to Dashboard",
-    "selectGame": "Select a Game",
-    "playNow": "Play Now",
-    "comingSoon": "Coming Soon",
+    "selectScenario": "Select a Scenario",
+    "scenarioDescription": "Choose a trucking situation and practice responding correctly in English under time pressure",
+    "playNow": "Play Now →",
+    "questions": "questions",
     "stats": {
       "gamesPlayed": "Games Played",
       "bestScore": "Best Score",
@@ -187,44 +188,28 @@
       "medium": "Medium",
       "hard": "Hard"
     },
-    "games": {
-      "trafficLight": {
-        "title": "Traffic Light Vocabulary",
-        "description": "Sort words by category before time runs out"
+    "scenarios": {
+      "weighStation": {
+        "title": "At the Weigh Station",
+        "description": "Communicate with inspectors at weigh stations"
       },
-      "wordMatch": {
-        "title": "Word Match",
-        "description": "Match English words with their meanings"
+      "gasStation": {
+        "title": "At the Gas Station",
+        "description": "Handle fuel stops and payment conversations"
       },
-      "cbSlang": {
-        "title": "CB Radio Slang Challenge",
-        "description": "Learn authentic trucker CB radio language"
+      "policeStop": {
+        "title": "Police Traffic Stop",
+        "description": "Respond properly during traffic stops"
       },
-      "wordScramble": {
-        "title": "Word Scramble",
-        "description": "Unscramble truck-related vocabulary"
-      },
-      "routeMaster": {
-        "title": "Route Master",
-        "description": "Match routes with their destinations"
-      },
-      "truckerTrivia": {
-        "title": "Trucker Trivia Sprint",
-        "description": "Quick-fire questions about trucking"
-      },
-      "highwayBuilder": {
-        "title": "Highway Word Builder",
-        "description": "Build words from letter tiles"
-      },
-      "phraseShooter": {
-        "title": "Parking Lot Phrase Shooter",
-        "description": "Shoot correct phrases into parking spots"
+      "borderCrossing": {
+        "title": "Border Crossing",
+        "description": "Navigate border crossing inspections"
       }
     },
     "dailyChallenge": {
       "title": "Daily Challenge",
-      "description": "Complete today's challenge for bonus points",
-      "comingSoon": "Daily challenges are coming soon! Check back later."
+      "description": "Complete today's special challenge for bonus points",
+      "comingSoon": "Daily challenges coming soon! Check back later."
     }
   },
   "contact": {

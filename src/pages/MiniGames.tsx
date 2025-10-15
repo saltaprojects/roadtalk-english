@@ -3,78 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Trophy, Timer, Target } from "lucide-react";
 import { useTranslation } from "react-i18next";
-
-interface GameCard {
-  id: string;
-  icon: string;
-  titleKey: string;
-  descriptionKey: string;
-  difficulty: "easy" | "medium" | "hard";
-  comingSoon?: boolean;
-}
-
-const games: GameCard[] = [
-  {
-    id: "traffic-light",
-    icon: "🚦",
-    titleKey: "miniGames.games.trafficLight.title",
-    descriptionKey: "miniGames.games.trafficLight.description",
-    difficulty: "easy",
-  },
-  {
-    id: "word-match",
-    icon: "🎯",
-    titleKey: "miniGames.games.wordMatch.title",
-    descriptionKey: "miniGames.games.wordMatch.description",
-    difficulty: "easy",
-  },
-  {
-    id: "cb-slang",
-    icon: "📻",
-    titleKey: "miniGames.games.cbSlang.title",
-    descriptionKey: "miniGames.games.cbSlang.description",
-    difficulty: "medium",
-  },
-  {
-    id: "word-scramble",
-    icon: "🔤",
-    titleKey: "miniGames.games.wordScramble.title",
-    descriptionKey: "miniGames.games.wordScramble.description",
-    difficulty: "medium",
-  },
-  {
-    id: "route-master",
-    icon: "🗺️",
-    titleKey: "miniGames.games.routeMaster.title",
-    descriptionKey: "miniGames.games.routeMaster.description",
-    difficulty: "medium",
-    comingSoon: true,
-  },
-  {
-    id: "trucker-trivia",
-    icon: "🎓",
-    titleKey: "miniGames.games.truckerTrivia.title",
-    descriptionKey: "miniGames.games.truckerTrivia.description",
-    difficulty: "hard",
-    comingSoon: true,
-  },
-  {
-    id: "highway-builder",
-    icon: "🛣️",
-    titleKey: "miniGames.games.highwayBuilder.title",
-    descriptionKey: "miniGames.games.highwayBuilder.description",
-    difficulty: "hard",
-    comingSoon: true,
-  },
-  {
-    id: "phrase-shooter",
-    icon: "🎮",
-    titleKey: "miniGames.games.phraseShooter.title",
-    descriptionKey: "miniGames.games.phraseShooter.description",
-    difficulty: "hard",
-    comingSoon: true,
-  },
-];
+import { scenarios } from "@/data/miniGameQuestions";
 
 const MiniGames = () => {
   const navigate = useNavigate();
@@ -155,47 +84,35 @@ const MiniGames = () => {
           </Card>
         </div>
 
-        {/* Games Grid */}
+        {/* Scenarios Grid */}
         <div>
-          <h2 className="text-2xl font-bold mb-4">{t('miniGames.selectGame')}</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {games.map((game) => (
+          <h2 className="text-2xl font-bold mb-4">{t('miniGames.selectScenario')}</h2>
+          <p className="text-muted-foreground mb-6">{t('miniGames.scenarioDescription')}</p>
+          <div className="grid md:grid-cols-2 gap-4">
+            {scenarios.map((scenario) => (
               <Card
-                key={game.id}
-                className={`card-elevated transition-transform duration-200 ${
-                  game.comingSoon 
-                    ? 'opacity-60 cursor-not-allowed' 
-                    : 'hover:scale-105 cursor-pointer'
-                }`}
-                onClick={() => {
-                  if (!game.comingSoon) {
-                    // TODO: Navigate to specific game
-                    console.log(`Starting game: ${game.id}`);
-                  }
-                }}
+                key={scenario.id}
+                className="card-elevated transition-transform duration-200 hover:scale-105 cursor-pointer"
+                onClick={() => navigate(`/mini-games/play?scenario=${scenario.id}`)}
               >
                 <CardHeader>
-                  <div className="text-5xl mb-2">{game.icon}</div>
+                  <div className="text-5xl mb-2">{scenario.icon}</div>
                   <CardTitle className="flex items-center justify-between">
-                    <span>{t(game.titleKey)}</span>
-                    {game.comingSoon && (
-                      <span className="text-xs px-2 py-1 bg-muted rounded">
-                        {t('miniGames.comingSoon')}
-                      </span>
-                    )}
+                    <span>{t(scenario.titleKey)}</span>
+                    <span className="text-xs px-2 py-1 bg-muted rounded">
+                      {scenario.questionCount} {t('miniGames.questions')}
+                    </span>
                   </CardTitle>
-                  <CardDescription>{t(game.descriptionKey)}</CardDescription>
+                  <CardDescription>{t(scenario.descriptionKey)}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center justify-between">
-                    <span className={`text-sm font-medium ${getDifficultyColor(game.difficulty)}`}>
-                      {getDifficultyLabel(game.difficulty)}
+                    <span className={`text-sm font-medium ${getDifficultyColor(scenario.difficulty)}`}>
+                      {getDifficultyLabel(scenario.difficulty)}
                     </span>
-                    {!game.comingSoon && (
-                      <span className="text-sm text-muted-foreground">
-                        {t('miniGames.playNow')}
-                      </span>
-                    )}
+                    <span className="text-sm text-muted-foreground">
+                      {t('miniGames.playNow')}
+                    </span>
                   </div>
                 </CardContent>
               </Card>
