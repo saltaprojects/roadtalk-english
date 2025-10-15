@@ -1,55 +1,53 @@
-import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/components/ui/use-toast";
+import { useState, useEffect } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 export const useTextToSpeech = () => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
+  const [synth, setSynth] = useState<SpeechSynthesis | null>(null);
   const { toast } = useToast();
 
-  const playText = async (text: string, voice: string = "echo") => {
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      setSynth(window.speechSynthesis);
+    }
+  }, []);
+
+  const playText = async (text: string, lang: string = "en-US") => {
     try {
-      // Stop any currently playing audio
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio.currentTime = 0;
-      }
-
-      setIsPlaying(true);
-
-      const { data, error } = await supabase.functions.invoke("text-to-speech", {
-        body: { text, voice },
-      });
-
-      if (error) {
-        console.error("TTS Error:", error);
-        if (error.message?.includes("429")) {
-          toast({
-            title: "Rate limit",
-            description: "Too many requests. Please wait a moment.",
-            variant: "destructive",
-          });
-        }
-        setIsPlaying(false);
+      if (!synth) {
+        toast({
+          title: "Not supported",
+          description: "Text-to-speech is not supported in your browser.",
+          variant: "destructive",
+        });
         return;
       }
 
-      if (data?.audioContent) {
-        const audio = new Audio(`data:audio/mp3;base64,${data.audioContent}`);
-        setCurrentAudio(audio);
+      // Stop any currently playing speech
+      synth.cancel();
 
-        audio.onended = () => {
-          setIsPlaying(false);
-          setCurrentAudio(null);
-        };
+      setIsPlaying(true);
 
-        audio.onerror = () => {
-          setIsPlaying(false);
-          setCurrentAudio(null);
-        };
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = lang;
+      utterance.rate = 0.85;
+      utterance.pitch = 1;
 
-        await audio.play();
-      }
+      utterance.onend = () => {
+        setIsPlaying(false);
+      };
+
+      utterance.onerror = (error) => {
+        console.error("TTS Error:", error);
+        setIsPlaying(false);
+        toast({
+          title: "Error",
+          description: "Failed to play audio.",
+          variant: "destructive",
+        });
+      };
+
+      synth.speak(utterance);
     } catch (error) {
       console.error("TTS Error:", error);
       setIsPlaying(false);
@@ -57,10 +55,8 @@ export const useTextToSpeech = () => {
   };
 
   const stop = () => {
-    if (currentAudio) {
-      currentAudio.pause();
-      currentAudio.currentTime = 0;
-      setCurrentAudio(null);
+    if (synth) {
+      synth.cancel();
     }
     setIsPlaying(false);
   };
