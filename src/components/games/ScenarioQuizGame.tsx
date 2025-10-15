@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -14,6 +15,7 @@ interface ScenarioQuizGameProps {
 
 const ScenarioQuizGame = ({ questions, scenarioTitle, onComplete }: ScenarioQuizGameProps) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -99,7 +101,7 @@ const ScenarioQuizGame = ({ questions, scenarioTitle, onComplete }: ScenarioQuiz
                 {t('miniGames.gameComplete.playAgain')}
               </Button>
               <Button 
-                onClick={() => window.history.back()} 
+                onClick={() => navigate('/mini-games')} 
                 variant="outline"
                 className="flex-1"
                 size="lg"
@@ -119,7 +121,7 @@ const ScenarioQuizGame = ({ questions, scenarioTitle, onComplete }: ScenarioQuiz
         {/* Exit Button */}
         <Button
           variant="ghost"
-          onClick={() => window.history.back()}
+          onClick={() => navigate('/mini-games')}
           className="mb-2"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
