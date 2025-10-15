@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Progress } from "@/components/ui/progress";
 import { GameQuestion } from "@/data/miniGameQuestions";
 import { useTranslation } from "react-i18next";
-import { CheckCircle2, XCircle, Trophy, Timer } from "lucide-react";
+import { CheckCircle2, XCircle, Trophy, Timer, ArrowLeft } from "lucide-react";
 
 interface ScenarioQuizGameProps {
   questions: GameQuestion[];
@@ -129,6 +129,16 @@ const ScenarioQuizGame = ({ questions, scenarioTitle, onComplete }: ScenarioQuiz
   return (
     <div className="min-h-screen bg-muted/30 p-4">
       <div className="max-w-4xl mx-auto space-y-4">
+        {/* Exit Button */}
+        <Button
+          variant="ghost"
+          onClick={() => window.history.back()}
+          className="mb-2"
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Exit Game
+        </Button>
+
         {/* Header */}
         <Card className="card-elevated">
           <CardHeader>
