@@ -492,6 +492,27 @@
     "title": "Pronunciation Practice",
     "subtitle": "Practice essential English phrases for truck drivers",
     "backToDashboard": "Back to Dashboard",
+    "dialoguePractice": "Dialogue Practice",
+    "listenToPhrase": "Listen to Phrase",
+    "recordYourself": "Record Yourself",
+    "translation": "Translation",
+    "playing": "Playing...",
+    "recording": "Recording...",
+    "analyzing": "Analyzing...",
+    "previous": "Previous",
+    "next": "Next",
+    "finish": "Finish",
+    "allPhrases": "All pronunciation phrases for truck drivers",
+    "allDifficulties": "All Difficulties",
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced",
+    "navigationDesc": "Directions and route planning phrases",
+    "deliveryDesc": "Loading and delivery communication",
+    "borderDesc": "Customs and border crossing dialogues",
+    "emergencyDesc": "Emergency and breakdown situations",
+    "dispatchDesc": "Communication with dispatch and logistics",
+    "mechanicsDesc": "Truck repair and maintenance terminology",
     "categories": {
       "all": "All Phrases",
       "navigation": "Navigation",
@@ -528,7 +549,9 @@
       "microphoneError": "Could not access microphone. Please allow microphone access.",
       "recognitionError": "Could not recognize speech. Please try again.",
       "noSpeechDetected": "No speech detected. Please speak clearly.",
-      "notSupported": "Speech recognition is not supported in this browser."
+      "notSupported": "Speech recognition is not supported in this browser.",
+      "completed": "Practice completed!",
+      "overallScore": "Overall score"
     }
   },
   "everydayEnglish": {
