@@ -55,12 +55,7 @@ export const useSubscription = () => {
       const { data: { session } } = await supabase.auth.getSession();
       
       if (!session) {
-        toast({
-          title: "Authentication required",
-          description: "Please log in to subscribe.",
-          variant: "destructive",
-        });
-        return;
+        throw new Error('Not authenticated');
       }
 
       const { data, error } = await supabase.functions.invoke('create-checkout', {
@@ -69,35 +64,55 @@ export const useSubscription = () => {
         },
       });
 
-      if (error) {
-        throw error;
-      }
+      if (error) throw error;
 
-      if (data.url) {
+      if (data?.url) {
         window.open(data.url, '_blank');
       }
     } catch (error) {
       console.error('Error creating checkout session:', error);
-      toast({
-        title: "Error",
-        description: "Failed to create checkout session. Please try again.",
-        variant: "destructive",
+      throw error;
+    }
+  };
+
+  const manageSubscription = async () => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        throw new Error('Not authenticated');
+      }
+
+      const { data, error } = await supabase.functions.invoke('customer-portal', {
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+        },
       });
+
+      if (error) throw error;
+
+      if (data?.url) {
+        window.open(data.url, '_blank');
+      }
+    } catch (error) {
+      console.error('Error opening customer portal:', error);
+      throw error;
     }
   };
 
   useEffect(() => {
     checkSubscription();
-    
+
     // Refresh subscription status every minute
     const interval = setInterval(checkSubscription, 60000);
-    
+
     return () => clearInterval(interval);
   }, []);
 
   return {
     ...status,
-    checkSubscription,
     createCheckoutSession,
+    manageSubscription,
+    checkSubscription,
   };
 };

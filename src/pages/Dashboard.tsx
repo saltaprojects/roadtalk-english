@@ -17,7 +17,7 @@ const Dashboard = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const [userName, setUserName] = useState<string>("");
-  const { subscribed, subscription_status, loading: subLoading, createCheckoutSession, checkSubscription } = useSubscription();
+  const { subscribed, subscription_status, subscription_end, loading: subLoading, createCheckoutSession, manageSubscription, checkSubscription } = useSubscription();
   const { getCompletedCount, hasReachedFreeLimit, FREE_LESSONS_LIMIT, loading: progressLoading } = useLessonProgress();
   
   const completedLessons = getCompletedCount();
@@ -129,8 +129,23 @@ const Dashboard = () => {
         {!subLoading && subscribed && (
           <Alert className="border-green-500 bg-green-500/10">
             <Trophy className="h-4 w-4 text-green-500" />
-            <AlertDescription>
-              <span className="font-medium">{t('dashboard.subscription.active')}</span> - {t('dashboard.subscription.activeDescription')}
+            <AlertDescription className="flex items-center justify-between">
+              <div>
+                <div className="font-medium">{t('dashboard.subscription.active')} - {t('dashboard.subscription.activeDescription')}</div>
+                {subscription_end && (
+                  <p className="text-sm mt-1">
+                    Next payment: {new Date(subscription_end).toLocaleDateString()} ($5.99/week)
+                  </p>
+                )}
+              </div>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={manageSubscription}
+                className="ml-4 shrink-0"
+              >
+                Manage Subscription
+              </Button>
             </AlertDescription>
           </Alert>
         )}
