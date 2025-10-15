@@ -6,9 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Mic } from "lucide-react";
 import { ConversationChat } from "@/components/ConversationChat";
-import { DialoguePractice } from "@/components/DialoguePractice";
 import { DialogueReading } from "@/components/DialogueReading";
-import type { PhraseCategory } from "@/data/pronunciationPhrases";
 import type { DialogueDifficulty } from "@/data/dialogueTexts";
 import policeImage from "@/assets/scenarios/police-conversation.jpg";
 import gasStationImage from "@/assets/scenarios/gas-station-conversation.jpg";
@@ -63,7 +61,6 @@ const Practice = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(null);
-  const [selectedDialogueCategory, setSelectedDialogueCategory] = useState<PhraseCategory | 'all' | null>(null);
   const [selectedReadingDifficulty, setSelectedReadingDifficulty] = useState<DialogueDifficulty | null>(null);
 
   // Group scenarios by difficulty
@@ -76,15 +73,6 @@ const Practice = () => {
       <DialogueReading
         difficulty={selectedReadingDifficulty}
         onBack={() => setSelectedReadingDifficulty(null)}
-      />
-    );
-  }
-
-  if (selectedDialogueCategory) {
-    return (
-      <DialoguePractice
-        category={selectedDialogueCategory}
-        onBack={() => setSelectedDialogueCategory(null)}
       />
     );
   }
