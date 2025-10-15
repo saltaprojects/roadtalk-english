@@ -560,5 +560,33 @@
     },
     "comingSoon": "Скоро появится",
     "comingSoonDescription": "Эта функция скоро будет доступна!"
+  },
+  "vocabulary": {
+    "title": "Словарный тренажер",
+    "subtitle": "Составляйте фразы из слов с картинками и звуком",
+    "backToDashboard": "Назад на панель",
+    "backToScenarios": "Назад к сценариям",
+    "scenarios": {
+      "gasStation": "АЗС",
+      "weighStation": "Весовая станция",
+      "policeStop": "Полицейский контроль",
+      "borderCrossing": "Граница"
+    },
+    "phrasesCount": "{{count}} фраз для практики",
+    "startPractice": "Начать практику",
+    "playAgain": "Играть снова",
+    "listenToPhrase": "Послушать фразу",
+    "yourPhrase": "Ваша фраза",
+    "tapWords": "Нажмите на слова ниже, чтобы составить фразу",
+    "availableWords": "Доступные слова",
+    "checkAnswer": "Проверить ответ",
+    "nextPhrase": "Следующая фраза",
+    "finish": "Закончить",
+    "tryAgain": "Попробовать снова",
+    "correct": "Правильно!",
+    "correctDescription": "Отлично! Переходим к следующей фразе.",
+    "incorrect": "Неправильно",
+    "correctFeedback": "Отлично! Вы правильно составили фразу!",
+    "incorrectFeedback": "Не совсем так. Попробуйте еще раз!"
   }
 }

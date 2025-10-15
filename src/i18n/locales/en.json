@@ -560,5 +560,33 @@
     },
     "comingSoon": "Coming Soon",
     "comingSoonDescription": "This feature will be available soon!"
+  },
+  "vocabulary": {
+    "title": "Vocabulary Builder",
+    "subtitle": "Build phrases with words, pictures, and sounds",
+    "backToDashboard": "Back to Dashboard",
+    "backToScenarios": "Back to Scenarios",
+    "scenarios": {
+      "gasStation": "Gas Station",
+      "weighStation": "Weigh Station",
+      "policeStop": "Police Stop",
+      "borderCrossing": "Border Crossing"
+    },
+    "phrasesCount": "{{count}} phrases to practice",
+    "startPractice": "Start Practice",
+    "playAgain": "Play Again",
+    "listenToPhrase": "Listen to Phrase",
+    "yourPhrase": "Your Phrase",
+    "tapWords": "Tap words below to build the phrase",
+    "availableWords": "Available Words",
+    "checkAnswer": "Check Answer",
+    "nextPhrase": "Next Phrase",
+    "finish": "Finish",
+    "tryAgain": "Try Again",
+    "correct": "Correct!",
+    "correctDescription": "Great job! Moving to next phrase.",
+    "incorrect": "Incorrect",
+    "correctFeedback": "Perfect! You built the phrase correctly!",
+    "incorrectFeedback": "Not quite right. Try again!"
   }
 }
