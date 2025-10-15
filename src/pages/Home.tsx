@@ -127,7 +127,7 @@ const Home = () => {
       <section className="py-20 px-4 bg-gradient-to-br from-background to-muted/30">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-          <div className="flex justify-center mb-2">
+          <div className="flex justify-center mb-0">
             <Newspaper className="w-12 h-12 text-accent" />
           </div>
             <h2 className="text-4xl font-bold mb-4">
