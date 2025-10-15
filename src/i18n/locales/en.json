@@ -169,6 +169,64 @@
     "correct": "Correct!",
     "incorrect": "Not quite. The correct answer is"
   },
+  "miniGames": {
+    "title": "Mini Games",
+    "subtitle": "Learn English through fun and interactive games",
+    "backToDashboard": "Back to Dashboard",
+    "selectGame": "Select a Game",
+    "playNow": "Play Now",
+    "comingSoon": "Coming Soon",
+    "stats": {
+      "gamesPlayed": "Games Played",
+      "bestScore": "Best Score",
+      "totalTime": "Total Time",
+      "minutes": "min"
+    },
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "games": {
+      "trafficLight": {
+        "title": "Traffic Light Vocabulary",
+        "description": "Sort words by category before time runs out"
+      },
+      "wordMatch": {
+        "title": "Word Match",
+        "description": "Match English words with their meanings"
+      },
+      "cbSlang": {
+        "title": "CB Radio Slang Challenge",
+        "description": "Learn authentic trucker CB radio language"
+      },
+      "wordScramble": {
+        "title": "Word Scramble",
+        "description": "Unscramble truck-related vocabulary"
+      },
+      "routeMaster": {
+        "title": "Route Master",
+        "description": "Match routes with their destinations"
+      },
+      "truckerTrivia": {
+        "title": "Trucker Trivia Sprint",
+        "description": "Quick-fire questions about trucking"
+      },
+      "highwayBuilder": {
+        "title": "Highway Word Builder",
+        "description": "Build words from letter tiles"
+      },
+      "phraseShooter": {
+        "title": "Parking Lot Phrase Shooter",
+        "description": "Shoot correct phrases into parking spots"
+      }
+    },
+    "dailyChallenge": {
+      "title": "Daily Challenge",
+      "description": "Complete today's challenge for bonus points",
+      "comingSoon": "Daily challenges are coming soon! Check back later."
+    }
+  },
   "contact": {
     "title": "Contact Us",
     "subtitle": "Have questions? We're here to help!",

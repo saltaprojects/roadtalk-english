@@ -16,6 +16,7 @@ import PronunciationHelp from "./pages/PronunciationHelp";
 import EssentialPhrases from "./pages/EssentialPhrases";
 import MiniGrammar from "./pages/MiniGrammar";
 import { GrammarLesson } from "./components/GrammarLesson";
+import MiniGames from "./pages/MiniGames";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,6 +40,7 @@ const App = () => (
           <Route path="/essential-phrases" element={<EssentialPhrases />} />
           <Route path="/mini-grammar" element={<MiniGrammar />} />
           <Route path="/mini-grammar/:topicId" element={<GrammarLesson />} />
+          <Route path="/mini-games" element={<MiniGames />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
