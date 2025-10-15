@@ -7,7 +7,9 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Mic } from "lucide-react";
 import { ConversationChat } from "@/components/ConversationChat";
 import { DialoguePractice } from "@/components/DialoguePractice";
+import { DialogueReading } from "@/components/DialogueReading";
 import type { PhraseCategory } from "@/data/pronunciationPhrases";
+import type { DialogueDifficulty } from "@/data/dialogueTexts";
 import policeImage from "@/assets/scenarios/police-conversation.jpg";
 import gasStationImage from "@/assets/scenarios/gas-station-conversation.jpg";
 import dispatcherImage from "@/assets/scenarios/dispatcher-conversation.jpg";
@@ -62,11 +64,21 @@ const Practice = () => {
   const { t } = useTranslation();
   const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(null);
   const [selectedDialogueCategory, setSelectedDialogueCategory] = useState<PhraseCategory | 'all' | null>(null);
+  const [selectedReadingDifficulty, setSelectedReadingDifficulty] = useState<DialogueDifficulty | null>(null);
 
   // Group scenarios by difficulty
   const beginnerScenarios = scenarios.filter(s => t(s.difficultyKey) === t("practice.scenarios.gasStation.difficulty"));
   const intermediateScenarios = scenarios.filter(s => t(s.difficultyKey) === t("practice.scenarios.police.difficulty"));
   const professionalScenarios = scenarios.filter(s => t(s.difficultyKey) === t("practice.scenarios.border.difficulty"));
+
+  if (selectedReadingDifficulty) {
+    return (
+      <DialogueReading
+        difficulty={selectedReadingDifficulty}
+        onBack={() => setSelectedReadingDifficulty(null)}
+      />
+    );
+  }
 
   if (selectedDialogueCategory) {
     return (
@@ -106,101 +118,61 @@ const Practice = () => {
           <p className="text-muted-foreground text-lg">{t("practice.subtitle")}</p>
         </div>
 
-        {/* Speaking Practice with Dialogues */}
+        {/* Dialogue Reading Practice */}
         <div className="mb-12">
           <div className="mb-6">
-            <h2 className="text-3xl font-bold mb-2">{t("pronunciation.title")}</h2>
-            <p className="text-muted-foreground">{t("pronunciation.subtitle")}</p>
+            <h2 className="text-3xl font-bold mb-2">{t("dialogue.title")}</h2>
+            <p className="text-muted-foreground">{t("dialogue.subtitle")}</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Card className="hover:shadow-lg transition-all hover:scale-105 cursor-pointer" onClick={() => setSelectedDialogueCategory('all')}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card 
+              className="hover:shadow-lg transition-all hover:scale-105 cursor-pointer" 
+              onClick={() => setSelectedReadingDifficulty('beginner')}
+            >
               <CardHeader>
-                <div className="flex items-center gap-2">
-                  <Mic className="h-6 w-6 text-primary" />
-                  <CardTitle>{t('pronunciation.categories.all')}</CardTitle>
-                </div>
-                <CardDescription>{t('pronunciation.allPhrases')}</CardDescription>
+                <CardTitle className="flex items-center gap-2">
+                  <Badge variant="default" className="text-lg px-3 py-1">
+                    {t('dialogue.difficulty.beginner')}
+                  </Badge>
+                </CardTitle>
+                <CardDescription>{t('dialogue.beginnerDesc')}</CardDescription>
               </CardHeader>
               <CardContent>
-                <Badge variant="secondary">{t('pronunciation.allDifficulties')}</Badge>
+                <p className="text-sm text-muted-foreground">{t('dialogue.readFullTexts')}</p>
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-all hover:scale-105 cursor-pointer" onClick={() => setSelectedDialogueCategory('navigation')}>
+            <Card 
+              className="hover:shadow-lg transition-all hover:scale-105 cursor-pointer" 
+              onClick={() => setSelectedReadingDifficulty('intermediate')}
+            >
               <CardHeader>
-                <div className="flex items-center gap-2">
-                  <Mic className="h-6 w-6 text-primary" />
-                  <CardTitle>{t('pronunciation.categories.navigation')}</CardTitle>
-                </div>
-                <CardDescription>{t('pronunciation.navigationDesc')}</CardDescription>
+                <CardTitle className="flex items-center gap-2">
+                  <Badge variant="secondary" className="text-lg px-3 py-1">
+                    {t('dialogue.difficulty.intermediate')}
+                  </Badge>
+                </CardTitle>
+                <CardDescription>{t('dialogue.intermediateDesc')}</CardDescription>
               </CardHeader>
               <CardContent>
-                <Badge variant="secondary">{t('pronunciation.beginner')}</Badge>
+                <p className="text-sm text-muted-foreground">{t('dialogue.readFullTexts')}</p>
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-all hover:scale-105 cursor-pointer" onClick={() => setSelectedDialogueCategory('delivery')}>
+            <Card 
+              className="hover:shadow-lg transition-all hover:scale-105 cursor-pointer" 
+              onClick={() => setSelectedReadingDifficulty('advanced')}
+            >
               <CardHeader>
-                <div className="flex items-center gap-2">
-                  <Mic className="h-6 w-6 text-primary" />
-                  <CardTitle>{t('pronunciation.categories.delivery')}</CardTitle>
-                </div>
-                <CardDescription>{t('pronunciation.deliveryDesc')}</CardDescription>
+                <CardTitle className="flex items-center gap-2">
+                  <Badge variant="destructive" className="text-lg px-3 py-1">
+                    {t('dialogue.difficulty.advanced')}
+                  </Badge>
+                </CardTitle>
+                <CardDescription>{t('dialogue.advancedDesc')}</CardDescription>
               </CardHeader>
               <CardContent>
-                <Badge variant="secondary">{t('pronunciation.intermediate')}</Badge>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-lg transition-all hover:scale-105 cursor-pointer" onClick={() => setSelectedDialogueCategory('border')}>
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <Mic className="h-6 w-6 text-primary" />
-                  <CardTitle>{t('pronunciation.categories.border')}</CardTitle>
-                </div>
-                <CardDescription>{t('pronunciation.borderDesc')}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Badge variant="destructive">{t('pronunciation.advanced')}</Badge>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-lg transition-all hover:scale-105 cursor-pointer" onClick={() => setSelectedDialogueCategory('emergency')}>
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <Mic className="h-6 w-6 text-primary" />
-                  <CardTitle>{t('pronunciation.categories.emergency')}</CardTitle>
-                </div>
-                <CardDescription>{t('pronunciation.emergencyDesc')}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Badge variant="secondary">{t('pronunciation.intermediate')}</Badge>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-lg transition-all hover:scale-105 cursor-pointer" onClick={() => setSelectedDialogueCategory('dispatch')}>
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <Mic className="h-6 w-6 text-primary" />
-                  <CardTitle>{t('pronunciation.categories.dispatch')}</CardTitle>
-                </div>
-                <CardDescription>{t('pronunciation.dispatchDesc')}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Badge variant="secondary">{t('pronunciation.intermediate')}</Badge>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-lg transition-all hover:scale-105 cursor-pointer" onClick={() => setSelectedDialogueCategory('mechanics')}>
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <Mic className="h-6 w-6 text-primary" />
-                  <CardTitle>{t('pronunciation.categories.mechanics')}</CardTitle>
-                </div>
-                <CardDescription>{t('pronunciation.mechanicsDesc')}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Badge variant="destructive">{t('pronunciation.advanced')}</Badge>
+                <p className="text-sm text-muted-foreground">{t('dialogue.readFullTexts')}</p>
               </CardContent>
             </Card>
           </div>
