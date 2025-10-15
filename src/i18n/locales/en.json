@@ -388,6 +388,11 @@
         "title": "Contract Negotiation",
         "description": "Discuss rates and contract terms",
         "difficulty": "Professional"
+      },
+      "iceOfficer": {
+        "title": "ICE Officer Encounter",
+        "description": "Handle immigration enforcement encounters professionally",
+        "difficulty": "Professional"
       }
     },
     "chat": {

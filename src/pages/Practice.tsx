@@ -52,6 +52,7 @@ const scenarios: Scenario[] = [
   { id: "accident", icon: "🚨", titleKey: "practice.scenarios.accident.title", descriptionKey: "practice.scenarios.accident.description", difficultyKey: "practice.scenarios.accident.difficulty", image: accidentImage },
   { id: "cbRadio", icon: "📻", titleKey: "practice.scenarios.cbRadio.title", descriptionKey: "practice.scenarios.cbRadio.description", difficultyKey: "practice.scenarios.cbRadio.difficulty", image: cbRadioImage },
   { id: "contract", icon: "📋", titleKey: "practice.scenarios.contract.title", descriptionKey: "practice.scenarios.contract.description", difficultyKey: "practice.scenarios.contract.difficulty", image: contractImage },
+  { id: "iceOfficer", icon: "🛂", titleKey: "practice.scenarios.iceOfficer.title", descriptionKey: "practice.scenarios.iceOfficer.description", difficultyKey: "practice.scenarios.iceOfficer.difficulty", image: borderImage },
 ];
 
 const Practice = () => {
