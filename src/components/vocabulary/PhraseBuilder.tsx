@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { WordCard } from "./WordCard";
 import { Phrase, Word } from "@/data/vocabularyWords";
-import { CheckCircle, XCircle, RotateCcw, Volume2 } from "lucide-react";
+import { CheckCircle, XCircle, RotateCcw } from "lucide-react";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useToast } from "@/hooks/use-toast";
 
@@ -88,11 +88,6 @@ export const PhraseBuilder = ({ phrases, scenarioTitle, scenarioImage, onComplet
     setIsCorrect(null);
   };
 
-  const handlePlayPhrase = () => {
-    const fullPhrase = currentPhrase.targetPhrase.map(w => w.text).join(" ");
-    playText(fullPhrase);
-  };
-
   return (
     <div className="space-y-6">
       <Card>
@@ -108,18 +103,6 @@ export const PhraseBuilder = ({ phrases, scenarioTitle, scenarioImage, onComplet
         <CardContent className="space-y-6">
           <div className="relative rounded-lg overflow-hidden">
             <img src={scenarioImage} alt={scenarioTitle} className="w-full h-48 object-cover" />
-          </div>
-
-          <div className="flex items-center justify-center">
-            <Button
-              onClick={handlePlayPhrase}
-              disabled={isPlaying}
-              variant="outline"
-              size="lg"
-            >
-              <Volume2 className="mr-2 h-5 w-5" />
-              {t("vocabulary.listenToPhrase")}
-            </Button>
           </div>
 
           {/* Selected Words Area */}
