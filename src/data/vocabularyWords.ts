@@ -6,6 +6,7 @@ import borderImage from "@/assets/scenarios/border-conversation.jpg";
 
 export interface Word {
   text: string;
+  russian: string;
   icon: any;
 }
 
@@ -34,41 +35,41 @@ export const vocabularyScenarios: Scenario[] = [
       {
         id: "fill-up-diesel",
         targetPhrase: [
-          { text: "Fill", icon: Fuel },
-          { text: "up", icon: Fuel },
-          { text: "diesel", icon: Fuel },
-          { text: "please", icon: ThumbsUp }
+          { text: "Fill", russian: "Заполнить", icon: Fuel },
+          { text: "up", russian: "до конца", icon: Fuel },
+          { text: "diesel", russian: "дизель", icon: Fuel },
+          { text: "please", russian: "пожалуйста", icon: ThumbsUp }
         ],
         distractorWords: [
-          { text: "gasoline", icon: Fuel },
-          { text: "empty", icon: XCircle }
+          { text: "gasoline", russian: "бензин", icon: Fuel },
+          { text: "empty", russian: "пусто", icon: XCircle }
         ]
       },
       {
         id: "restroom-location",
         targetPhrase: [
-          { text: "Where", icon: MapPin },
-          { text: "is", icon: MapPin },
-          { text: "the", icon: MapPin },
-          { text: "restroom", icon: Coffee }
+          { text: "Where", russian: "Где", icon: MapPin },
+          { text: "is", russian: "есть", icon: MapPin },
+          { text: "the", russian: "", icon: MapPin },
+          { text: "restroom", russian: "туалет", icon: Coffee }
         ],
         distractorWords: [
-          { text: "truck", icon: Wrench },
-          { text: "parking", icon: MapPin }
+          { text: "truck", russian: "грузовик", icon: Wrench },
+          { text: "parking", russian: "парковка", icon: MapPin }
         ]
       },
       {
         id: "credit-card-payment",
         targetPhrase: [
-          { text: "Can", icon: CheckCircle },
-          { text: "I", icon: CheckCircle },
-          { text: "pay", icon: CreditCard },
-          { text: "by", icon: CreditCard },
-          { text: "card", icon: CreditCard }
+          { text: "Can", russian: "Могу", icon: CheckCircle },
+          { text: "I", russian: "я", icon: CheckCircle },
+          { text: "pay", russian: "оплатить", icon: CreditCard },
+          { text: "by", russian: "", icon: CreditCard },
+          { text: "card", russian: "картой", icon: CreditCard }
         ],
         distractorWords: [
-          { text: "cash", icon: CreditCard },
-          { text: "receipt", icon: CheckCircle }
+          { text: "cash", russian: "наличные", icon: CreditCard },
+          { text: "receipt", russian: "чек", icon: CheckCircle }
         ]
       }
     ]
@@ -82,42 +83,42 @@ export const vocabularyScenarios: Scenario[] = [
       {
         id: "paperwork-ready",
         targetPhrase: [
-          { text: "My", icon: CheckCircle },
-          { text: "paperwork", icon: CheckCircle },
-          { text: "is", icon: CheckCircle },
-          { text: "ready", icon: CheckCircle }
+          { text: "My", russian: "Мои", icon: CheckCircle },
+          { text: "paperwork", russian: "документы", icon: CheckCircle },
+          { text: "is", russian: "", icon: CheckCircle },
+          { text: "ready", russian: "готовы", icon: CheckCircle }
         ],
         distractorWords: [
-          { text: "missing", icon: XCircle },
-          { text: "weight", icon: Scale }
+          { text: "missing", russian: "отсутствуют", icon: XCircle },
+          { text: "weight", russian: "вес", icon: Scale }
         ]
       },
       {
         id: "weight-limit",
         targetPhrase: [
-          { text: "What", icon: Scale },
-          { text: "is", icon: Scale },
-          { text: "the", icon: Scale },
-          { text: "weight", icon: Scale },
-          { text: "limit", icon: AlertTriangle }
+          { text: "What", russian: "Какой", icon: Scale },
+          { text: "is", russian: "", icon: Scale },
+          { text: "the", russian: "", icon: Scale },
+          { text: "weight", russian: "весовой", icon: Scale },
+          { text: "limit", russian: "лимит", icon: AlertTriangle }
         ],
         distractorWords: [
-          { text: "height", icon: AlertTriangle },
-          { text: "speed", icon: Clock }
+          { text: "height", russian: "высота", icon: AlertTriangle },
+          { text: "speed", russian: "скорость", icon: Clock }
         ]
       },
       {
         id: "inspection-time",
         targetPhrase: [
-          { text: "How", icon: Clock },
-          { text: "long", icon: Clock },
-          { text: "will", icon: Clock },
-          { text: "this", icon: Clock },
-          { text: "take", icon: Clock }
+          { text: "How", russian: "Как", icon: Clock },
+          { text: "long", russian: "долго", icon: Clock },
+          { text: "will", russian: "", icon: Clock },
+          { text: "this", russian: "это", icon: Clock },
+          { text: "take", russian: "займет", icon: Clock }
         ],
         distractorWords: [
-          { text: "much", icon: CreditCard },
-          { text: "cost", icon: CreditCard }
+          { text: "much", russian: "много", icon: CreditCard },
+          { text: "cost", russian: "стоит", icon: CreditCard }
         ]
       }
     ]
@@ -131,39 +132,39 @@ export const vocabularyScenarios: Scenario[] = [
       {
         id: "license-registration",
         targetPhrase: [
-          { text: "Here", icon: CheckCircle },
-          { text: "is", icon: CheckCircle },
-          { text: "my", icon: CheckCircle },
-          { text: "license", icon: CheckCircle }
+          { text: "Here", russian: "Вот", icon: CheckCircle },
+          { text: "is", russian: "", icon: CheckCircle },
+          { text: "my", russian: "моя", icon: CheckCircle },
+          { text: "license", russian: "лицензия", icon: CheckCircle }
         ],
         distractorWords: [
-          { text: "passport", icon: CheckCircle },
-          { text: "ticket", icon: XCircle }
+          { text: "passport", russian: "паспорт", icon: CheckCircle },
+          { text: "ticket", russian: "штраф", icon: XCircle }
         ]
       },
       {
         id: "problem-question",
         targetPhrase: [
-          { text: "Is", icon: AlertTriangle },
-          { text: "there", icon: AlertTriangle },
-          { text: "a", icon: AlertTriangle },
-          { text: "problem", icon: AlertTriangle }
+          { text: "Is", russian: "", icon: AlertTriangle },
+          { text: "there", russian: "Есть", icon: AlertTriangle },
+          { text: "a", russian: "", icon: AlertTriangle },
+          { text: "problem", russian: "проблема", icon: AlertTriangle }
         ],
         distractorWords: [
-          { text: "fine", icon: CreditCard },
-          { text: "speeding", icon: Clock }
+          { text: "fine", russian: "штраф", icon: CreditCard },
+          { text: "speeding", russian: "превышение", icon: Clock }
         ]
       },
       {
         id: "understand",
         targetPhrase: [
-          { text: "I", icon: CheckCircle },
-          { text: "understand", icon: CheckCircle }
+          { text: "I", russian: "Я", icon: CheckCircle },
+          { text: "understand", russian: "понимаю", icon: CheckCircle }
         ],
         distractorWords: [
-          { text: "sorry", icon: ThumbsUp },
-          { text: "explain", icon: AlertTriangle },
-          { text: "slowly", icon: Clock }
+          { text: "sorry", russian: "извините", icon: ThumbsUp },
+          { text: "explain", russian: "объясните", icon: AlertTriangle },
+          { text: "slowly", russian: "медленно", icon: Clock }
         ]
       }
     ]
@@ -177,41 +178,41 @@ export const vocabularyScenarios: Scenario[] = [
       {
         id: "cargo-declaration",
         targetPhrase: [
-          { text: "I", icon: CheckCircle },
-          { text: "am", icon: CheckCircle },
-          { text: "carrying", icon: CheckCircle },
-          { text: "electronics", icon: CheckCircle }
+          { text: "I", russian: "Я", icon: CheckCircle },
+          { text: "am", russian: "", icon: CheckCircle },
+          { text: "carrying", russian: "везу", icon: CheckCircle },
+          { text: "electronics", russian: "электронику", icon: CheckCircle }
         ],
         distractorWords: [
-          { text: "food", icon: Coffee },
-          { text: "weapons", icon: XCircle }
+          { text: "food", russian: "еду", icon: Coffee },
+          { text: "weapons", russian: "оружие", icon: XCircle }
         ]
       },
       {
         id: "destination",
         targetPhrase: [
-          { text: "My", icon: MapPin },
-          { text: "destination", icon: MapPin },
-          { text: "is", icon: MapPin },
-          { text: "Chicago", icon: MapPin }
+          { text: "My", russian: "Мой", icon: MapPin },
+          { text: "destination", russian: "пункт назначения", icon: MapPin },
+          { text: "is", russian: "", icon: MapPin },
+          { text: "Chicago", russian: "Чикаго", icon: MapPin }
         ],
         distractorWords: [
-          { text: "origin", icon: MapPin },
-          { text: "route", icon: MapPin }
+          { text: "origin", russian: "происхождение", icon: MapPin },
+          { text: "route", russian: "маршрут", icon: MapPin }
         ]
       },
       {
         id: "documents-complete",
         targetPhrase: [
-          { text: "All", icon: CheckCircle },
-          { text: "my", icon: CheckCircle },
-          { text: "documents", icon: CheckCircle },
-          { text: "are", icon: CheckCircle },
-          { text: "complete", icon: CheckCircle }
+          { text: "All", russian: "Все", icon: CheckCircle },
+          { text: "my", russian: "мои", icon: CheckCircle },
+          { text: "documents", russian: "документы", icon: CheckCircle },
+          { text: "are", russian: "", icon: CheckCircle },
+          { text: "complete", russian: "в порядке", icon: CheckCircle }
         ],
         distractorWords: [
-          { text: "missing", icon: XCircle },
-          { text: "expired", icon: AlertTriangle }
+          { text: "missing", russian: "отсутствуют", icon: XCircle },
+          { text: "expired", russian: "просрочены", icon: AlertTriangle }
         ]
       }
     ]

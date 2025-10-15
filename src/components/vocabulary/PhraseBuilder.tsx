@@ -7,7 +7,7 @@ import { WordCard } from "./WordCard";
 import { Phrase, Word } from "@/data/vocabularyWords";
 import { CheckCircle, XCircle, RotateCcw, Volume2 } from "lucide-react";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 interface PhraseBuilderProps {
   phrases: Phrase[];

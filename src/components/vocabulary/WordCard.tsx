@@ -30,6 +30,9 @@ export const WordCard = ({ word, onClick, isSelected, isDisabled }: WordCardProp
       <div className="flex flex-col items-center gap-2">
         <Icon className="h-8 w-8 text-primary" />
         <p className="text-lg font-semibold text-center">{word.text}</p>
+        {word.russian && (
+          <p className="text-sm text-muted-foreground text-center">{word.russian}</p>
+        )}
         <Button
           variant="ghost"
           size="sm"
