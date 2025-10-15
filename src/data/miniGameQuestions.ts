@@ -1,59 +1,116 @@
 export interface GameQuestion {
   id: string;
   scenario: string;
-  situationEN: string;
-  situationRU: string;
+  imageUrl: string;
+  phraseEN: string;
+  phraseRU: string;
+  questionLanguage: "en" | "ru";
   correctAnswer: string;
   wrongAnswers: string[];
   difficulty: "easy" | "medium" | "hard";
 }
 
 export const miniGameQuestions: GameQuestion[] = [
-  // Weigh Station Scenario (Easy)
+  // Weigh Station Scenario - English to Russian
   {
-    id: "weigh-1",
+    id: "weigh-en-1",
     scenario: "weigh-station",
-    situationEN: "The inspector asks: 'What's your gross vehicle weight?'",
-    situationRU: "Инспектор спрашивает: 'Какова масса вашего транспортного средства?'",
-    correctAnswer: "It's 78,000 pounds, sir",
+    imageUrl: "/src/assets/scenarios/weigh-station-conversation.jpg",
+    phraseEN: "May I see your logbook?",
+    phraseRU: "Можно посмотреть вашу путевую книгу?",
+    questionLanguage: "en",
+    correctAnswer: "Можно посмотреть вашу путевую книгу?",
     wrongAnswers: [
-      "I don't know the weight",
-      "Maybe 50 tons",
-      "Is it important?"
+      "Где ваши документы?",
+      "Вы превысили скорость?",
+      "Какой груз вы везете?"
     ],
     difficulty: "easy"
   },
   {
-    id: "weigh-2",
+    id: "weigh-en-2",
     scenario: "weigh-station",
-    situationEN: "The inspector says: 'Pull your truck onto the scale'",
-    situationRU: "Инспектор говорит: 'Заезжайте на весы'",
-    correctAnswer: "Yes, sir. Right away",
+    imageUrl: "/src/assets/scenarios/weigh-station-conversation.jpg",
+    phraseEN: "Pull your truck onto the scale",
+    phraseRU: "Заезжайте на весы",
+    questionLanguage: "en",
+    correctAnswer: "Заезжайте на весы",
     wrongAnswers: [
-      "Why do I need to?",
-      "Can I skip this?",
-      "I'm in a hurry"
+      "Остановите двигатель",
+      "Покажите права",
+      "Откройте прицеп"
     ],
     difficulty: "easy"
   },
   {
-    id: "weigh-3",
+    id: "weigh-en-3",
     scenario: "weigh-station",
-    situationEN: "The inspector asks: 'May I see your logbook?'",
-    situationRU: "Инспектор спрашивает: 'Можно посмотреть вашу путевую книгу?'",
+    imageUrl: "/src/assets/scenarios/weigh-station-conversation.jpg",
+    phraseEN: "Your axle weight is over the limit",
+    phraseRU: "Вес на оси превышает норму",
+    questionLanguage: "en",
+    correctAnswer: "Вес на оси превышает норму",
+    wrongAnswers: [
+      "Ваша скорость слишком высокая",
+      "У вас сломаны фары",
+      "Документы не в порядке"
+    ],
+    difficulty: "medium"
+  },
+  {
+    id: "weigh-en-4",
+    scenario: "weigh-station",
+    imageUrl: "/src/assets/scenarios/weigh-station-conversation.jpg",
+    phraseEN: "Are you carrying any hazardous materials?",
+    phraseRU: "Вы перевозите опасные грузы?",
+    questionLanguage: "en",
+    correctAnswer: "Вы перевозите опасные грузы?",
+    wrongAnswers: [
+      "Сколько миль вы проехали?",
+      "Куда вы направляетесь?",
+      "Когда вы отдыхали?"
+    ],
+    difficulty: "medium"
+  },
+  {
+    id: "weigh-en-5",
+    scenario: "weigh-station",
+    imageUrl: "/src/assets/scenarios/weigh-station-conversation.jpg",
+    phraseEN: "How many hours have you been driving today?",
+    phraseRU: "Сколько часов вы сегодня за рулем?",
+    questionLanguage: "en",
+    correctAnswer: "Сколько часов вы сегодня за рулем?",
+    wrongAnswers: [
+      "Когда вы начали работать?",
+      "Где вы будете спать?",
+      "Сколько вам лет?"
+    ],
+    difficulty: "easy"
+  },
+
+  // Weigh Station Scenario - Russian to English
+  {
+    id: "weigh-ru-1",
+    scenario: "weigh-station",
+    imageUrl: "/src/assets/scenarios/weigh-station-conversation.jpg",
+    phraseEN: "Here it is, officer",
+    phraseRU: "Вот, офицер",
+    questionLanguage: "ru",
     correctAnswer: "Here it is, officer",
     wrongAnswers: [
-      "I forgot it at home",
-      "Do you really need it?",
-      "It's in the truck somewhere"
+      "I don't have it",
+      "Why do you need it?",
+      "It's in the truck"
     ],
     difficulty: "easy"
   },
   {
-    id: "weigh-4",
+    id: "weigh-ru-2",
     scenario: "weigh-station",
-    situationEN: "The inspector says: 'Your axle weight is over the limit'",
-    situationRU: "Инспектор говорит: 'Вес на оси превышает норму'",
+    imageUrl: "/src/assets/scenarios/weigh-station-conversation.jpg",
+    phraseEN: "I understand. What should I do?",
+    phraseRU: "Я понимаю. Что мне делать?",
+    questionLanguage: "ru",
     correctAnswer: "I understand. What should I do?",
     wrongAnswers: [
       "That's impossible!",
@@ -63,23 +120,42 @@ export const miniGameQuestions: GameQuestion[] = [
     difficulty: "easy"
   },
   {
-    id: "weigh-5",
+    id: "weigh-ru-3",
     scenario: "weigh-station",
-    situationEN: "The inspector asks: 'Are you carrying any hazardous materials?'",
-    situationRU: "Инспектор спрашивает: 'Вы перевозите опасные грузы?'",
+    imageUrl: "/src/assets/scenarios/weigh-station-conversation.jpg",
+    phraseEN: "No, just regular cargo",
+    phraseRU: "Нет, просто обычный груз",
+    questionLanguage: "ru",
     correctAnswer: "No, just regular cargo",
     wrongAnswers: [
+      "Yes, I have chemicals",
       "What do you mean?",
-      "I'm not sure",
-      "Maybe some chemicals"
+      "I'm not sure"
     ],
     difficulty: "easy"
   },
   {
-    id: "weigh-6",
+    id: "weigh-ru-4",
     scenario: "weigh-station",
-    situationEN: "The inspector says: 'Your permits look good. You're cleared to go'",
-    situationRU: "Инспектор говорит: 'Ваши документы в порядке. Можете ехать'",
+    imageUrl: "/src/assets/scenarios/weigh-station-conversation.jpg",
+    phraseEN: "I've driven 8 hours so far",
+    phraseRU: "Я проехал 8 часов на данный момент",
+    questionLanguage: "ru",
+    correctAnswer: "I've driven 8 hours so far",
+    wrongAnswers: [
+      "Not too many hours",
+      "I lost count",
+      "Enough hours"
+    ],
+    difficulty: "medium"
+  },
+  {
+    id: "weigh-ru-5",
+    scenario: "weigh-station",
+    imageUrl: "/src/assets/scenarios/weigh-station-conversation.jpg",
+    phraseEN: "Thank you, officer. Have a good day",
+    phraseRU: "Спасибо, офицер. Хорошего дня",
+    questionLanguage: "ru",
     correctAnswer: "Thank you, officer. Have a good day",
     wrongAnswers: [
       "Finally!",
@@ -88,143 +164,107 @@ export const miniGameQuestions: GameQuestion[] = [
     ],
     difficulty: "easy"
   },
+
+  // Gas Station Scenario - English to Russian
   {
-    id: "weigh-7",
-    scenario: "weigh-station",
-    situationEN: "The inspector asks: 'How many hours have you been driving today?'",
-    situationRU: "Инспектор спрашивает: 'Сколько часов вы сегодня за рулем?'",
-    correctAnswer: "I've driven 8 hours so far",
+    id: "gas-en-1",
+    scenario: "gas-station",
+    imageUrl: "/src/assets/scenarios/gas-station-conversation.jpg",
+    phraseEN: "Diesel, please. Fill it up",
+    phraseRU: "Дизель, пожалуйста. Полный бак",
+    questionLanguage: "en",
+    correctAnswer: "Дизель, пожалуйста. Полный бак",
     wrongAnswers: [
-      "Not too many",
-      "I lost count",
-      "Enough hours"
+      "Бензин на 50 долларов",
+      "Где туалет?",
+      "Сколько это стоит?"
     ],
     difficulty: "easy"
   },
   {
-    id: "weigh-8",
-    scenario: "weigh-station",
-    situationEN: "The inspector says: 'I need to inspect your cargo area'",
-    situationRU: "Инспектор говорит: 'Мне нужно осмотреть грузовой отсек'",
-    correctAnswer: "Sure, let me open it for you",
+    id: "gas-en-2",
+    scenario: "gas-station",
+    imageUrl: "/src/assets/scenarios/gas-station-conversation.jpg",
+    phraseEN: "Can I pay with a company card?",
+    phraseRU: "Могу я оплатить корпоративной картой?",
+    questionLanguage: "en",
+    correctAnswer: "Могу я оплатить корпоративной картой?",
     wrongAnswers: [
-      "Why is that necessary?",
-      "Can't you just trust me?",
-      "I'm running late"
+      "Это слишком дорого!",
+      "У меня нет денег",
+      "Дайте скидку"
     ],
     difficulty: "easy"
   },
   {
-    id: "weigh-9",
-    scenario: "weigh-station",
-    situationEN: "The inspector asks: 'Where are you headed?'",
-    situationRU: "Инспектор спрашивает: 'Куда вы направляетесь?'",
-    correctAnswer: "I'm heading to Chicago, Illinois",
+    id: "gas-en-3",
+    scenario: "gas-station",
+    imageUrl: "/src/assets/scenarios/gas-station-conversation.jpg",
+    phraseEN: "Yes, please. I need it for my company",
+    phraseRU: "Да, пожалуйста. Он нужен для моей компании",
+    questionLanguage: "en",
+    correctAnswer: "Да, пожалуйста. Он нужен для моей компании",
     wrongAnswers: [
-      "Just driving around",
-      "North somewhere",
-      "To deliver stuff"
+      "Нет, забудьте",
+      "Мне всё равно",
+      "Может быть"
     ],
     difficulty: "easy"
   },
   {
-    id: "weigh-10",
-    scenario: "weigh-station",
-    situationEN: "The inspector says: 'Your brake lights aren't working properly'",
-    situationRU: "Инспектор говорит: 'Ваши стоп-сигналы не работают должным образом'",
-    correctAnswer: "I'll get them fixed right away. Where's the nearest shop?",
+    id: "gas-en-4",
+    scenario: "gas-station",
+    imageUrl: "/src/assets/scenarios/gas-station-conversation.jpg",
+    phraseEN: "How far is the next station?",
+    phraseRU: "Как далеко следующая заправка?",
+    questionLanguage: "en",
+    correctAnswer: "Как далеко следующая заправка?",
     wrongAnswers: [
-      "They were working this morning",
-      "I didn't notice",
-      "Can I fix it later?"
+      "Это смешно!",
+      "Я не могу в это поверить",
+      "Что мне делать?"
+    ],
+    difficulty: "medium"
+  },
+  {
+    id: "gas-en-5",
+    scenario: "gas-station",
+    imageUrl: "/src/assets/scenarios/gas-station-conversation.jpg",
+    phraseEN: "I'm at pump number 7",
+    phraseRU: "Я на колонке номер 7",
+    questionLanguage: "en",
+    correctAnswer: "Я на колонке номер 7",
+    wrongAnswers: [
+      "Та, что снаружи",
+      "Дизельная колонка",
+      "Я забыл"
     ],
     difficulty: "easy"
   },
 
-  // Gas Station Scenario (Easy)
+  // Gas Station Scenario - Russian to English
   {
-    id: "gas-1",
+    id: "gas-ru-1",
     scenario: "gas-station",
-    situationEN: "The attendant asks: 'Diesel or gas?'",
-    situationRU: "Работник спрашивает: 'Дизель или бензин?'",
-    correctAnswer: "Diesel, please. Fill it up",
-    wrongAnswers: [
-      "Whatever's cheaper",
-      "I don't know",
-      "Just fuel"
-    ],
-    difficulty: "easy"
-  },
-  {
-    id: "gas-2",
-    scenario: "gas-station",
-    situationEN: "The attendant says: 'That'll be $450'",
-    situationRU: "Работник говорит: 'С вас 450 долларов'",
-    correctAnswer: "Can I pay with a company card?",
-    wrongAnswers: [
-      "That's too much!",
-      "Are you sure?",
-      "I only have $300"
-    ],
-    difficulty: "easy"
-  },
-  {
-    id: "gas-3",
-    scenario: "gas-station",
-    situationEN: "The attendant asks: 'Do you need a receipt?'",
-    situationRU: "Работник спрашивает: 'Вам нужен чек?'",
-    correctAnswer: "Yes, please. I need it for my company",
-    wrongAnswers: [
-      "No, forget it",
-      "Whatever",
-      "I guess so"
-    ],
-    difficulty: "easy"
-  },
-  {
-    id: "gas-4",
-    scenario: "gas-station",
-    situationEN: "The attendant says: 'We're out of diesel. Try the next station'",
-    situationRU: "Работник говорит: 'У нас закончилось дизельное топливо. Попробуйте следующую заправку'",
-    correctAnswer: "Okay, thanks. How far is the next station?",
-    wrongAnswers: [
-      "This is ridiculous!",
-      "I can't believe this",
-      "What am I supposed to do?"
-    ],
-    difficulty: "easy"
-  },
-  {
-    id: "gas-5",
-    scenario: "gas-station",
-    situationEN: "The attendant asks: 'Which pump number are you at?'",
-    situationRU: "Работник спрашивает: 'На какой колонке вы стоите?'",
-    correctAnswer: "I'm at pump number 7",
-    wrongAnswers: [
-      "The one outside",
-      "The diesel one",
-      "I forgot"
-    ],
-    difficulty: "easy"
-  },
-  {
-    id: "gas-6",
-    scenario: "gas-station",
-    situationEN: "The attendant says: 'Your card was declined'",
-    situationRU: "Работник говорит: 'Ваша карта не прошла'",
+    imageUrl: "/src/assets/scenarios/gas-station-conversation.jpg",
+    phraseEN: "Let me try another card. One moment",
+    phraseRU: "Позвольте попробовать другую карту. Одну минуту",
+    questionLanguage: "ru",
     correctAnswer: "Let me try another card. One moment",
     wrongAnswers: [
       "That's impossible!",
-      "Your machine must be broken",
+      "Your machine is broken",
       "I used it yesterday"
     ],
     difficulty: "easy"
   },
   {
-    id: "gas-7",
+    id: "gas-ru-2",
     scenario: "gas-station",
-    situationEN: "The attendant asks: 'Do you need DEF fluid?'",
-    situationRU: "Работник спрашивает: 'Вам нужна жидкость DEF?'",
+    imageUrl: "/src/assets/scenarios/gas-station-conversation.jpg",
+    phraseEN: "Yes, I'll take 5 gallons",
+    phraseRU: "Да, возьму 5 галлонов",
+    questionLanguage: "ru",
     correctAnswer: "Yes, I'll take 5 gallons",
     wrongAnswers: [
       "What's that?",
@@ -234,36 +274,42 @@ export const miniGameQuestions: GameQuestion[] = [
     difficulty: "easy"
   },
   {
-    id: "gas-8",
+    id: "gas-ru-3",
     scenario: "gas-station",
-    situationEN: "The attendant says: 'We have free coffee inside'",
-    situationRU: "Работник говорит: 'У нас внутри есть бесплатный кофе'",
+    imageUrl: "/src/assets/scenarios/gas-station-conversation.jpg",
+    phraseEN: "Great! Thank you for letting me know",
+    phraseRU: "Отлично! Спасибо, что сообщили",
+    questionLanguage: "ru",
     correctAnswer: "Great! Thank you for letting me know",
     wrongAnswers: [
       "I don't drink coffee",
       "Is it good?",
-      "Okay"
+      "Whatever"
     ],
     difficulty: "easy"
   },
   {
-    id: "gas-9",
+    id: "gas-ru-4",
     scenario: "gas-station",
-    situationEN: "The attendant asks: 'Where can I park my truck?'",
-    situationRU: "Работник спрашивает: 'Где я могу припарковать свой грузовик?'",
+    imageUrl: "/src/assets/scenarios/gas-station-conversation.jpg",
+    phraseEN: "You can park in the back lot, near the fence",
+    phraseRU: "Можете припарковаться сзади, у забора",
+    questionLanguage: "ru",
     correctAnswer: "You can park in the back lot, near the fence",
     wrongAnswers: [
       "Anywhere you want",
       "I don't know",
       "Figure it out"
     ],
-    difficulty: "easy"
+    difficulty: "medium"
   },
   {
-    id: "gas-10",
+    id: "gas-ru-5",
     scenario: "gas-station",
-    situationEN: "The attendant says: 'The restroom is out of order'",
-    situationRU: "Работник говорит: 'Туалет не работает'",
+    imageUrl: "/src/assets/scenarios/gas-station-conversation.jpg",
+    phraseEN: "Is there another restroom nearby?",
+    phraseRU: "Есть ли другой туалет поблизости?",
+    questionLanguage: "ru",
     correctAnswer: "Is there another restroom nearby?",
     wrongAnswers: [
       "This is unacceptable!",
@@ -273,103 +319,121 @@ export const miniGameQuestions: GameQuestion[] = [
     difficulty: "easy"
   },
 
-  // Police Stop Scenario (Medium)
+  // Police Stop Scenario - English to Russian
   {
-    id: "police-1",
+    id: "police-en-1",
     scenario: "police-stop",
-    situationEN: "The officer says: 'License and registration, please'",
-    situationRU: "Офицер говорит: 'Права и регистрацию, пожалуйста'",
-    correctAnswer: "Yes, officer. Let me get them for you",
+    imageUrl: "/src/assets/scenarios/police-conversation.jpg",
+    phraseEN: "Yes, officer. Let me get them for you",
+    phraseRU: "Да, офицер. Позвольте я их достану",
+    questionLanguage: "en",
+    correctAnswer: "Да, офицер. Позвольте я их достану",
     wrongAnswers: [
-      "Why did you stop me?",
-      "I didn't do anything wrong",
-      "This will take a minute"
+      "Почему вы меня остановили?",
+      "Я ничего не сделал",
+      "Это займет минуту"
+    ],
+    difficulty: "easy"
+  },
+  {
+    id: "police-en-2",
+    scenario: "police-stop",
+    imageUrl: "/src/assets/scenarios/police-conversation.jpg",
+    phraseEN: "No, officer. I'm not sure",
+    phraseRU: "Нет, офицер. Я не уверен",
+    questionLanguage: "en",
+    correctAnswer: "Нет, офицер. Я не уверен",
+    wrongAnswers: [
+      "Потому что вы хотели?",
+      "Я понятия не имею",
+      "Я превысил скорость?"
+    ],
+    difficulty: "easy"
+  },
+  {
+    id: "police-en-3",
+    scenario: "police-stop",
+    imageUrl: "/src/assets/scenarios/police-conversation.jpg",
+    phraseEN: "I apologize, officer. I didn't realize",
+    phraseRU: "Прошу прощения, офицер. Я не осознавал",
+    questionLanguage: "en",
+    correctAnswer: "Прошу прощения, офицер. Я не осознавал",
+    wrongAnswers: [
+      "Все ехали быстрее",
+      "Я ехал в потоке",
+      "Вы уверены?"
     ],
     difficulty: "medium"
   },
   {
-    id: "police-2",
+    id: "police-en-4",
     scenario: "police-stop",
-    situationEN: "The officer asks: 'Do you know why I pulled you over?'",
-    situationRU: "Офицер спрашивает: 'Вы знаете, почему я вас остановил?'",
-    correctAnswer: "No, officer. I'm not sure",
+    imageUrl: "/src/assets/scenarios/police-conversation.jpg",
+    phraseEN: "No, officer. Not at all",
+    phraseRU: "Нет, офицер. Совсем нет",
+    questionLanguage: "en",
+    correctAnswer: "Нет, офицер. Совсем нет",
     wrongAnswers: [
-      "Because you wanted to?",
-      "I have no idea",
-      "Was I speeding?"
+      "Немного",
+      "Это личное",
+      "Почему вы спрашиваете?"
     ],
     difficulty: "medium"
   },
   {
-    id: "police-3",
+    id: "police-en-5",
     scenario: "police-stop",
-    situationEN: "The officer says: 'You were going 75 in a 55 zone'",
-    situationRU: "Офицер говорит: 'Вы ехали 75 в зоне с ограничением 55'",
-    correctAnswer: "I apologize, officer. I didn't realize",
+    imageUrl: "/src/assets/scenarios/police-conversation.jpg",
+    phraseEN: "Of course, officer. Here are the keys",
+    phraseRU: "Конечно, офицер. Вот ключи",
+    questionLanguage: "en",
+    correctAnswer: "Конечно, офицер. Вот ключи",
     wrongAnswers: [
-      "Everyone else was going faster",
-      "I was just keeping up with traffic",
-      "Are you sure?"
+      "У вас есть ордер?",
+      "Это действительно необходимо?",
+      "Это просто обычный груз"
     ],
     difficulty: "medium"
   },
+
+  // Police Stop Scenario - Russian to English
   {
-    id: "police-4",
+    id: "police-ru-1",
     scenario: "police-stop",
-    situationEN: "The officer asks: 'Have you been drinking?'",
-    situationRU: "Офицер спрашивает: 'Вы употребляли алкоголь?'",
-    correctAnswer: "No, officer. Not at all",
-    wrongAnswers: [
-      "Just a little",
-      "That's personal",
-      "Why do you ask?"
-    ],
-    difficulty: "medium"
-  },
-  {
-    id: "police-5",
-    scenario: "police-stop",
-    situationEN: "The officer says: 'I need to inspect your cargo'",
-    situationRU: "Офицер говорит: 'Мне нужно осмотреть ваш груз'",
-    correctAnswer: "Of course, officer. Here are the keys",
-    wrongAnswers: [
-      "Do you have a warrant?",
-      "Is that really necessary?",
-      "It's just regular cargo"
-    ],
-    difficulty: "medium"
-  },
-  {
-    id: "police-6",
-    scenario: "police-stop",
-    situationEN: "The officer asks: 'Where are you coming from?'",
-    situationRU: "Офицер спрашивает: 'Откуда вы едете?'",
+    imageUrl: "/src/assets/scenarios/police-conversation.jpg",
+    phraseEN: "I'm coming from Denver, Colorado",
+    phraseRU: "Я еду из Денвера, Колорадо",
+    questionLanguage: "ru",
     correctAnswer: "I'm coming from Denver, Colorado",
     wrongAnswers: [
       "From back there",
       "Does it matter?",
       "A warehouse somewhere"
     ],
-    difficulty: "medium"
+    difficulty: "easy"
   },
   {
-    id: "police-7",
+    id: "police-ru-2",
     scenario: "police-stop",
-    situationEN: "The officer says: 'Your tail light is broken'",
-    situationRU: "Офицер говорит: 'У вас разбит задний фонарь'",
+    imageUrl: "/src/assets/scenarios/police-conversation.jpg",
+    phraseEN: "I didn't know that. I'll get it fixed immediately",
+    phraseRU: "Я не знал об этом. Я исправлю это немедленно",
+    questionLanguage: "ru",
     correctAnswer: "I didn't know that. I'll get it fixed immediately",
     wrongAnswers: [
       "It was fine this morning",
       "Can I just tape it?",
       "How much is the fine?"
     ],
-    difficulty: "medium"
+    difficulty: "easy"
   },
   {
-    id: "police-8",
+    id: "police-ru-3",
     scenario: "police-stop",
-    situationEN: "The officer asks: 'Who owns this truck?'",
-    situationRU: "Офицер спрашивает: 'Кому принадлежит этот грузовик?'",
+    imageUrl: "/src/assets/scenarios/police-conversation.jpg",
+    phraseEN: "It belongs to my company, Swift Transport",
+    phraseRU: "Он принадлежит моей компании, Swift Transport",
+    questionLanguage: "ru",
     correctAnswer: "It belongs to my company, Swift Transport",
     wrongAnswers: [
       "I do",
@@ -379,77 +443,121 @@ export const miniGameQuestions: GameQuestion[] = [
     difficulty: "medium"
   },
   {
-    id: "police-9",
+    id: "police-ru-4",
     scenario: "police-stop",
-    situationEN: "The officer says: 'I'm giving you a warning this time'",
-    situationRU: "Офицер говорит: 'На этот раз я выпишу вам предупреждение'",
+    imageUrl: "/src/assets/scenarios/police-conversation.jpg",
+    phraseEN: "Thank you, officer. I appreciate it",
+    phraseRU: "Спасибо, офицер. Я ценю это",
+    questionLanguage: "ru",
     correctAnswer: "Thank you, officer. I appreciate it",
     wrongAnswers: [
       "Okay, whatever",
       "Can I go now?",
       "Fine"
     ],
-    difficulty: "medium"
+    difficulty: "easy"
   },
   {
-    id: "police-10",
+    id: "police-ru-5",
     scenario: "police-stop",
-    situationEN: "The officer asks: 'Can you step out of the vehicle?'",
-    situationRU: "Офицер спрашивает: 'Можете выйти из машины?'",
+    imageUrl: "/src/assets/scenarios/police-conversation.jpg",
+    phraseEN: "Yes, officer. Right away",
+    phraseRU: "Да, офицер. Прямо сейчас",
+    questionLanguage: "ru",
     correctAnswer: "Yes, officer. Right away",
     wrongAnswers: [
       "Why should I?",
       "Am I under arrest?",
       "I'd rather not"
     ],
-    difficulty: "medium"
+    difficulty: "easy"
   },
 
-  // Border Crossing Scenario (Hard)
+  // Border Crossing Scenario - English to Russian
   {
-    id: "border-1",
+    id: "border-en-1",
     scenario: "border-crossing",
-    situationEN: "The officer asks: 'What's the purpose of your trip?'",
-    situationRU: "Офицер спрашивает: 'Какова цель вашей поездки?'",
-    correctAnswer: "I'm delivering commercial cargo to Toronto",
+    imageUrl: "/src/assets/scenarios/border-conversation.jpg",
+    phraseEN: "I'm delivering commercial cargo to Toronto",
+    phraseRU: "Я доставляю коммерческий груз в Торонто",
+    questionLanguage: "en",
+    correctAnswer: "Я доставляю коммерческий груз в Торонто",
     wrongAnswers: [
-      "Just business",
-      "Transporting goods",
-      "Work stuff"
+      "Просто бизнес",
+      "Перевожу товары",
+      "Рабочие дела"
+    ],
+    difficulty: "medium"
+  },
+  {
+    id: "border-en-2",
+    scenario: "border-crossing",
+    imageUrl: "/src/assets/scenarios/border-conversation.jpg",
+    phraseEN: "Here's the invoice and bill of lading",
+    phraseRU: "Вот счет-фактура и коносамент",
+    questionLanguage: "en",
+    correctAnswer: "Вот счет-фактура и коносамент",
+    wrongAnswers: [
+      "Я думаю, это где-то здесь",
+      "У моей компании это есть",
+      "Это требуется?"
     ],
     difficulty: "hard"
   },
   {
-    id: "border-2",
+    id: "border-en-3",
     scenario: "border-crossing",
-    situationEN: "The officer says: 'I need to see your commercial invoice'",
-    situationRU: "Офицер говорит: 'Мне нужен коммерческий счет-фактура'",
-    correctAnswer: "Here's the invoice and bill of lading",
+    imageUrl: "/src/assets/scenarios/border-conversation.jpg",
+    phraseEN: "No, sir. Only the items listed on my manifest",
+    phraseRU: "Нет, сэр. Только предметы, указанные в моем манифесте",
+    questionLanguage: "en",
+    correctAnswer: "Нет, сэр. Только предметы, указанные в моем манифесте",
     wrongAnswers: [
-      "I think I have it somewhere",
-      "My company has that",
-      "Is that required?"
+      "Я так не думаю",
+      "Какие предметы запрещены?",
+      "Просто обычный груз"
     ],
     difficulty: "hard"
   },
   {
-    id: "border-3",
+    id: "border-en-4",
     scenario: "border-crossing",
-    situationEN: "The officer asks: 'Are you carrying any restricted items?'",
-    situationRU: "Офицер спрашивает: 'Вы перевозите запрещенные предметы?'",
-    correctAnswer: "No, sir. Only the items listed on my manifest",
+    imageUrl: "/src/assets/scenarios/border-conversation.jpg",
+    phraseEN: "I'll be here for two days to complete the delivery",
+    phraseRU: "Я буду здесь два дня, чтобы завершить доставку",
+    questionLanguage: "en",
+    correctAnswer: "Я буду здесь два дня, чтобы завершить доставку",
     wrongAnswers: [
-      "I don't think so",
-      "What items are restricted?",
-      "Just normal cargo"
+      "Ненадолго",
+      "Несколько дней",
+      "Пока не закончу"
+    ],
+    difficulty: "medium"
+  },
+  {
+    id: "border-en-5",
+    scenario: "border-crossing",
+    imageUrl: "/src/assets/scenarios/border-conversation.jpg",
+    phraseEN: "The total declared value is $85,000",
+    phraseRU: "Общая заявленная стоимость составляет $85,000",
+    questionLanguage: "en",
+    correctAnswer: "Общая заявленная стоимость составляет $85,000",
+    wrongAnswers: [
+      "Много",
+      "Это в документах",
+      "Около 80 или 90 тысяч"
     ],
     difficulty: "hard"
   },
+
+  // Border Crossing Scenario - Russian to English
   {
-    id: "border-4",
+    id: "border-ru-1",
     scenario: "border-crossing",
-    situationEN: "The officer says: 'Your FAST card has expired'",
-    situationRU: "Офицер говорит: 'Срок действия вашей карты FAST истек'",
+    imageUrl: "/src/assets/scenarios/border-conversation.jpg",
+    phraseEN: "I apologize. Can I cross with standard documentation?",
+    phraseRU: "Прошу прощения. Могу я пересечь границу со стандартными документами?",
+    questionLanguage: "ru",
     correctAnswer: "I apologize. Can I cross with standard documentation?",
     wrongAnswers: [
       "I didn't notice that",
@@ -459,82 +567,64 @@ export const miniGameQuestions: GameQuestion[] = [
     difficulty: "hard"
   },
   {
-    id: "border-5",
+    id: "border-ru-2",
     scenario: "border-crossing",
-    situationEN: "The officer asks: 'How long will you be in Canada?'",
-    situationRU: "Офицер спрашивает: 'Как долго вы пробудете в Канаде?'",
-    correctAnswer: "I'll be here for two days to complete the delivery",
-    wrongAnswers: [
-      "Not long",
-      "A few days",
-      "Until I finish"
-    ],
-    difficulty: "hard"
-  },
-  {
-    id: "border-6",
-    scenario: "border-crossing",
-    situationEN: "The officer says: 'Pull over for secondary inspection'",
-    situationRU: "Офицер говорит: 'Остановитесь для дополнительного досмотра'",
+    imageUrl: "/src/assets/scenarios/border-conversation.jpg",
+    phraseEN: "Yes, sir. Where should I park?",
+    phraseRU: "Да, сэр. Где мне припарковаться?",
+    questionLanguage: "ru",
     correctAnswer: "Yes, sir. Where should I park?",
     wrongAnswers: [
       "Is there a problem?",
       "How long will this take?",
       "Do I have to?"
     ],
-    difficulty: "hard"
+    difficulty: "medium"
   },
   {
-    id: "border-7",
+    id: "border-ru-3",
     scenario: "border-crossing",
-    situationEN: "The officer asks: 'What's the total value of your cargo?'",
-    situationRU: "Офицер спрашивает: 'Какова общая стоимость вашего груза?'",
-    correctAnswer: "The total declared value is $85,000",
+    imageUrl: "/src/assets/scenarios/border-conversation.jpg",
+    phraseEN: "I have all the required permits",
+    phraseRU: "У меня есть все необходимые разрешения",
+    questionLanguage: "ru",
+    correctAnswer: "I have all the required permits",
     wrongAnswers: [
-      "A lot",
-      "It's on the paperwork",
-      "Around 80 or 90 thousand"
+      "I think so",
+      "My company handles that",
+      "What permits?"
+    ],
+    difficulty: "medium"
+  },
+  {
+    id: "border-ru-4",
+    scenario: "border-crossing",
+    imageUrl: "/src/assets/scenarios/border-conversation.jpg",
+    phraseEN: "The cargo is sealed and secure",
+    phraseRU: "Груз опечатан и надежно закреплен",
+    questionLanguage: "ru",
+    correctAnswer: "The cargo is sealed and secure",
+    wrongAnswers: [
+      "It looks fine to me",
+      "I loaded it myself",
+      "Everything is inside"
     ],
     difficulty: "hard"
   },
   {
-    id: "border-8",
+    id: "border-ru-5",
     scenario: "border-crossing",
-    situationEN: "The officer says: 'I need your passport and visa'",
-    situationRU: "Офицер говорит: 'Мне нужен ваш паспорт и виза'",
-    correctAnswer: "Here's my passport. I have a work permit as well",
+    imageUrl: "/src/assets/scenarios/border-conversation.jpg",
+    phraseEN: "Thank you. Have a good day",
+    phraseRU: "Спасибо. Хорошего дня",
+    questionLanguage: "ru",
+    correctAnswer: "Thank you. Have a good day",
     wrongAnswers: [
-      "I have a driver's license",
-      "Do I need a visa?",
-      "I'm just passing through"
+      "Finally done",
+      "About time",
+      "See you"
     ],
-    difficulty: "hard"
-  },
-  {
-    id: "border-9",
-    scenario: "border-crossing",
-    situationEN: "The officer asks: 'Have you been to any farms recently?'",
-    situationRU: "Офицер спрашивает: 'Вы недавно посещали фермы?'",
-    correctAnswer: "No, officer. I haven't been near any farms",
-    wrongAnswers: [
-      "I don't remember",
-      "Maybe last week",
-      "Why does that matter?"
-    ],
-    difficulty: "hard"
-  },
-  {
-    id: "border-10",
-    scenario: "border-crossing",
-    situationEN: "The officer says: 'You're cleared. Welcome to Canada'",
-    situationRU: "Офицер говорит: 'Все в порядке. Добро пожаловать в Канаду'",
-    correctAnswer: "Thank you, officer. Have a great day",
-    wrongAnswers: [
-      "Finally!",
-      "Okay, thanks",
-      "About time"
-    ],
-    difficulty: "hard"
+    difficulty: "easy"
   }
 ];
 
@@ -548,7 +638,7 @@ export const scenarios = [
     icon: "⚖️",
     titleKey: "miniGames.scenarios.weighStation.title",
     descriptionKey: "miniGames.scenarios.weighStation.description",
-    difficulty: "easy" as const,
+    difficulty: "easy",
     questionCount: 10
   },
   {
@@ -556,15 +646,15 @@ export const scenarios = [
     icon: "⛽",
     titleKey: "miniGames.scenarios.gasStation.title",
     descriptionKey: "miniGames.scenarios.gasStation.description",
-    difficulty: "easy" as const,
+    difficulty: "easy",
     questionCount: 10
   },
   {
     id: "police-stop",
-    icon: "🚔",
+    icon: "🚨",
     titleKey: "miniGames.scenarios.policeStop.title",
     descriptionKey: "miniGames.scenarios.policeStop.description",
-    difficulty: "medium" as const,
+    difficulty: "medium",
     questionCount: 10
   },
   {
@@ -572,7 +662,7 @@ export const scenarios = [
     icon: "🛂",
     titleKey: "miniGames.scenarios.borderCrossing.title",
     descriptionKey: "miniGames.scenarios.borderCrossing.description",
-    difficulty: "hard" as const,
+    difficulty: "hard",
     questionCount: 10
   }
 ];

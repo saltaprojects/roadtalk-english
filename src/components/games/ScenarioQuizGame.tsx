@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { GameQuestion } from "@/data/miniGameQuestions";
 import { useTranslation } from "react-i18next";
-import { CheckCircle2, XCircle, Trophy, Timer, ArrowLeft } from "lucide-react";
+import { CheckCircle2, XCircle, Trophy, ArrowLeft } from "lucide-react";
 
 interface ScenarioQuizGameProps {
   questions: GameQuestion[];
@@ -13,39 +13,15 @@ interface ScenarioQuizGameProps {
 }
 
 const ScenarioQuizGame = ({ questions, scenarioTitle, onComplete }: ScenarioQuizGameProps) => {
-  const { i18n } = useTranslation();
+  const { t } = useTranslation();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(10);
   const [isGameComplete, setIsGameComplete] = useState(false);
 
   const currentQuestion = questions[currentQuestionIndex];
-  const allAnswers = currentQuestion 
-    ? [currentQuestion.correctAnswer, ...currentQuestion.wrongAnswers].sort(() => Math.random() - 0.5)
-    : [];
-
-  useEffect(() => {
-    if (showResult || isGameComplete) return;
-
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          handleTimeout();
-          return 10;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [currentQuestionIndex, showResult, isGameComplete]);
-
-  const handleTimeout = () => {
-    setShowResult(true);
-    setSelectedAnswer(null);
-  };
+  const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
 
   const handleAnswerClick = (answer: string) => {
     if (showResult) return;
@@ -63,61 +39,72 @@ const ScenarioQuizGame = ({ questions, scenarioTitle, onComplete }: ScenarioQuiz
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSelectedAnswer(null);
       setShowResult(false);
-      setTimeLeft(10);
     } else {
       setIsGameComplete(true);
       onComplete(score + (selectedAnswer === currentQuestion.correctAnswer ? 1 : 0), questions.length);
     }
   };
 
+  const handlePlayAgain = () => {
+    setCurrentQuestionIndex(0);
+    setScore(0);
+    setSelectedAnswer(null);
+    setShowResult(false);
+    setIsGameComplete(false);
+  };
+
   const getButtonVariant = (answer: string) => {
     if (!showResult) return "outline";
     if (answer === currentQuestion.correctAnswer) return "default";
-    if (answer === selectedAnswer && answer !== currentQuestion.correctAnswer) return "destructive";
+    if (answer === selectedAnswer) return "destructive";
     return "outline";
   };
 
-  if (isGameComplete) {
-    const finalScore = score + (selectedAnswer === currentQuestion.correctAnswer ? 1 : 0);
-    const percentage = Math.round((finalScore / questions.length) * 100);
+  // Shuffle answers
+  const allAnswers = [currentQuestion.correctAnswer, ...currentQuestion.wrongAnswers].sort(() => Math.random() - 0.5);
 
+  if (isGameComplete) {
+    const percentage = Math.round((score / questions.length) * 100);
+    
     return (
-      <div className="min-h-screen bg-muted/30 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-muted/30 p-4 flex items-center justify-center">
         <Card className="card-elevated max-w-2xl w-full">
           <CardHeader className="text-center">
             <div className="flex justify-center mb-4">
               <Trophy className="h-16 w-16 text-yellow-500" />
             </div>
-            <CardTitle className="text-3xl">Game Complete!</CardTitle>
-            <CardDescription>Great job on completing {scenarioTitle}</CardDescription>
+            <CardTitle className="text-3xl">{t('miniGames.gameComplete.title')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="text-center space-y-2">
-              <div className="text-5xl font-bold text-primary">{finalScore}/{questions.length}</div>
-              <div className="text-xl text-muted-foreground">{percentage}% Correct</div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 text-center">
-              <div className="p-4 bg-muted rounded-lg">
-                <div className="text-2xl font-bold text-green-600 dark:text-green-400">
-                  {finalScore}
-                </div>
-                <div className="text-sm text-muted-foreground">Correct Answers</div>
+            <div className="text-center space-y-4">
+              <div className="text-6xl font-bold text-primary">
+                {score}/{questions.length}
               </div>
-              <div className="p-4 bg-muted rounded-lg">
-                <div className="text-2xl font-bold text-red-600 dark:text-red-400">
-                  {questions.length - finalScore}
-                </div>
-                <div className="text-sm text-muted-foreground">Wrong Answers</div>
-              </div>
+              <p className="text-xl text-muted-foreground">
+                {percentage}% {t('miniGames.gameComplete.correct')}
+              </p>
+              {percentage === 100 && (
+                <p className="text-lg font-medium text-green-600 dark:text-green-400">
+                  {t('miniGames.gameComplete.perfect')}
+                </p>
+              )}
             </div>
-
-            <div className="flex gap-2">
-              <Button onClick={() => window.location.reload()} className="flex-1">
-                Play Again
+            
+            <div className="flex gap-4">
+              <Button 
+                onClick={handlePlayAgain} 
+                className="flex-1"
+                size="lg"
+              >
+                {t('miniGames.gameComplete.playAgain')}
               </Button>
-              <Button onClick={() => window.history.back()} variant="outline" className="flex-1">
-                Back to Scenarios
+              <Button 
+                onClick={() => window.history.back()} 
+                variant="outline"
+                className="flex-1"
+                size="lg"
+              >
+                {t('miniGames.gameComplete.backToScenarios')}
               </Button>
             </div>
           </CardContent>
@@ -136,103 +123,120 @@ const ScenarioQuizGame = ({ questions, scenarioTitle, onComplete }: ScenarioQuiz
           className="mb-2"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Exit Game
+          {t('miniGames.exitGame')}
         </Button>
 
         {/* Header */}
         <Card className="card-elevated">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <div>
-                <CardTitle>{scenarioTitle}</CardTitle>
-                <CardDescription>
-                  Question {currentQuestionIndex + 1} of {questions.length}
-                </CardDescription>
-              </div>
-              <div className="flex items-center gap-2">
-                <Timer className="h-5 w-5 text-muted-foreground" />
-                <span className={`text-2xl font-bold ${timeLeft <= 3 ? 'text-red-500' : 'text-primary'}`}>
-                  {timeLeft}s
-                </span>
-              </div>
+              <CardTitle className="text-2xl">{scenarioTitle}</CardTitle>
+              <span className="text-sm text-muted-foreground">
+                {t('miniGames.question')} {currentQuestionIndex + 1}/{questions.length}
+              </span>
             </div>
-            <Progress value={(currentQuestionIndex / questions.length) * 100} className="mt-4" />
+            <Progress value={progress} className="mt-2" />
           </CardHeader>
         </Card>
 
         {/* Question Card */}
         <Card className="card-elevated">
-          <CardHeader>
-            <CardTitle className="text-xl">
-              {i18n.language === 'ru' ? currentQuestion.situationRU : currentQuestion.situationEN}
-            </CardTitle>
-            {i18n.language === 'ru' && (
-              <CardDescription className="text-sm italic">
-                {currentQuestion.situationEN}
-              </CardDescription>
+          <CardContent className="p-6 space-y-6">
+            {/* Scenario Image */}
+            <div className="w-full h-64 rounded-lg overflow-hidden bg-muted">
+              <img 
+                src={currentQuestion.imageUrl} 
+                alt={scenarioTitle}
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Translation Instruction */}
+            <div className="text-center space-y-4">
+              <p className="text-lg font-semibold text-primary">
+                {currentQuestion.questionLanguage === "en" 
+                  ? t('miniGames.translateToRussian')
+                  : t('miniGames.translateToEnglish')
+                }
+              </p>
+              
+              {/* Phrase to Translate */}
+              <div className="bg-muted/50 p-6 rounded-lg">
+                <p className="text-2xl font-bold">
+                  {currentQuestion.questionLanguage === "en" 
+                    ? currentQuestion.phraseEN
+                    : currentQuestion.phraseRU
+                  }
+                </p>
+              </div>
+            </div>
+
+            {/* Answer Options */}
+            <div className="space-y-3">
+              {allAnswers.map((answer, index) => (
+                <Button
+                  key={index}
+                  onClick={() => handleAnswerClick(answer)}
+                  variant={getButtonVariant(answer)}
+                  className="w-full text-lg py-6 justify-start"
+                  disabled={showResult}
+                >
+                  <span className="flex items-center gap-3 w-full">
+                    {showResult && answer === currentQuestion.correctAnswer && (
+                      <CheckCircle2 className="h-5 w-5 flex-shrink-0" />
+                    )}
+                    {showResult && answer === selectedAnswer && answer !== currentQuestion.correctAnswer && (
+                      <XCircle className="h-5 w-5 flex-shrink-0" />
+                    )}
+                    <span className="text-left">{answer}</span>
+                  </span>
+                </Button>
+              ))}
+            </div>
+
+            {/* Result Feedback */}
+            {showResult && (
+              <div className={`p-4 rounded-lg ${
+                selectedAnswer === currentQuestion.correctAnswer 
+                  ? 'bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800' 
+                  : 'bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800'
+              }`}>
+                <p className="font-semibold mb-2">
+                  {selectedAnswer === currentQuestion.correctAnswer 
+                    ? t('miniGames.feedback.correct')
+                    : t('miniGames.feedback.incorrect')
+                  }
+                </p>
+                {selectedAnswer !== currentQuestion.correctAnswer && (
+                  <p className="text-sm">
+                    {t('miniGames.feedback.correctAnswer')}: {currentQuestion.correctAnswer}
+                  </p>
+                )}
+              </div>
             )}
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {allAnswers.map((answer, index) => (
-              <Button
-                key={index}
-                onClick={() => handleAnswerClick(answer)}
-                variant={getButtonVariant(answer)}
-                className="w-full justify-start text-left h-auto py-4 px-6"
-                disabled={showResult}
+
+            {/* Next Button */}
+            {showResult && (
+              <Button 
+                onClick={handleNext} 
+                className="w-full"
+                size="lg"
               >
-                <span className="flex-1">{answer}</span>
-                {showResult && answer === currentQuestion.correctAnswer && (
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                )}
-                {showResult && answer === selectedAnswer && answer !== currentQuestion.correctAnswer && (
-                  <XCircle className="h-5 w-5 text-red-500" />
-                )}
+                {currentQuestionIndex < questions.length - 1 
+                  ? t('miniGames.nextQuestion')
+                  : t('miniGames.viewResults')
+                }
               </Button>
-            ))}
+            )}
           </CardContent>
         </Card>
 
-        {/* Result Feedback */}
-        {showResult && (
-          <Card className={`card-elevated ${selectedAnswer === currentQuestion.correctAnswer ? 'border-green-500' : 'border-red-500'} border-2`}>
-            <CardContent className="pt-6">
-              <div className="flex items-center gap-3 mb-4">
-                {selectedAnswer === currentQuestion.correctAnswer ? (
-                  <>
-                    <CheckCircle2 className="h-8 w-8 text-green-500" />
-                    <div>
-                      <h3 className="text-xl font-bold text-green-600 dark:text-green-400">Correct!</h3>
-                      <p className="text-sm text-muted-foreground">Great job! That's the right response.</p>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <XCircle className="h-8 w-8 text-red-500" />
-                    <div>
-                      <h3 className="text-xl font-bold text-red-600 dark:text-red-400">
-                        {selectedAnswer ? "Incorrect" : "Time's Up!"}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        The correct answer was: <span className="font-semibold">{currentQuestion.correctAnswer}</span>
-                      </p>
-                    </div>
-                  </>
-                )}
-              </div>
-              <Button onClick={handleNext} className="w-full">
-                {currentQuestionIndex < questions.length - 1 ? "Next Question" : "View Results"}
-              </Button>
-            </CardContent>
-          </Card>
-        )}
-
         {/* Score Display */}
         <Card className="card-elevated">
-          <CardContent className="pt-6">
+          <CardContent className="py-4">
             <div className="flex items-center justify-between">
-              <span className="text-muted-foreground">Current Score</span>
-              <span className="text-2xl font-bold">{score}/{currentQuestionIndex + (showResult ? 1 : 0)}</span>
+              <span className="text-muted-foreground">{t('miniGames.currentScore')}</span>
+              <span className="text-xl font-bold">{score}/{currentQuestionIndex + (showResult ? 1 : 0)}</span>
             </div>
           </CardContent>
         </Card>

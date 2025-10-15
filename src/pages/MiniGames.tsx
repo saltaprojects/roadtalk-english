@@ -87,7 +87,7 @@ const MiniGames = () => {
         {/* Scenarios Grid */}
         <div>
           <h2 className="text-2xl font-bold mb-4">{t('miniGames.selectScenario')}</h2>
-          <p className="text-muted-foreground mb-6">{t('miniGames.scenarioDescription')}</p>
+          <p className="text-muted-foreground mb-6">{t('miniGames.scenarioDescriptionNew')}</p>
           <div className="grid md:grid-cols-2 gap-4">
             {scenarios.map((scenario) => (
               <Card
@@ -100,7 +100,7 @@ const MiniGames = () => {
                   <CardTitle className="flex items-center justify-between">
                     <span>{t(scenario.titleKey)}</span>
                     <span className="text-xs px-2 py-1 bg-muted rounded">
-                      {scenario.questionCount} {t('miniGames.questions')}
+                      {scenario.questionCount} {t('miniGames.phrases')}
                     </span>
                   </CardTitle>
                   <CardDescription>{t(scenario.descriptionKey)}</CardDescription>

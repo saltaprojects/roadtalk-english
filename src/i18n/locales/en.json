@@ -170,13 +170,15 @@
     "incorrect": "Not quite. The correct answer is"
   },
   "miniGames": {
-    "title": "Quick Response Challenge",
-    "subtitle": "Practice real trucking scenarios with time-pressured responses",
+    "title": "Phrase Translation Practice",
+    "subtitle": "Learn essential trucking phrases through translation practice",
     "backToDashboard": "Back to Dashboard",
     "selectScenario": "Select a Scenario",
     "scenarioDescription": "Choose a trucking situation and practice responding correctly in English under time pressure",
+    "scenarioDescriptionNew": "Choose a scenario and practice translating essential phrases between English and Russian at your own pace",
     "playNow": "Play Now →",
     "questions": "questions",
+    "phrases": "phrases",
     "stats": {
       "gamesPlayed": "Games Played",
       "bestScore": "Best Score",
@@ -191,25 +193,44 @@
     "scenarios": {
       "weighStation": {
         "title": "At the Weigh Station",
-        "description": "Communicate with inspectors at weigh stations"
+        "description": "Practice phrases for weigh station inspections"
       },
       "gasStation": {
         "title": "At the Gas Station",
-        "description": "Handle fuel stops and payment conversations"
+        "description": "Learn phrases for fuel stops and services"
       },
       "policeStop": {
         "title": "Police Traffic Stop",
-        "description": "Respond properly during traffic stops"
+        "description": "Master polite responses during traffic stops"
       },
       "borderCrossing": {
         "title": "Border Crossing",
-        "description": "Navigate border crossing inspections"
+        "description": "Practice professional border crossing communication"
       }
     },
     "dailyChallenge": {
       "title": "Daily Challenge",
       "description": "Complete today's special challenge for bonus points",
       "comingSoon": "Daily challenges coming soon! Check back later."
+    },
+    "translateToEnglish": "Translate to English:",
+    "translateToRussian": "Translate to Russian:",
+    "question": "Question",
+    "exitGame": "Exit Game",
+    "nextQuestion": "Next Question",
+    "viewResults": "View Results",
+    "currentScore": "Current Score",
+    "feedback": {
+      "correct": "✓ Correct!",
+      "incorrect": "✗ Incorrect",
+      "correctAnswer": "Correct answer"
+    },
+    "gameComplete": {
+      "title": "Game Complete!",
+      "correct": "Correct",
+      "perfect": "Perfect Score! 🎉",
+      "playAgain": "Play Again",
+      "backToScenarios": "Back to Scenarios"
     }
   },
   "contact": {
