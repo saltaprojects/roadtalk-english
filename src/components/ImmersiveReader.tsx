@@ -317,7 +317,7 @@ export const ImmersiveReader = ({
             {showTranslation && dialogue.translation && (
               <div className="mt-8 pt-8 border-t border-[hsl(var(--reading-muted))]">
                 <h3 className="text-lg font-semibold mb-3 text-[hsl(var(--reading-text))]">Перевод</h3>
-                <p className="text-[hsl(var(--reading-muted))] font-serif leading-relaxed">
+                <p className="text-[hsl(var(--reading-text))] font-serif leading-relaxed">
                   {dialogue.translation}
                 </p>
               </div>
