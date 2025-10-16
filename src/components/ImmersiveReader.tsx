@@ -383,11 +383,9 @@ export const ImmersiveReader = ({
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {dialogue.keyVocabulary.map((word, index) => (
                     <div key={index} className="bg-[hsl(var(--reading-bg))] p-3 rounded-lg">
-                      <div className="font-semibold text-[hsl(var(--reading-accent))] mb-1">{word}</div>
+                      <span className="font-semibold text-[hsl(var(--reading-accent))]">{word}</span>
                       {dialogue.keyVocabularyTranslation && dialogue.keyVocabularyTranslation[index] && (
-                        <div className="text-sm text-[hsl(var(--reading-text))]">
-                          {dialogue.keyVocabularyTranslation[index]}
-                        </div>
+                        <span className="text-sm text-[hsl(var(--reading-text))]"> - {dialogue.keyVocabularyTranslation[index]}</span>
                       )}
                     </div>
                   ))}
