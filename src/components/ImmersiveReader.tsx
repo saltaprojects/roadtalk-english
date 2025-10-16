@@ -267,7 +267,7 @@ export const ImmersiveReader = ({
       </div>
 
       {/* Main Reading Area */}
-      <div className="container mx-auto px-6 pt-12 pb-48 max-w-4xl">
+      <div className="container mx-auto px-6 pt-12 pb-64 max-w-4xl">
         <Card className="bg-[hsl(var(--reading-paper))] border-[hsl(var(--reading-muted))] shadow-2xl">
           <div className="p-12">
             {/* Title */}
