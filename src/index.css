@@ -48,6 +48,13 @@ All colors MUST be HSL.
     /* Shadows */
     --shadow-card: 0 4px 20px -2px hsl(220 70% 25% / 0.1);
     --shadow-button: 0 2px 10px -1px hsl(35 95% 55% / 0.3);
+
+    /* Reading theme - warm book-like colors */
+    --reading-bg: 40 30% 94%;
+    --reading-text: 30 25% 20%;
+    --reading-paper: 40 40% 97%;
+    --reading-accent: 35 70% 50%;
+    --reading-muted: 40 15% 70%;
   }
 
   .dark {
@@ -78,6 +85,13 @@ All colors MUST be HSL.
     --border: 220 20% 25%;
     --input: 220 20% 25%;
     --ring: 35 95% 50%;
+
+    /* Reading theme - dark mode */
+    --reading-bg: 30 20% 15%;
+    --reading-text: 40 30% 85%;
+    --reading-paper: 30 15% 18%;
+    --reading-accent: 35 70% 55%;
+    --reading-muted: 30 10% 40%;
   }
 }
 

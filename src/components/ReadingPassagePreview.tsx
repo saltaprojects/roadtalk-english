@@ -18,15 +18,18 @@ export const ReadingPassagePreview = ({
   
   return (
     <Card 
-      className="hover:shadow-xl transition-all duration-300 cursor-pointer border-l-4 border-l-amber-600/50 bg-gradient-to-br from-amber-50/30 to-background dark:from-amber-950/10 dark:to-background hover:scale-[1.02]"
+      className="hover:shadow-xl transition-all duration-300 cursor-pointer relative overflow-hidden group bg-[hsl(var(--reading-paper))] border-[hsl(var(--reading-muted))]"
       onClick={onClick}
     >
-      <CardContent className="p-6">
+      {/* Book spine effect */}
+      <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[hsl(var(--reading-accent))] to-[hsl(var(--reading-accent)/0.5)]" />
+      
+      <CardContent className="p-6 pl-8">
         <div className="flex items-start gap-4">
           {/* Book Icon */}
           <div className="flex-shrink-0 mt-1">
-            <div className="w-12 h-12 rounded-lg bg-amber-100 dark:bg-amber-900/20 flex items-center justify-center">
-              <BookOpen className="w-6 h-6 text-amber-700 dark:text-amber-500" />
+            <div className="w-12 h-12 rounded-lg bg-[hsl(var(--reading-bg))] flex items-center justify-center">
+              <BookOpen className="w-6 h-6 text-[hsl(var(--reading-accent))]" />
             </div>
           </div>
           
@@ -34,7 +37,7 @@ export const ReadingPassagePreview = ({
           <div className="flex-1 min-w-0">
             {/* Header */}
             <div className="flex items-start justify-between gap-2 mb-3">
-              <h3 className="font-semibold text-lg text-foreground leading-tight">
+              <h3 className="font-serif font-bold text-lg text-[hsl(var(--reading-text))] leading-tight group-hover:text-[hsl(var(--reading-accent))] transition-colors">
                 {dialogue.title}
               </h3>
               {isCompleted && (
@@ -43,7 +46,7 @@ export const ReadingPassagePreview = ({
             </div>
             
             {/* Preview Text */}
-            <p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-2 font-serif">
+            <p className="text-sm text-[hsl(var(--reading-muted))] leading-relaxed mb-4 line-clamp-2 font-serif">
               {preview}
             </p>
             
@@ -54,22 +57,22 @@ export const ReadingPassagePreview = ({
                   dialogue.difficulty === 'beginner' ? 'default' :
                   dialogue.difficulty === 'intermediate' ? 'secondary' : 'destructive'
                 }
-                className="text-xs"
+                className="text-xs bg-[hsl(var(--reading-bg))] border-[hsl(var(--reading-accent))] text-[hsl(var(--reading-text))]"
               >
                 {dialogue.difficulty}
               </Badge>
               
-              <Badge variant="outline" className="text-xs">
+              <Badge variant="outline" className="text-xs bg-[hsl(var(--reading-bg))] border-[hsl(var(--reading-muted))] text-[hsl(var(--reading-text))]">
                 {dialogue.category}
               </Badge>
               
-              <div className="flex items-center gap-1 text-xs text-muted-foreground">
+              <div className="flex items-center gap-1 text-xs text-[hsl(var(--reading-muted))]">
                 <Clock className="w-3 h-3" />
                 <span>{dialogue.estimatedReadingTime || '5-7'} min</span>
               </div>
               
               {dialogue.wordCount && (
-                <span className="text-xs text-muted-foreground">
+                <span className="text-xs text-[hsl(var(--reading-muted))]">
                   {dialogue.wordCount} words
                 </span>
               )}
@@ -81,7 +84,7 @@ export const ReadingPassagePreview = ({
                 {dialogue.tags.map((tag) => (
                   <span 
                     key={tag}
-                    className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground"
+                    className="text-xs px-2 py-0.5 rounded-full bg-[hsl(var(--reading-bg))] text-[hsl(var(--reading-text))]"
                   >
                     #{tag}
                   </span>
@@ -90,6 +93,10 @@ export const ReadingPassagePreview = ({
             )}
           </div>
         </div>
+
+        {/* Page corner fold effect */}
+        <div className="absolute bottom-0 right-0 w-8 h-8 bg-[hsl(var(--reading-bg))] opacity-0 group-hover:opacity-100 transition-opacity" 
+             style={{ clipPath: "polygon(100% 0, 0% 100%, 100% 100%)" }} />
       </CardContent>
     </Card>
   );

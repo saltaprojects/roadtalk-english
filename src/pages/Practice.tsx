@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, BookOpen, Library } from "lucide-react";
 import { ConversationChat } from "@/components/ConversationChat";
-import { TextReadingPractice } from "@/components/TextReadingPractice";
+import { ImmersiveReader } from "@/components/ImmersiveReader";
 import { ReadingPassagePreview } from "@/components/ReadingPassagePreview";
 import { getDialoguesByDifficulty, type DialogueDifficulty } from "@/data/dialogueTexts";
 import policeImage from "@/assets/scenarios/police-conversation.jpg";
@@ -63,6 +63,7 @@ const Practice = () => {
   const { t } = useTranslation();
   const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(null);
   const [selectedReadingDifficulty, setSelectedReadingDifficulty] = useState<DialogueDifficulty | null>(null);
+  const [currentReadingIndex, setCurrentReadingIndex] = useState(0);
 
   // Group scenarios by difficulty
   const beginnerScenarios = scenarios.filter(s => t(s.difficultyKey) === t("practice.scenarios.gasStation.difficulty"));
@@ -70,10 +71,18 @@ const Practice = () => {
   const professionalScenarios = scenarios.filter(s => t(s.difficultyKey) === t("practice.scenarios.border.difficulty"));
 
   if (selectedReadingDifficulty) {
+    const dialogues = getDialoguesByDifficulty(selectedReadingDifficulty);
+    
     return (
-      <TextReadingPractice
-        difficulty={selectedReadingDifficulty}
-        onBack={() => setSelectedReadingDifficulty(null)}
+      <ImmersiveReader 
+        dialogues={dialogues}
+        currentIndex={currentReadingIndex}
+        onBack={() => {
+          setSelectedReadingDifficulty(null);
+          setCurrentReadingIndex(0);
+        }}
+        onNext={() => setCurrentReadingIndex(prev => Math.min(prev + 1, dialogues.length - 1))}
+        onPrevious={() => setCurrentReadingIndex(prev => Math.max(prev - 1, 0))}
       />
     );
   }
