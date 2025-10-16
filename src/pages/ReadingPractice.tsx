@@ -14,6 +14,13 @@ const ReadingPractice = () => {
   const [selectedReadingDifficulty, setSelectedReadingDifficulty] = useState<DialogueDifficulty | null>(null);
   const [currentReadingIndex, setCurrentReadingIndex] = useState(0);
 
+  const handleDialogueClick = (dialogue: any) => {
+    const dialogues = getDialoguesByDifficulty(dialogue.difficulty);
+    const index = dialogues.findIndex(d => d.id === dialogue.id);
+    setCurrentReadingIndex(index >= 0 ? index : 0);
+    setSelectedReadingDifficulty(dialogue.difficulty);
+  };
+
   if (selectedReadingDifficulty) {
     const dialogues = getDialoguesByDifficulty(selectedReadingDifficulty);
     
@@ -69,7 +76,7 @@ const ReadingPractice = () => {
               <ReadingPassagePreview
                 key={dialogue.id}
                 dialogue={dialogue}
-                onClick={() => setSelectedReadingDifficulty('beginner')}
+                onClick={() => handleDialogueClick(dialogue)}
               />
             ))}
           </div>
@@ -88,7 +95,7 @@ const ReadingPractice = () => {
               <ReadingPassagePreview
                 key={dialogue.id}
                 dialogue={dialogue}
-                onClick={() => setSelectedReadingDifficulty('intermediate')}
+                onClick={() => handleDialogueClick(dialogue)}
               />
             ))}
           </div>
@@ -107,7 +114,7 @@ const ReadingPractice = () => {
               <ReadingPassagePreview
                 key={dialogue.id}
                 dialogue={dialogue}
-                onClick={() => setSelectedReadingDifficulty('advanced')}
+                onClick={() => handleDialogueClick(dialogue)}
               />
             ))}
           </div>
