@@ -4,11 +4,8 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, BookOpen, Library } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { ConversationChat } from "@/components/ConversationChat";
-import { ImmersiveReader } from "@/components/ImmersiveReader";
-import { ReadingPassagePreview } from "@/components/ReadingPassagePreview";
-import { getDialoguesByDifficulty, type DialogueDifficulty } from "@/data/dialogueTexts";
 import policeImage from "@/assets/scenarios/police-conversation.jpg";
 import gasStationImage from "@/assets/scenarios/gas-station-conversation.jpg";
 import dispatcherImage from "@/assets/scenarios/dispatcher-conversation.jpg";
@@ -62,30 +59,11 @@ const Practice = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(null);
-  const [selectedReadingDifficulty, setSelectedReadingDifficulty] = useState<DialogueDifficulty | null>(null);
-  const [currentReadingIndex, setCurrentReadingIndex] = useState(0);
 
   // Group scenarios by difficulty
   const beginnerScenarios = scenarios.filter(s => t(s.difficultyKey) === t("practice.scenarios.gasStation.difficulty"));
   const intermediateScenarios = scenarios.filter(s => t(s.difficultyKey) === t("practice.scenarios.police.difficulty"));
   const professionalScenarios = scenarios.filter(s => t(s.difficultyKey) === t("practice.scenarios.border.difficulty"));
-
-  if (selectedReadingDifficulty) {
-    const dialogues = getDialoguesByDifficulty(selectedReadingDifficulty);
-    
-    return (
-      <ImmersiveReader 
-        dialogues={dialogues}
-        currentIndex={currentReadingIndex}
-        onBack={() => {
-          setSelectedReadingDifficulty(null);
-          setCurrentReadingIndex(0);
-        }}
-        onNext={() => setCurrentReadingIndex(prev => Math.min(prev + 1, dialogues.length - 1))}
-        onPrevious={() => setCurrentReadingIndex(prev => Math.max(prev - 1, 0))}
-      />
-    );
-  }
 
   if (selectedScenario) {
     return (
@@ -114,79 +92,6 @@ const Practice = () => {
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2">{t("practice.title")}</h1>
           <p className="text-muted-foreground text-lg">{t("practice.subtitle")}</p>
-        </div>
-
-        {/* Reading Library - Document Style */}
-        <div className="mb-12">
-          <div className="mb-6 flex items-center gap-3">
-            <div className="w-12 h-12 rounded-lg bg-amber-100 dark:bg-amber-900/20 flex items-center justify-center">
-              <Library className="w-6 h-6 text-amber-700 dark:text-amber-500" />
-            </div>
-            <div>
-              <h2 className="text-3xl font-bold mb-1 flex items-center gap-2">
-                {t("dialogue.title")}
-                <BookOpen className="w-7 h-7 text-amber-600" />
-              </h2>
-              <p className="text-muted-foreground">{t("dialogue.subtitle")}</p>
-            </div>
-          </div>
-
-          {/* Beginner Reading Passages */}
-          <div className="mb-8">
-            <div className="flex items-center gap-2 mb-4">
-              <Badge variant="default" className="text-sm px-3 py-1">
-                {t('dialogue.difficulty.beginner')}
-              </Badge>
-              <h3 className="text-xl font-semibold">{t('dialogue.beginnerDesc')}</h3>
-            </div>
-            <div className="space-y-3">
-              {getDialoguesByDifficulty('beginner').map((dialogue) => (
-                <ReadingPassagePreview
-                  key={dialogue.id}
-                  dialogue={dialogue}
-                  onClick={() => setSelectedReadingDifficulty('beginner')}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Intermediate Reading Passages */}
-          <div className="mb-8">
-            <div className="flex items-center gap-2 mb-4">
-              <Badge variant="secondary" className="text-sm px-3 py-1">
-                {t('dialogue.difficulty.intermediate')}
-              </Badge>
-              <h3 className="text-xl font-semibold">{t('dialogue.intermediateDesc')}</h3>
-            </div>
-            <div className="space-y-3">
-              {getDialoguesByDifficulty('intermediate').map((dialogue) => (
-                <ReadingPassagePreview
-                  key={dialogue.id}
-                  dialogue={dialogue}
-                  onClick={() => setSelectedReadingDifficulty('intermediate')}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Advanced Reading Passages */}
-          <div className="mb-8">
-            <div className="flex items-center gap-2 mb-4">
-              <Badge variant="destructive" className="text-sm px-3 py-1">
-                {t('dialogue.difficulty.advanced')}
-              </Badge>
-              <h3 className="text-xl font-semibold">{t('dialogue.advancedDesc')}</h3>
-            </div>
-            <div className="space-y-3">
-              {getDialoguesByDifficulty('advanced').map((dialogue) => (
-                <ReadingPassagePreview
-                  key={dialogue.id}
-                  dialogue={dialogue}
-                  onClick={() => setSelectedReadingDifficulty('advanced')}
-                />
-              ))}
-            </div>
-          </div>
         </div>
 
         {/* Beginner Level */}

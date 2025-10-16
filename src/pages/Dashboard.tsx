@@ -168,7 +168,17 @@ const Dashboard = () => {
           </div>
 
           {/* Practice Sections */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t">
+          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-4 pt-4 border-t">
+            {/* Reading Practice */}
+            <div 
+              className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer"
+              onClick={() => navigate("/reading-practice")}
+            >
+              <BookOpen className="w-8 h-8 mx-auto mb-2 text-amber-600" />
+              <h3 className="font-semibold text-sm mb-1">Reading Practice</h3>
+              <p className="text-xs text-muted-foreground">Read & improve fluency</p>
+            </div>
+
             {/* AI Conversation Practice */}
             <div 
               className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer"
@@ -279,15 +289,15 @@ const Dashboard = () => {
               </p>
             </Card>
 
-            {/* Speaking Practice */}
+            {/* Reading Practice */}
             <Card 
               className="p-6 card-elevated hover:scale-105 transition-transform cursor-pointer"
-              onClick={() => navigate("/pronunciation-help")}
+              onClick={() => navigate("/reading-practice")}
             >
-              <Speech className="w-10 h-10 mb-3 text-primary" />
-              <h3 className="text-lg font-bold mb-2">{t('everydayEnglish.speaking.title')}</h3>
+              <BookOpen className="w-10 h-10 mb-3 text-amber-600" />
+              <h3 className="text-lg font-bold mb-2">Reading Practice</h3>
               <p className="text-sm text-muted-foreground">
-                {t('everydayEnglish.speaking.description')}
+                Improve reading fluency with full texts
               </p>
             </Card>
           </div>

@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import Lesson from "./pages/Lesson";
 import Contact from "./pages/Contact";
 import Practice from "./pages/Practice";
+import ReadingPractice from "./pages/ReadingPractice";
 import RoadSigns from "./pages/RoadSigns";
 import DriverChat from "./pages/DriverChat";
 import PronunciationHelp from "./pages/PronunciationHelp";
@@ -36,6 +37,7 @@ const App = () => (
           <Route path="/lesson/:id" element={<Lesson />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/practice" element={<Practice />} />
+          <Route path="/reading-practice" element={<ReadingPractice />} />
           <Route path="/road-signs" element={<RoadSigns />} />
           <Route path="/driver-chat" element={<DriverChat />} />
           <Route path="/pronunciation-help" element={<PronunciationHelp />} />
