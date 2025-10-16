@@ -284,7 +284,7 @@ const Dashboard = () => {
               className="p-6 card-elevated hover:scale-105 transition-transform cursor-pointer"
               onClick={() => navigate("/reading-practice")}
             >
-              <BookOpen className="w-10 h-10 mb-3 text-amber-600" />
+              <BookOpen className="w-10 h-10 mb-3 text-primary" />
               <h3 className="text-lg font-bold mb-2">Reading Practice</h3>
               <p className="text-sm text-muted-foreground">
                 Improve reading fluency with full texts
