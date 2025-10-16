@@ -20,6 +20,7 @@ import { GrammarLesson } from "./components/GrammarLesson";
 import MiniGames from "./pages/MiniGames";
 import PlayMiniGame from "./pages/PlayMiniGame";
 import VocabularyBuilder from "./pages/VocabularyBuilder";
+import ListeningPractice from "./pages/ListeningPractice";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -47,6 +48,7 @@ const App = () => (
           <Route path="/mini-games" element={<MiniGames />} />
           <Route path="/mini-games/play" element={<PlayMiniGame />} />
           <Route path="/vocabulary-builder" element={<VocabularyBuilder />} />
+          <Route path="/listening-practice" element={<ListeningPractice />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
