@@ -35,7 +35,7 @@ export const ImmersiveReader = ({
   onNext,
   onPrevious 
 }: ImmersiveReaderProps) => {
-  const [showTranslation, setShowTranslation] = useState(false);
+  const [showTranslation, setShowTranslation] = useState(true);
   const [isRecording, setIsRecording] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
   const [readingTime, setReadingTime] = useState(0);
@@ -317,26 +317,6 @@ export const ImmersiveReader = ({
             >
               {isRecording ? <Pause className="mr-2 h-5 w-5" /> : <Mic className="mr-2 h-5 w-5" />}
               {isRecording ? formatTime(recordingTime) : "Record"}
-            </Button>
-
-            {/* Translation Toggle */}
-            <Button
-              size="lg"
-              variant="outline"
-              onClick={() => setShowTranslation(!showTranslation)}
-              className="bg-[hsl(var(--reading-paper))] border-[hsl(var(--reading-muted))] hover:bg-[hsl(var(--reading-bg))]"
-            >
-              <Languages className="h-5 w-5" />
-            </Button>
-
-            {/* Settings */}
-            <Button
-              size="lg"
-              variant="outline"
-              onClick={() => setShowSettings(!showSettings)}
-              className="bg-[hsl(var(--reading-paper))] border-[hsl(var(--reading-muted))] hover:bg-[hsl(var(--reading-bg))]"
-            >
-              <Settings className="h-5 w-5" />
             </Button>
           </div>
 
