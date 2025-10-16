@@ -511,9 +511,6 @@
     "previous": "Назад",
     "next": "Далее",
     "finish": "Завершить",
-    "pause": "Пауза",
-    "recordingAnalysis": "Анализ записи",
-    "keyVocabulary": "Ключевая лексика",
     "titles": {
       "truckStopDiner": "Заказ в придорожной столовой",
       "askingDirections": "Спросить направление",

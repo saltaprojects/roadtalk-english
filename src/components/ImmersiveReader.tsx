@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -36,7 +35,6 @@ export const ImmersiveReader = ({
   onNext,
   onPrevious 
 }: ImmersiveReaderProps) => {
-  const { t } = useTranslation();
   const [showTranslation, setShowTranslation] = useState(true);
   const [isRecording, setIsRecording] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
@@ -64,7 +62,6 @@ export const ImmersiveReader = ({
   const audioChunksRef = useRef<Blob[]>([]);
 
   const dialogue = dialogues[currentIndex];
-  const title = dialogue.titleKey ? t(dialogue.titleKey) : dialogue.title;
   const sentences = dialogue.sentences || dialogue.dialogueText.split(/[.!?]+/).filter(s => s.trim());
   const totalWords = dialogue.dialogueText.split(/\s+/).length;
 
@@ -248,7 +245,7 @@ export const ImmersiveReader = ({
             className="text-[hsl(var(--reading-text))] hover:bg-[hsl(var(--reading-bg))]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
-            {t("contact.back")}
+            Library
           </Button>
           
           <div className="flex items-center gap-3 text-sm text-[hsl(var(--reading-muted))]">
@@ -275,12 +272,12 @@ export const ImmersiveReader = ({
           <div className="p-12">
             {/* Title */}
             <h1 className="text-3xl font-serif mb-2 text-[hsl(var(--reading-text))]">
-              {title}
+              {dialogue.title}
             </h1>
             
             {/* Metadata */}
             <div className="flex items-center gap-4 mb-8 text-sm text-[hsl(var(--reading-muted))]">
-              <span className="capitalize">{t(`dialogue.difficulty.${dialogue.difficulty}`)}</span>
+              <span className="capitalize">{dialogue.difficulty}</span>
               <span>•</span>
               <span>{dialogue.category}</span>
               <span>•</span>
@@ -319,7 +316,7 @@ export const ImmersiveReader = ({
             {/* Translation */}
             {showTranslation && dialogue.translation && (
               <div className="mt-8 pt-8 border-t border-[hsl(var(--reading-muted))]">
-                <h3 className="text-lg font-semibold mb-3 text-[hsl(var(--reading-text))]">{t("dialogue.translation")}</h3>
+                <h3 className="text-lg font-semibold mb-3 text-[hsl(var(--reading-text))]">Перевод</h3>
                 <p className="text-[hsl(var(--reading-text))] font-serif leading-relaxed">
                   {dialogue.translation}
                 </p>
@@ -329,7 +326,7 @@ export const ImmersiveReader = ({
             {/* Recording Analysis */}
             {analysis && (
               <div className="mt-8 pt-8 border-t border-[hsl(var(--reading-muted))]">
-                <h3 className="text-lg font-semibold mb-4 text-[hsl(var(--reading-text))]">{t("dialogue.recordingAnalysis")}</h3>
+                <h3 className="text-lg font-semibold mb-4 text-[hsl(var(--reading-text))]">Recording Analysis</h3>
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="bg-[hsl(var(--reading-bg))] p-4 rounded-lg">
@@ -382,7 +379,7 @@ export const ImmersiveReader = ({
             {/* Key Vocabulary */}
             {dialogue.keyVocabulary && dialogue.keyVocabulary.length > 0 && (
               <div className="mt-8 pt-8 border-t border-[hsl(var(--reading-muted))]">
-                <h3 className="text-lg font-semibold mb-4 text-[hsl(var(--reading-text))]">{t("dialogue.keyVocabulary")}</h3>
+                <h3 className="text-lg font-semibold mb-4 text-[hsl(var(--reading-text))]">Key Vocabulary / Ключевая лексика</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {dialogue.keyVocabulary.map((word, index) => (
                     <div key={index} className="bg-[hsl(var(--reading-bg))] p-3 rounded-lg">
@@ -433,7 +430,7 @@ export const ImmersiveReader = ({
               className="bg-[hsl(var(--reading-paper))] border-[hsl(var(--reading-accent))] text-[hsl(var(--reading-accent))] hover:bg-[hsl(var(--reading-accent)/0.1)]"
             >
               {isPlaying ? <Pause className="mr-2 h-5 w-5" /> : <Volume2 className="mr-2 h-5 w-5" />}
-              {isPlaying ? t("dialogue.pause") : t("dialogue.listenToDialogue")}
+              {isPlaying ? "Pause" : "Listen"}
             </Button>
 
             {/* Record Button */}
@@ -449,7 +446,7 @@ export const ImmersiveReader = ({
               }`}
             >
               {isRecording ? <Pause className="mr-2 h-5 w-5" /> : <Mic className="mr-2 h-5 w-5" />}
-              {isAnalyzing ? t("dialogue.analyzing") : isRecording ? formatTime(recordingTime) : t("dialogue.recordReading")}
+              {isAnalyzing ? "Analyzing..." : isRecording ? formatTime(recordingTime) : "Record"}
             </Button>
           </div>
 

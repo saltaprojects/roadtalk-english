@@ -1,7 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { BookOpen, Clock, CheckCircle2 } from "lucide-react";
-import { useTranslation } from "react-i18next";
 import type { DialogueText } from "@/data/dialogueTexts";
 
 interface ReadingPassagePreviewProps {
@@ -15,8 +14,6 @@ export const ReadingPassagePreview = ({
   isCompleted = false,
   onClick 
 }: ReadingPassagePreviewProps) => {
-  const { t } = useTranslation();
-  const title = dialogue.titleKey ? t(dialogue.titleKey) : dialogue.title;
   const preview = dialogue.dialogueText.substring(0, 120) + "...";
   
   return (
@@ -41,7 +38,7 @@ export const ReadingPassagePreview = ({
             {/* Header */}
             <div className="flex items-start justify-between gap-2 mb-3">
               <h3 className="font-serif font-bold text-lg text-[hsl(var(--reading-text))] leading-tight group-hover:text-[hsl(var(--reading-accent))] transition-colors">
-                {title}
+                {dialogue.title}
               </h3>
               {isCompleted && (
                 <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-500 flex-shrink-0" />
@@ -62,7 +59,7 @@ export const ReadingPassagePreview = ({
                 }
                 className="text-xs bg-[hsl(var(--reading-bg))] border-[hsl(var(--reading-accent))] text-[hsl(var(--reading-text))]"
               >
-                {t(`dialogue.difficulty.${dialogue.difficulty}`)}
+                {dialogue.difficulty}
               </Badge>
               
               <Badge variant="outline" className="text-xs bg-[hsl(var(--reading-bg))] border-[hsl(var(--reading-muted))] text-[hsl(var(--reading-text))]">
