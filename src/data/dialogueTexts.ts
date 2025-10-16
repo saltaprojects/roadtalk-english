@@ -15,6 +15,7 @@ export interface DialogueText {
   paragraphs?: string[];
   sentences?: string[];
   keyVocabulary?: string[];
+  keyVocabularyTranslation?: string[];
   readingTips?: string;
 }
 
@@ -40,6 +41,7 @@ export const dialogueTexts: DialogueText[] = [
       "Thank you very much!"
     ],
     keyVocabulary: ["order", "scrambled eggs", "bacon", "toast", "coffee"],
+    keyVocabularyTranslation: ["заказать", "яичница-болтунья", "бекон", "тост", "кофе"],
     readingTips: "Practice polite ordering phrases like 'I'd like...' and 'Could I get...'"
   },
   {

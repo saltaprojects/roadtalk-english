@@ -379,11 +379,16 @@ export const ImmersiveReader = ({
             {/* Key Vocabulary */}
             {dialogue.keyVocabulary && dialogue.keyVocabulary.length > 0 && (
               <div className="mt-8 pt-8 border-t border-[hsl(var(--reading-muted))]">
-                <h3 className="text-lg font-semibold mb-4 text-[hsl(var(--reading-text))]">Key Vocabulary</h3>
-                <div className="grid grid-cols-2 gap-3">
+                <h3 className="text-lg font-semibold mb-4 text-[hsl(var(--reading-text))]">Key Vocabulary / Ключевая лексика</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {dialogue.keyVocabulary.map((word, index) => (
-                    <div key={index} className="text-sm">
-                      <span className="font-semibold text-[hsl(var(--reading-accent))]">{word}</span>
+                    <div key={index} className="bg-[hsl(var(--reading-bg))] p-3 rounded-lg">
+                      <div className="font-semibold text-[hsl(var(--reading-accent))] mb-1">{word}</div>
+                      {dialogue.keyVocabularyTranslation && dialogue.keyVocabularyTranslation[index] && (
+                        <div className="text-sm text-[hsl(var(--reading-text))]">
+                          {dialogue.keyVocabularyTranslation[index]}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
