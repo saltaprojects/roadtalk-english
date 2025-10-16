@@ -168,17 +168,7 @@ const Dashboard = () => {
           </div>
 
           {/* Practice Sections */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-4 pt-4 border-t">
-            {/* Reading Practice */}
-            <div 
-              className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer"
-              onClick={() => navigate("/reading-practice")}
-            >
-              <BookOpen className="w-8 h-8 mx-auto mb-2 text-amber-600" />
-              <h3 className="font-semibold text-sm mb-1">Reading Practice</h3>
-              <p className="text-xs text-muted-foreground">Read & improve fluency</p>
-            </div>
-
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t">
             {/* AI Conversation Practice */}
             <div 
               className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer"
