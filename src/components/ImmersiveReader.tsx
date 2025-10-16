@@ -44,6 +44,15 @@ export const ImmersiveReader = ({
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [showSettings, setShowSettings] = useState(false);
   const [wordsPerMinute, setWordsPerMinute] = useState(0);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analysis, setAnalysis] = useState<{
+    accuracy: number;
+    correctWords: number;
+    totalWords: number;
+    missingWords: number;
+    extraWords: number;
+    transcribedText: string;
+  } | null>(null);
   
   const { playText, stop } = useTextToSpeech();
   const { toast } = useToast();
@@ -146,13 +155,77 @@ export const ImmersiveReader = ({
     }
   };
 
-  const handleStopRecording = () => {
+  const handleStopRecording = async () => {
     if (mediaRecorderRef.current && isRecording) {
       mediaRecorderRef.current.stop();
       setIsRecording(false);
       if (recordingIntervalRef.current) {
         clearInterval(recordingIntervalRef.current);
       }
+      
+      // Wait for the audio to be processed
+      setIsAnalyzing(true);
+      
+      // The actual analysis will happen in the onstop handler
+      mediaRecorderRef.current.onstop = async () => {
+        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
+        
+        // Calculate WPM
+        const minutes = recordingTime / 60;
+        const wpm = Math.round(totalWords / minutes);
+        setWordsPerMinute(wpm);
+        
+        try {
+          // Convert blob to base64
+          const reader = new FileReader();
+          reader.readAsDataURL(audioBlob);
+          
+          reader.onloadend = async () => {
+            const base64Audio = (reader.result as string).split(',')[1];
+            
+            // Send to edge function for analysis
+            const response = await fetch(
+              `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/analyze-recording`,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+                },
+                body: JSON.stringify({
+                  audio: base64Audio,
+                  originalText: dialogue.dialogueText,
+                }),
+              }
+            );
+            
+            if (!response.ok) {
+              throw new Error('Failed to analyze recording');
+            }
+            
+            const analysisResult = await response.json();
+            setAnalysis(analysisResult);
+            setIsAnalyzing(false);
+            
+            toast({
+              title: "Analysis Complete",
+              description: `Accuracy: ${analysisResult.accuracy}% - ${wpm} WPM`,
+            });
+          };
+        } catch (error) {
+          console.error('Error analyzing recording:', error);
+          setIsAnalyzing(false);
+          toast({
+            title: "Analysis Failed",
+            description: "Could not analyze your recording",
+            variant: "destructive",
+          });
+        }
+        
+        if (mediaRecorderRef.current?.stream) {
+          mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
+        }
+      };
     }
   };
 
@@ -250,6 +323,59 @@ export const ImmersiveReader = ({
               </div>
             )}
 
+            {/* Recording Analysis */}
+            {analysis && (
+              <div className="mt-8 pt-8 border-t border-[hsl(var(--reading-muted))]">
+                <h3 className="text-lg font-semibold mb-4 text-[hsl(var(--reading-text))]">Recording Analysis</h3>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-[hsl(var(--reading-bg))] p-4 rounded-lg">
+                      <div className="text-2xl font-bold text-[hsl(var(--reading-accent))]">
+                        {analysis.accuracy}%
+                      </div>
+                      <div className="text-sm text-[hsl(var(--reading-muted))]">Accuracy</div>
+                    </div>
+                    <div className="bg-[hsl(var(--reading-bg))] p-4 rounded-lg">
+                      <div className="text-2xl font-bold text-[hsl(var(--reading-accent))]">
+                        {wordsPerMinute}
+                      </div>
+                      <div className="text-sm text-[hsl(var(--reading-muted))]">Words Per Minute</div>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-3 gap-3 text-sm">
+                    <div className="bg-green-100 dark:bg-green-900/20 p-3 rounded">
+                      <div className="font-semibold text-green-700 dark:text-green-400">
+                        {analysis.correctWords}
+                      </div>
+                      <div className="text-green-600 dark:text-green-500">Correct Words</div>
+                    </div>
+                    {analysis.missingWords > 0 && (
+                      <div className="bg-orange-100 dark:bg-orange-900/20 p-3 rounded">
+                        <div className="font-semibold text-orange-700 dark:text-orange-400">
+                          {analysis.missingWords}
+                        </div>
+                        <div className="text-orange-600 dark:text-orange-500">Missing Words</div>
+                      </div>
+                    )}
+                    {analysis.extraWords > 0 && (
+                      <div className="bg-blue-100 dark:bg-blue-900/20 p-3 rounded">
+                        <div className="font-semibold text-blue-700 dark:text-blue-400">
+                          {analysis.extraWords}
+                        </div>
+                        <div className="text-blue-600 dark:text-blue-500">Extra Words</div>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="bg-[hsl(var(--reading-bg))] p-4 rounded-lg">
+                    <h4 className="font-semibold mb-2 text-[hsl(var(--reading-text))]">What You Said:</h4>
+                    <p className="text-[hsl(var(--reading-muted))] italic">"{analysis.transcribedText}"</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Key Vocabulary */}
             {dialogue.keyVocabulary && dialogue.keyVocabulary.length > 0 && (
               <div className="mt-8 pt-8 border-t border-[hsl(var(--reading-muted))]">
@@ -309,6 +435,7 @@ export const ImmersiveReader = ({
               size="lg"
               variant="outline"
               onClick={isRecording ? handleStopRecording : handleStartRecording}
+              disabled={isAnalyzing}
               className={`${
                 isRecording 
                   ? "bg-red-500 text-white border-red-500 hover:bg-red-600" 
@@ -316,7 +443,7 @@ export const ImmersiveReader = ({
               }`}
             >
               {isRecording ? <Pause className="mr-2 h-5 w-5" /> : <Mic className="mr-2 h-5 w-5" />}
-              {isRecording ? formatTime(recordingTime) : "Record"}
+              {isAnalyzing ? "Analyzing..." : isRecording ? formatTime(recordingTime) : "Record"}
             </Button>
           </div>
 
