@@ -4,7 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Volume2, Mic, CheckCircle, XCircle, ArrowRight, ArrowLeft } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { Volume2, Mic, CheckCircle, XCircle, ArrowRight, ArrowLeft, Eye, EyeOff, Gauge } from "lucide-react";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 import { useToast } from "@/hooks/use-toast";
@@ -23,6 +25,8 @@ export const DialogueReading = ({ difficulty, onBack }: DialogueReadingProps) =>
   
   const [currentIndex, setCurrentIndex] = useState(0);
   const [practiceResults, setPracticeResults] = useState<Record<number, { score: number; category: string }>>({});
+  const [showTranslation, setShowTranslation] = useState(true);
+  const [playbackSpeed, setPlaybackSpeed] = useState(1);
   
   const dialogues = getDialoguesByDifficulty(difficulty);
   const currentDialogue = dialogues[currentIndex];
@@ -118,8 +122,15 @@ export const DialogueReading = ({ difficulty, onBack }: DialogueReadingProps) =>
     );
   }
 
+  const cycleSpeed = () => {
+    const speeds = [0.75, 1, 1.25];
+    const currentIdx = speeds.indexOf(playbackSpeed);
+    const nextIdx = (currentIdx + 1) % speeds.length;
+    setPlaybackSpeed(speeds[nextIdx]);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted p-6">
+    <div className="min-h-screen bg-gradient-to-b from-amber-50/30 via-background to-muted dark:from-amber-950/5 dark:via-background dark:to-muted p-6">
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Progress Header */}
         <Card>
@@ -155,23 +166,63 @@ export const DialogueReading = ({ difficulty, onBack }: DialogueReadingProps) =>
               <h2 className="text-2xl font-bold">{t(currentDialogue.titleKey)}</h2>
             </div>
 
+            {/* Reading Controls */}
+            <div className="flex items-center justify-between p-4 bg-muted/30 rounded-lg">
+              <div className="flex items-center gap-3">
+                <Label htmlFor="show-translation" className="text-sm cursor-pointer">
+                  {showTranslation ? <Eye className="w-4 h-4 inline mr-1" /> : <EyeOff className="w-4 h-4 inline mr-1" />}
+                  {t('dialogue.showTranslation')}
+                </Label>
+                <Switch
+                  id="show-translation"
+                  checked={showTranslation}
+                  onCheckedChange={setShowTranslation}
+                />
+              </div>
+              
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={cycleSpeed}
+                className="gap-2"
+              >
+                <Gauge className="w-4 h-4" />
+                {playbackSpeed}x
+              </Button>
+            </div>
+
             {/* Dialogue Text */}
             <div className="space-y-4">
-              <div className="bg-muted/50 p-6 rounded-lg">
-                <p className="text-lg leading-relaxed">{currentDialogue.dialogueText}</p>
+              <div className="bg-gradient-to-br from-amber-50/50 to-background dark:from-amber-950/10 dark:to-background p-6 rounded-lg border-l-4 border-l-amber-600/50">
+                <p className="text-lg leading-relaxed font-serif">{currentDialogue.dialogueText}</p>
               </div>
               
               {/* Transcription */}
-              <div className="bg-primary/5 p-4 rounded-lg">
+              <div className="bg-primary/5 p-4 rounded-lg border border-primary/10">
                 <p className="text-sm text-muted-foreground mb-2">{t('dialogue.transcription')}:</p>
                 <p className="text-base italic leading-relaxed">{currentDialogue.transcription}</p>
               </div>
 
-              {/* Translation */}
-              <div className="bg-accent/30 p-4 rounded-lg">
-                <p className="text-sm text-muted-foreground mb-2">{t('dialogue.translation')}:</p>
-                <p className="text-base leading-relaxed">{currentDialogue.translation}</p>
-              </div>
+              {/* Translation - Conditional */}
+              {showTranslation && (
+                <div className="bg-accent/30 p-4 rounded-lg border border-accent/20 animate-fade-in">
+                  <p className="text-sm text-muted-foreground mb-2">{t('dialogue.translation')}:</p>
+                  <p className="text-base leading-relaxed">{currentDialogue.translation}</p>
+                </div>
+              )}
+
+              {/* Reading Stats */}
+              {currentDialogue.wordCount && (
+                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                  <span>{currentDialogue.wordCount} words</span>
+                  {currentDialogue.estimatedReadingTime && (
+                    <>
+                      <span>•</span>
+                      <span>{currentDialogue.estimatedReadingTime} min reading time</span>
+                    </>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Action Buttons */}

@@ -9,6 +9,9 @@ export interface DialogueText {
   dialogueText: string;
   translation: string;
   transcription: string;
+  wordCount?: number;
+  estimatedReadingTime?: string;
+  tags?: string[];
 }
 
 export const dialogueTexts: DialogueText[] = [

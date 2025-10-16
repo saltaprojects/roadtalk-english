@@ -4,10 +4,11 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Mic } from "lucide-react";
+import { ArrowLeft, BookOpen, Library } from "lucide-react";
 import { ConversationChat } from "@/components/ConversationChat";
 import { DialogueReading } from "@/components/DialogueReading";
-import type { DialogueDifficulty } from "@/data/dialogueTexts";
+import { ReadingPassagePreview } from "@/components/ReadingPassagePreview";
+import { getDialoguesByDifficulty, type DialogueDifficulty } from "@/data/dialogueTexts";
 import policeImage from "@/assets/scenarios/police-conversation.jpg";
 import gasStationImage from "@/assets/scenarios/gas-station-conversation.jpg";
 import dispatcherImage from "@/assets/scenarios/dispatcher-conversation.jpg";
@@ -106,63 +107,76 @@ const Practice = () => {
           <p className="text-muted-foreground text-lg">{t("practice.subtitle")}</p>
         </div>
 
-        {/* Dialogue Reading Practice */}
+        {/* Reading Library - Document Style */}
         <div className="mb-12">
-          <div className="mb-6">
-            <h2 className="text-3xl font-bold mb-2">{t("dialogue.title")}</h2>
-            <p className="text-muted-foreground">{t("dialogue.subtitle")}</p>
+          <div className="mb-6 flex items-center gap-3">
+            <div className="w-12 h-12 rounded-lg bg-amber-100 dark:bg-amber-900/20 flex items-center justify-center">
+              <Library className="w-6 h-6 text-amber-700 dark:text-amber-500" />
+            </div>
+            <div>
+              <h2 className="text-3xl font-bold mb-1 flex items-center gap-2">
+                {t("dialogue.title")}
+                <BookOpen className="w-7 h-7 text-amber-600" />
+              </h2>
+              <p className="text-muted-foreground">{t("dialogue.subtitle")}</p>
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card 
-              className="hover:shadow-lg transition-all hover:scale-105 cursor-pointer" 
-              onClick={() => setSelectedReadingDifficulty('beginner')}
-            >
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Badge variant="default" className="text-lg px-3 py-1">
-                    {t('dialogue.difficulty.beginner')}
-                  </Badge>
-                </CardTitle>
-                <CardDescription>{t('dialogue.beginnerDesc')}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">{t('dialogue.readFullTexts')}</p>
-              </CardContent>
-            </Card>
 
-            <Card 
-              className="hover:shadow-lg transition-all hover:scale-105 cursor-pointer" 
-              onClick={() => setSelectedReadingDifficulty('intermediate')}
-            >
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Badge variant="secondary" className="text-lg px-3 py-1">
-                    {t('dialogue.difficulty.intermediate')}
-                  </Badge>
-                </CardTitle>
-                <CardDescription>{t('dialogue.intermediateDesc')}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">{t('dialogue.readFullTexts')}</p>
-              </CardContent>
-            </Card>
+          {/* Beginner Reading Passages */}
+          <div className="mb-8">
+            <div className="flex items-center gap-2 mb-4">
+              <Badge variant="default" className="text-sm px-3 py-1">
+                {t('dialogue.difficulty.beginner')}
+              </Badge>
+              <h3 className="text-xl font-semibold">{t('dialogue.beginnerDesc')}</h3>
+            </div>
+            <div className="space-y-3">
+              {getDialoguesByDifficulty('beginner').map((dialogue) => (
+                <ReadingPassagePreview
+                  key={dialogue.id}
+                  dialogue={dialogue}
+                  onClick={() => setSelectedReadingDifficulty('beginner')}
+                />
+              ))}
+            </div>
+          </div>
 
-            <Card 
-              className="hover:shadow-lg transition-all hover:scale-105 cursor-pointer" 
-              onClick={() => setSelectedReadingDifficulty('advanced')}
-            >
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Badge variant="destructive" className="text-lg px-3 py-1">
-                    {t('dialogue.difficulty.advanced')}
-                  </Badge>
-                </CardTitle>
-                <CardDescription>{t('dialogue.advancedDesc')}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">{t('dialogue.readFullTexts')}</p>
-              </CardContent>
-            </Card>
+          {/* Intermediate Reading Passages */}
+          <div className="mb-8">
+            <div className="flex items-center gap-2 mb-4">
+              <Badge variant="secondary" className="text-sm px-3 py-1">
+                {t('dialogue.difficulty.intermediate')}
+              </Badge>
+              <h3 className="text-xl font-semibold">{t('dialogue.intermediateDesc')}</h3>
+            </div>
+            <div className="space-y-3">
+              {getDialoguesByDifficulty('intermediate').map((dialogue) => (
+                <ReadingPassagePreview
+                  key={dialogue.id}
+                  dialogue={dialogue}
+                  onClick={() => setSelectedReadingDifficulty('intermediate')}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Advanced Reading Passages */}
+          <div className="mb-8">
+            <div className="flex items-center gap-2 mb-4">
+              <Badge variant="destructive" className="text-sm px-3 py-1">
+                {t('dialogue.difficulty.advanced')}
+              </Badge>
+              <h3 className="text-xl font-semibold">{t('dialogue.advancedDesc')}</h3>
+            </div>
+            <div className="space-y-3">
+              {getDialoguesByDifficulty('advanced').map((dialogue) => (
+                <ReadingPassagePreview
+                  key={dialogue.id}
+                  dialogue={dialogue}
+                  onClick={() => setSelectedReadingDifficulty('advanced')}
+                />
+              ))}
+            </div>
           </div>
         </div>
 
