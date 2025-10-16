@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, BookOpen, Library } from "lucide-react";
 import { ConversationChat } from "@/components/ConversationChat";
-import { DialogueReading } from "@/components/DialogueReading";
+import { TextReadingPractice } from "@/components/TextReadingPractice";
 import { ReadingPassagePreview } from "@/components/ReadingPassagePreview";
 import { getDialoguesByDifficulty, type DialogueDifficulty } from "@/data/dialogueTexts";
 import policeImage from "@/assets/scenarios/police-conversation.jpg";
@@ -71,7 +71,7 @@ const Practice = () => {
 
   if (selectedReadingDifficulty) {
     return (
-      <DialogueReading
+      <TextReadingPractice
         difficulty={selectedReadingDifficulty}
         onBack={() => setSelectedReadingDifficulty(null)}
       />

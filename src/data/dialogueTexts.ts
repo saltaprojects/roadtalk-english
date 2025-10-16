@@ -12,6 +12,10 @@ export interface DialogueText {
   wordCount?: number;
   estimatedReadingTime?: string;
   tags?: string[];
+  paragraphs?: string[];
+  sentences?: string[];
+  keyVocabulary?: string[];
+  readingTips?: string;
 }
 
 export const dialogueTexts: DialogueText[] = [
@@ -25,6 +29,18 @@ export const dialogueTexts: DialogueText[] = [
     dialogueText: "Good morning! I'd like to order breakfast, please. Can I have scrambled eggs with bacon and toast? Also, could I get a large coffee? Thank you very much!",
     translation: 'Доброе утро! Я хотел бы заказать завтрак, пожалуйста. Могу я взять яичницу-болтунью с беконом и тостом? Также, можно мне большой кофе? Большое спасибо!',
     transcription: 'Гуд морнинг! Айд лайк ту ордер брэкфаст, плиз. Кэн ай хэв скрэмблд эгз уиз бейкон энд тоуст? Олсоу, куд ай гет э лардж кофи? Сэнк ю вэри мач!',
+    wordCount: 38,
+    estimatedReadingTime: "2-3 min",
+    tags: ["ordering", "restaurant", "food"],
+    sentences: [
+      "Good morning!",
+      "I'd like to order breakfast, please.",
+      "Can I have scrambled eggs with bacon and toast?",
+      "Also, could I get a large coffee?",
+      "Thank you very much!"
+    ],
+    keyVocabulary: ["order", "scrambled eggs", "bacon", "toast", "coffee"],
+    readingTips: "Practice polite ordering phrases like 'I'd like...' and 'Could I get...'"
   },
   {
     id: 'dlg-beg-2',
