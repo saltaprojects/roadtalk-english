@@ -75,7 +75,7 @@ export const ListeningExerciseViewer = ({
         <div className="max-w-4xl mx-auto">
           <Button variant="ghost" className="mb-4 text-white hover:bg-white/20" onClick={onClose}>
             <ArrowLeft className="mr-2 h-4 w-4" />
-            {t('readingPractice.backToExercises')}
+            {t('listeningPractice.backToExercises')}
           </Button>
           <h1 className="text-3xl font-bold">
             {isRussian ? exercise.titleRu : exercise.title}
