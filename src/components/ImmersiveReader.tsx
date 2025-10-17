@@ -4,7 +4,6 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { 
   Volume2, 
-  Languages, 
   Pause, 
   ArrowLeft,
   ChevronRight,
@@ -30,7 +29,6 @@ export const ImmersiveReader = ({
   onNext,
   onPrevious 
 }: ImmersiveReaderProps) => {
-  const [showTranslation, setShowTranslation] = useState(true);
   const [readingTime, setReadingTime] = useState(0);
   const [highlightedSentence, setHighlightedSentence] = useState<number | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -169,7 +167,7 @@ export const ImmersiveReader = ({
             </div>
 
             {/* Translation */}
-            {showTranslation && dialogue.translation && (
+            {dialogue.translation && (
               <div className="mt-8 pt-8 border-t border-[hsl(var(--reading-muted))]">
                 <h3 className="text-lg font-semibold mb-3 text-[hsl(var(--reading-text))]">Перевод</h3>
                 <p className="text-[hsl(var(--reading-text))] font-serif leading-relaxed">
@@ -234,17 +232,6 @@ export const ImmersiveReader = ({
             >
               {isPlaying ? <Pause className="mr-2 h-5 w-5" /> : <Volume2 className="mr-2 h-5 w-5" />}
               {isPlaying ? "Pause" : "Listen"}
-            </Button>
-
-            {/* Translation Toggle */}
-            <Button
-              size="lg"
-              variant="outline"
-              onClick={() => setShowTranslation(!showTranslation)}
-              className="bg-[hsl(var(--reading-paper))] border-[hsl(var(--reading-muted))] text-[hsl(var(--reading-text))] hover:bg-[hsl(var(--reading-bg))]"
-            >
-              <Languages className="mr-2 h-5 w-5" />
-              Translation
             </Button>
           </div>
         </div>
