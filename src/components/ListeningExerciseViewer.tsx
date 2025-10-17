@@ -148,7 +148,7 @@ export const ListeningExerciseViewer = ({
 
         {/* Question Section */}
         {showQuestion && <Card className="p-6">
-            <h2 className="text-xl font-bold mb-4">{t('listeningPractice.question')}</h2>
+            <h2 className="text-xl font-bold mb-4">What was the conversation about?</h2>
             
 
             <div className="space-y-3 mb-6">
