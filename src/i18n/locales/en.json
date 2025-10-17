@@ -375,6 +375,10 @@
       "professional": {
         "title": "Professional Level",
         "description": "Master advanced situations requiring formal communication"
+      },
+      "advanced": {
+        "title": "Professional Level",
+        "description": "Master advanced situations requiring formal communication"
       }
     },
     "scenarios": {
