@@ -285,9 +285,9 @@ const Dashboard = () => {
               onClick={() => navigate("/reading-practice")}
             >
               <BookOpen className="w-10 h-10 mb-3 text-primary" />
-              <h3 className="text-lg font-bold mb-2">Reading Practice</h3>
+              <h3 className="text-lg font-bold mb-2">{t('everydayEnglish.readingPractice.title')}</h3>
               <p className="text-sm text-muted-foreground">
-                Improve reading fluency with full texts
+                {t('everydayEnglish.readingPractice.description')}
               </p>
             </Card>
           </div>

@@ -628,6 +628,10 @@
       "title": "Vocabulary Builder",
       "description": "Expand your truck driving vocabulary with flashcards and spaced repetition learning"
     },
+    "readingPractice": {
+      "title": "Reading Practice",
+      "description": "Improve reading fluency with full texts"
+    },
     "speaking": {
       "title": "Speaking Practice",
       "description": "Practice pronunciation and speaking with AI feedback on common trucker phrases"
