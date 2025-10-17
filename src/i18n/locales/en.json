@@ -491,6 +491,32 @@
   "dialogue": {
     "title": "Improve Your Reading Skills",
     "subtitle": "Practice reading full dialogue texts and improve your fluency",
+  },
+  "listeningPractice": {
+    "title": "Listening Practice",
+    "subtitle": "Improve your listening comprehension with real trucking conversations",
+    "howItWorks": "How It Works",
+    "step1": "Listen to realistic dialogues between truck drivers and others",
+    "step2": "Pay attention to the conversation and context",
+    "step3": "Answer a comprehension question about what you heard",
+    "step4": "Practice as many times as you need to improve",
+    "playAudio": "Play Audio",
+    "pause": "Pause",
+    "replay": "Replay",
+    "loading": "Loading...",
+    "showQuestion": "Show Question",
+    "question": "Comprehension Question",
+    "whatHappened": "What happened in this conversation?",
+    "submit": "Submit Answer",
+    "correct": "Correct! Well done!",
+    "incorrect": "Not quite right.",
+    "correctAnswer": "The correct answer is",
+    "tryAgain": "Try Again",
+    "finish": "Finish",
+    "line": "Line",
+    "backToDashboard": "Back to Dashboard"
+  },
+  "dialogueReading": {
     "readingPractice": "Dialogue Reading Practice",
     "difficulty": {
       "beginner": "Beginner",
