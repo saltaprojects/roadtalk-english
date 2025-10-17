@@ -1,3 +1,23 @@
+import gasStationImage from "@/assets/scenarios/gas-station-conversation.jpg";
+import restaurantImage from "@/assets/scenarios/restaurant-conversation.jpg";
+import hotelImage from "@/assets/scenarios/hotel-conversation.jpg";
+import facilitiesImage from "@/assets/scenarios/facilities-conversation.jpg";
+import dispatcherImage from "@/assets/scenarios/dispatcher-conversation.jpg";
+import deliveryImage from "@/assets/scenarios/delivery-conversation.jpg";
+import policeImage from "@/assets/scenarios/police-conversation.jpg";
+import mechanicImage from "@/assets/scenarios/mechanic-conversation.jpg";
+import borderImage from "@/assets/scenarios/border-conversation.jpg";
+import weighStationImage from "@/assets/scenarios/weigh-station-conversation.jpg";
+import accidentImage from "@/assets/scenarios/accident-conversation.jpg";
+import contractImage from "@/assets/scenarios/contract-conversation.jpg";
+
+import gasAttendantChar from "@/assets/characters/gas-attendant.png";
+import dispatcherChar from "@/assets/characters/dispatcher.png";
+import warehouseWorkerChar from "@/assets/characters/warehouse-worker.png";
+import policeOfficerChar from "@/assets/characters/police-officer.png";
+import borderOfficerChar from "@/assets/characters/border-officer.png";
+import weighInspectorChar from "@/assets/characters/weigh-inspector.png";
+
 export type DialogueLine = {
   speaker: string;
   speakerRu: string;
@@ -30,8 +50,8 @@ export const listeningExercises: ListeningExercise[] = [
     title: "Gas Station Conversation",
     titleRu: "Разговор на заправке",
     difficulty: "beginner",
-    imageUrl: "/src/assets/scenarios/gas-station-conversation.jpg",
-    characterImage: "/src/assets/characters/gas-attendant.png",
+    imageUrl: gasStationImage,
+    characterImage: gasAttendantChar,
     dialogue: [
       {
         speaker: "Driver",
@@ -58,12 +78,12 @@ export const listeningExercises: ListeningExercise[] = [
         textRu: "Внутри магазина."
       }
     ],
-    correctAnswer: "The driver needs diesel and asks where to pay",
-    correctAnswerRu: "Водитель нуждается в дизеле и спрашивает где заплатить",
-    wrongOption1: "The driver is looking for a bathroom",
-    wrongOption1Ru: "Водитель ищет туалет",
-    wrongOption2: "The driver wants to buy coffee",
-    wrongOption2Ru: "Водитель хочет купить кофе",
+    correctAnswer: "Buying diesel fuel",
+    correctAnswerRu: "Покупка дизельного топлива",
+    wrongOption1: "Looking for a bathroom",
+    wrongOption1Ru: "Ищет туалет",
+    wrongOption2: "Buying coffee",
+    wrongOption2Ru: "Покупает кофе",
     scenario: "gas-station",
     duration: "0:20"
   },
@@ -72,7 +92,7 @@ export const listeningExercises: ListeningExercise[] = [
     title: "Restaurant Order",
     titleRu: "Заказ в ресторане",
     difficulty: "beginner",
-    imageUrl: "/src/assets/scenarios/restaurant-conversation.jpg",
+    imageUrl: restaurantImage,
     dialogue: [
       {
         speaker: "Driver",
@@ -105,12 +125,12 @@ export const listeningExercises: ListeningExercise[] = [
         textRu: "С собой, спасибо!"
       }
     ],
-    correctAnswer: "The driver orders a burger and fries to go",
-    correctAnswerRu: "Водитель заказывает бургер и картошку фри с собой",
-    wrongOption1: "The driver is looking for directions",
-    wrongOption1Ru: "Водитель ищет направления",
-    wrongOption2: "The driver needs to use the bathroom",
-    wrongOption2Ru: "Водителю нужно в туалет",
+    correctAnswer: "Ordering food to go",
+    correctAnswerRu: "Заказ еды с собой",
+    wrongOption1: "Asking for directions",
+    wrongOption1Ru: "Спрашивает дорогу",
+    wrongOption2: "Using the bathroom",
+    wrongOption2Ru: "Пользуется туалетом",
     scenario: "restaurant",
     duration: "0:25"
   },
@@ -119,7 +139,7 @@ export const listeningExercises: ListeningExercise[] = [
     title: "Hotel Check-in",
     titleRu: "Регистрация в отеле",
     difficulty: "beginner",
-    imageUrl: "/src/assets/scenarios/hotel-conversation.jpg",
+    imageUrl: hotelImage,
     dialogue: [
       {
         speaker: "Driver",
@@ -146,12 +166,12 @@ export const listeningExercises: ListeningExercise[] = [
         textRu: "Да, за зданием."
       }
     ],
-    correctAnswer: "The driver checks in and asks about truck parking",
-    correctAnswerRu: "Водитель регистрируется и спрашивает о парковке для грузовиков",
-    wrongOption1: "The driver is asking for directions",
-    wrongOption1Ru: "Водитель спрашивает направления",
-    wrongOption2: "The driver wants to buy gas",
-    wrongOption2Ru: "Водитель хочет купить бензин",
+    correctAnswer: "Checking into a hotel",
+    correctAnswerRu: "Регистрация в отеле",
+    wrongOption1: "Asking for directions",
+    wrongOption1Ru: "Спрашивает дорогу",
+    wrongOption2: "Buying gas",
+    wrongOption2Ru: "Покупает бензин",
     scenario: "hotel",
     duration: "0:20"
   },
@@ -160,7 +180,7 @@ export const listeningExercises: ListeningExercise[] = [
     title: "Asking Directions",
     titleRu: "Как спросить дорогу",
     difficulty: "beginner",
-    imageUrl: "/src/assets/scenarios/facilities-conversation.jpg",
+    imageUrl: facilitiesImage,
     dialogue: [
       {
         speaker: "Driver",
@@ -187,12 +207,12 @@ export const listeningExercises: ListeningExercise[] = [
         textRu: "Около двух миль."
       }
     ],
-    correctAnswer: "The driver asks for directions to I-95",
-    correctAnswerRu: "Водитель спрашивает направления на I-95",
-    wrongOption1: "The driver needs a mechanic",
-    wrongOption1Ru: "Водителю нужен механик",
-    wrongOption2: "The driver is ordering food",
-    wrongOption2Ru: "Водитель заказывает еду",
+    correctAnswer: "Asking for directions to I-95",
+    correctAnswerRu: "Спрашивает дорогу на I-95",
+    wrongOption1: "Looking for a mechanic",
+    wrongOption1Ru: "Ищет механика",
+    wrongOption2: "Ordering food",
+    wrongOption2Ru: "Заказывает еду",
     scenario: "directions",
     duration: "0:20"
   },
@@ -203,8 +223,8 @@ export const listeningExercises: ListeningExercise[] = [
     title: "Dispatcher Call",
     titleRu: "Звонок диспетчеру",
     difficulty: "intermediate",
-    imageUrl: "/src/assets/scenarios/dispatcher-conversation.jpg",
-    characterImage: "/src/assets/characters/dispatcher.png",
+    imageUrl: dispatcherImage,
+    characterImage: dispatcherChar,
     dialogue: [
       {
         speaker: "Driver",
@@ -243,12 +263,12 @@ export const listeningExercises: ListeningExercise[] = [
         textRu: "Нет, я уведомлю их. Езжай осторожно."
       }
     ],
-    correctAnswer: "The driver reports a delay and gets alternate route instructions",
-    correctAnswerRu: "Водитель сообщает о задержке и получает инструкции по альтернативному маршруту",
-    wrongOption1: "The driver is asking for time off",
-    wrongOption1Ru: "Водитель просит выходной",
-    wrongOption2: "The driver needs a new load assignment",
-    wrongOption2Ru: "Водителю нужно новое назначение груза",
+    correctAnswer: "Reporting delay and getting alternate route",
+    correctAnswerRu: "Сообщает о задержке и получает другой маршрут",
+    wrongOption1: "Asking for time off",
+    wrongOption1Ru: "Просит выходной",
+    wrongOption2: "Requesting a new load",
+    wrongOption2Ru: "Запрашивает новый груз",
     scenario: "dispatcher",
     duration: "0:35"
   },
@@ -257,8 +277,8 @@ export const listeningExercises: ListeningExercise[] = [
     title: "Warehouse Delivery",
     titleRu: "Доставка на склад",
     difficulty: "intermediate",
-    imageUrl: "/src/assets/scenarios/delivery-conversation.jpg",
-    characterImage: "/src/assets/characters/warehouse-worker.png",
+    imageUrl: deliveryImage,
+    characterImage: warehouseWorkerChar,
     dialogue: [
       {
         speaker: "Driver",
@@ -297,12 +317,12 @@ export const listeningExercises: ListeningExercise[] = [
         textRu: "Около 30 минут. Можете подождать в комнате отдыха."
       }
     ],
-    correctAnswer: "The driver delivers to the warehouse and asks about unloading time",
-    correctAnswerRu: "Водитель доставляет на склад и спрашивает о времени разгрузки",
-    wrongOption1: "The driver is picking up a new load",
-    wrongOption1Ru: "Водитель забирает новый груз",
-    wrongOption2: "The driver is looking for parking",
-    wrongOption2Ru: "Водитель ищет парковку",
+    correctAnswer: "Making a warehouse delivery",
+    correctAnswerRu: "Доставка на склад",
+    wrongOption1: "Picking up a new load",
+    wrongOption1Ru: "Забирает новый груз",
+    wrongOption2: "Looking for parking",
+    wrongOption2Ru: "Ищет парковку",
     scenario: "delivery",
     duration: "0:35"
   },
@@ -311,8 +331,8 @@ export const listeningExercises: ListeningExercise[] = [
     title: "Police Traffic Stop",
     titleRu: "Остановка полицией",
     difficulty: "intermediate",
-    imageUrl: "/src/assets/scenarios/police-conversation.jpg",
-    characterImage: "/src/assets/characters/police-officer.png",
+    imageUrl: policeImage,
+    characterImage: policeOfficerChar,
     dialogue: [
       {
         speaker: "Officer",
@@ -351,12 +371,12 @@ export const listeningExercises: ListeningExercise[] = [
         textRu: "Спасибо, офицер. Я буду."
       }
     ],
-    correctAnswer: "The driver is stopped for speeding and receives a warning",
-    correctAnswerRu: "Водитель остановлен за превышение скорости и получает предупреждение",
-    wrongOption1: "The driver's truck has a mechanical problem",
-    wrongOption1Ru: "У грузовика водителя механическая проблема",
-    wrongOption2: "The driver is asking for directions",
-    wrongOption2Ru: "Водитель спрашивает направления",
+    correctAnswer: "Getting stopped for speeding",
+    correctAnswerRu: "Остановлен за превышение скорости",
+    wrongOption1: "Truck has mechanical problems",
+    wrongOption1Ru: "У грузовика механические проблемы",
+    wrongOption2: "Asking for directions",
+    wrongOption2Ru: "Спрашивает дорогу",
     scenario: "police",
     duration: "0:35"
   },
@@ -365,7 +385,7 @@ export const listeningExercises: ListeningExercise[] = [
     title: "Mechanic Shop",
     titleRu: "Ремонтная мастерская",
     difficulty: "intermediate",
-    imageUrl: "/src/assets/scenarios/mechanic-conversation.jpg",
+    imageUrl: mechanicImage,
     dialogue: [
       {
         speaker: "Driver",
@@ -404,12 +424,12 @@ export const listeningExercises: ListeningExercise[] = [
         textRu: "Диагностика стоит 75 долларов. Я узнаю больше после этого."
       }
     ],
-    correctAnswer: "The driver has engine problems and the mechanic runs a diagnostic",
-    correctAnswerRu: "У водителя проблемы с двигателем и механик проводит диагностику",
-    wrongOption1: "The driver is buying a new truck",
-    wrongOption1Ru: "Водитель покупает новый грузовик",
-    wrongOption2: "The driver needs fuel",
-    wrongOption2Ru: "Водителю нужно топливо",
+    correctAnswer: "Getting truck diagnosed at mechanic",
+    correctAnswerRu: "Диагностика грузовика у механика",
+    wrongOption1: "Buying a new truck",
+    wrongOption1Ru: "Покупает новый грузовик",
+    wrongOption2: "Getting fuel",
+    wrongOption2Ru: "Заправляется",
     scenario: "mechanic",
     duration: "0:35"
   },
@@ -420,8 +440,8 @@ export const listeningExercises: ListeningExercise[] = [
     title: "Border Crossing",
     titleRu: "Пересечение границы",
     difficulty: "advanced",
-    imageUrl: "/src/assets/scenarios/border-conversation.jpg",
-    characterImage: "/src/assets/characters/border-officer.png",
+    imageUrl: borderImage,
+    characterImage: borderOfficerChar,
     dialogue: [
       {
         speaker: "Officer",
@@ -478,12 +498,12 @@ export const listeningExercises: ListeningExercise[] = [
         textRu: "Всё в порядке. Проезжайте к инспекционному отсеку 3."
       }
     ],
-    correctAnswer: "The driver crosses the border with proper documentation and cargo details",
-    correctAnswerRu: "Водитель пересекает границу с надлежащими документами и деталями груза",
-    wrongOption1: "The driver is denied entry due to missing documents",
-    wrongOption1Ru: "Водителю отказано во въезде из-за отсутствующих документов",
-    wrongOption2: "The driver is asking for directions to a restaurant",
-    wrongOption2Ru: "Водитель спрашивает направления в ресторан",
+    correctAnswer: "Crossing international border with cargo",
+    correctAnswerRu: "Пересечение международной границы с грузом",
+    wrongOption1: "Being denied entry",
+    wrongOption1Ru: "Отказано во въезде",
+    wrongOption2: "Looking for a restaurant",
+    wrongOption2Ru: "Ищет ресторан",
     scenario: "border",
     duration: "0:50"
   },
@@ -492,8 +512,8 @@ export const listeningExercises: ListeningExercise[] = [
     title: "Weigh Station Inspection",
     titleRu: "Проверка на весовой станции",
     difficulty: "advanced",
-    imageUrl: "/src/assets/scenarios/weigh-station-conversation.jpg",
-    characterImage: "/src/assets/characters/weigh-inspector.png",
+    imageUrl: weighStationImage,
+    characterImage: weighInspectorChar,
     dialogue: [
       {
         speaker: "Inspector",
@@ -544,12 +564,12 @@ export const listeningExercises: ListeningExercise[] = [
         textRu: "Спасибо, офицер. Хорошего дня."
       }
     ],
-    correctAnswer: "The driver passes inspection with proper weight, hours, and documentation",
-    correctAnswerRu: "Водитель проходит проверку с правильным весом, часами и документацией",
-    wrongOption1: "The driver is overweight and must offload cargo",
-    wrongOption1Ru: "Водитель перегружен и должен разгрузить груз",
-    wrongOption2: "The driver's logbook has violations",
-    wrongOption2Ru: "В журнале водителя есть нарушения",
+    correctAnswer: "Passing weigh station inspection",
+    correctAnswerRu: "Прохождение проверки на весовой станции",
+    wrongOption1: "Being overweight",
+    wrongOption1Ru: "Перегружен",
+    wrongOption2: "Having logbook violations",
+    wrongOption2Ru: "Нарушения в журнале",
     scenario: "weigh-station",
     duration: "0:50"
   },
@@ -558,7 +578,7 @@ export const listeningExercises: ListeningExercise[] = [
     title: "Accident Report",
     titleRu: "Отчёт о происшествии",
     difficulty: "advanced",
-    imageUrl: "/src/assets/scenarios/accident-conversation.jpg",
+    imageUrl: accidentImage,
     dialogue: [
       {
         speaker: "Officer",
@@ -615,12 +635,12 @@ export const listeningExercises: ListeningExercise[] = [
         textRu: "Да, вы должны уведомить их немедленно. Вот номер дела."
       }
     ],
-    correctAnswer: "The driver reports an accident with dash cam evidence and proper documentation",
-    correctAnswerRu: "Водитель сообщает о ДТП с доказательствами с регистратора и надлежащими документами",
-    wrongOption1: "The driver was at fault and left the scene",
-    wrongOption1Ru: "Водитель был виноват и покинул место происшествия",
-    wrongOption2: "The driver was injured and needs medical attention",
-    wrongOption2Ru: "Водитель был ранен и нуждается в медицинской помощи",
+    correctAnswer: "Reporting traffic accident with evidence",
+    correctAnswerRu: "Сообщает о ДТП с доказательствами",
+    wrongOption1: "Being at fault and leaving",
+    wrongOption1Ru: "Виноват и покидает место",
+    wrongOption2: "Being injured",
+    wrongOption2Ru: "Получил травму",
     scenario: "accident",
     duration: "0:55"
   },
@@ -629,7 +649,7 @@ export const listeningExercises: ListeningExercise[] = [
     title: "Contract Negotiation",
     titleRu: "Переговоры по контракту",
     difficulty: "advanced",
-    imageUrl: "/src/assets/scenarios/contract-conversation.jpg",
+    imageUrl: contractImage,
     dialogue: [
       {
         speaker: "Broker",
@@ -680,12 +700,12 @@ export const listeningExercises: ListeningExercise[] = [
         textRu: "Я могу быть там завтра утром в 8 утра."
       }
     ],
-    correctAnswer: "The driver negotiates rate, detention pay, and delivery terms successfully",
-    correctAnswerRu: "Водитель успешно договаривается о ставке, плате за простой и условиях доставки",
-    wrongOption1: "The driver accepts the first offer without negotiation",
-    wrongOption1Ru: "Водитель принимает первое предложение без переговоров",
-    wrongOption2: "The negotiation fails and no deal is reached",
-    wrongOption2Ru: "Переговоры не удаются и сделка не заключается",
+    correctAnswer: "Negotiating contract terms and rates",
+    correctAnswerRu: "Переговоры по условиям контракта и ставкам",
+    wrongOption1: "Accepting first offer",
+    wrongOption1Ru: "Принимает первое предложение",
+    wrongOption2: "Negotiation fails",
+    wrongOption2Ru: "Переговоры не удаются",
     scenario: "contract",
     duration: "0:55"
   },

@@ -31,7 +31,7 @@ export const ListeningExerciseViewer = ({ exercise, onClose }: ListeningExercise
   } = useAudioDialogue();
 
   const handlePlay = () => {
-    playDialogue(exercise.dialogue, isRussian);
+    playDialogue(exercise.dialogue, false); // Always use English audio
   };
 
   const handlePause = () => {
@@ -42,7 +42,7 @@ export const ListeningExerciseViewer = ({ exercise, onClose }: ListeningExercise
     setShowQuestion(false);
     setHasSubmitted(false);
     setSelectedAnswer(null);
-    replay(exercise.dialogue, isRussian);
+    replay(exercise.dialogue, false); // Always use English audio
   };
 
   const handleSubmit = () => {
@@ -53,7 +53,7 @@ export const ListeningExerciseViewer = ({ exercise, onClose }: ListeningExercise
     setSelectedAnswer(null);
     setHasSubmitted(false);
     setShowQuestion(false);
-    replay(exercise.dialogue, isRussian);
+    replay(exercise.dialogue, false); // Always use English audio
   };
 
   const options = [
@@ -112,10 +112,10 @@ export const ListeningExerciseViewer = ({ exercise, onClose }: ListeningExercise
               </Avatar>
               <div className="flex-1">
                 <h3 className="font-bold text-lg mb-2">
-                  {isRussian ? currentDialogueLine.speakerRu : currentDialogueLine.speaker}
+                  {currentDialogueLine.speaker}
                 </h3>
                 <p className="text-lg leading-relaxed">
-                  {isRussian ? currentDialogueLine.textRu : currentDialogueLine.text}
+                  {currentDialogueLine.text}
                 </p>
               </div>
             </div>
