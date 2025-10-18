@@ -124,7 +124,7 @@ const Home = () => {
       </section>
 
       {/* News Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-background to-muted/30">
+      <section className="pt-8 pb-20 px-4 bg-gradient-to-br from-background to-muted/30">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
           <div className="flex justify-center mb-0">
