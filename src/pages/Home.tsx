@@ -103,7 +103,7 @@ const Home = () => {
           
           <div className="relative">
             {/* Avatar/Image - Floated */}
-            <Avatar className="w-48 h-48 md:w-64 md:h-64 border-4 border-primary shadow-xl rounded-xl float-left mr-8 mb-6 mt-4 pt-4">
+            <Avatar className="w-48 h-48 md:w-64 md:h-64 border-4 border-primary shadow-xl rounded-xl float-left mr-8 mb-6">
               <AvatarImage src={profileImage} alt="Profile" className="object-cover" />
               <AvatarFallback className="bg-primary text-white text-6xl rounded-xl">
                 <User className="w-24 h-24" />
