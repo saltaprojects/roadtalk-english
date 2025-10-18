@@ -92,7 +92,7 @@ const Home = () => {
       </section>
 
       {/* About Me Section */}
-      <section className="pt-6 pb-12 px-4 bg-muted/30">
+      <section className="pt-6 pb-6 px-4 bg-muted/30">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold mb-8 text-left px-0 pt-4 pb-[9px] my-0 mx-0">
             {t('home.about.title')}
@@ -121,7 +121,7 @@ const Home = () => {
       </section>
 
       {/* News Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-background to-muted/30">
+      <section className="pt-6 pb-20 px-4 bg-gradient-to-br from-background to-muted/30">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
