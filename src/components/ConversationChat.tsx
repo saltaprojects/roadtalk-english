@@ -55,6 +55,7 @@ export const ConversationChat = ({
   onEnd,
 }: ConversationChatProps) => {
   const { t, i18n } = useTranslation();
+  const isRussian = i18n.language === 'ru';
   const [input, setInput] = useState("");
   const [suggestedResponses, setSuggestedResponses] = useState<Array<{en: string, ru: string}>>([]);
   const { messages, isLoading, error, sendMessage, resetConversation } = useConversationChat();
@@ -197,13 +198,15 @@ export const ConversationChat = ({
                 <div className="space-y-3">
                   {message.contentEn && (
                     <div>
-                      <div className="text-xs font-semibold text-primary mb-1">English:</div>
+                      {isRussian && (
+                        <div className="text-xs font-semibold text-primary mb-1">English:</div>
+                      )}
                       <p className="text-sm leading-relaxed whitespace-pre-wrap">
                         {message.contentEn}
                       </p>
                     </div>
                   )}
-                  {message.contentRu && (
+                  {isRussian && message.contentRu && (
                     <div>
                       <div className="text-xs font-semibold text-muted-foreground mb-1">Русский:</div>
                       <p className="text-sm leading-relaxed whitespace-pre-wrap">
@@ -271,7 +274,9 @@ export const ConversationChat = ({
                 >
                   <div className="space-y-1 w-full">
                     <div className="font-medium">{suggestion.en}</div>
-                    <div className="text-xs text-muted-foreground">{suggestion.ru}</div>
+                    {isRussian && (
+                      <div className="text-xs text-muted-foreground">{suggestion.ru}</div>
+                    )}
                   </div>
                 </Button>
               ))}
@@ -292,7 +297,9 @@ export const ConversationChat = ({
                 >
                   <div className="space-y-1 w-full">
                     <div className="text-sm">{suggestion.en}</div>
-                    <div className="text-xs text-muted-foreground">{suggestion.ru}</div>
+                    {isRussian && (
+                      <div className="text-xs text-muted-foreground">{suggestion.ru}</div>
+                    )}
                   </div>
                 </Button>
               ))}
