@@ -20,6 +20,9 @@ export interface GrammarTopic {
   examples: GrammarExample[];
   exercises: GrammarExercise[];
   icon: string;
+  difficulty: 'beginner' | 'intermediate';
+  estimatedMinutes: number;
+  tips: { en: string; ru: string }[];
 }
 
 export const grammarTopics: GrammarTopic[] = [
@@ -37,6 +40,12 @@ export const grammarTopics: GrammarTopic[] = [
       en: 'We use Present Simple to talk about regular actions, habits, and routines in truck driving. Add -s/-es for he/she/it.', 
       ru: 'Мы используем Present Simple для регулярных действий и привычек. Добавляем -s/-es для he/she/it.' 
     },
+    difficulty: 'beginner',
+    estimatedMinutes: 15,
+    tips: [
+      { en: '💡 Use this when talking about your daily pre-trip inspection', ru: '💡 Используйте это при разговоре о ежедневном осмотре' },
+      { en: '⚠️ Don\'t forget the -s with he/she/it (dispatcher sends, truck needs)', ru: '⚠️ Не забывайте -s с he/she/it (диспетчер отправляет, грузовик нуждается)' },
+    ],
     examples: [
       { en: 'I inspect the truck every morning', ru: 'Я осматриваю грузовик каждое утро', highlight: 'inspect' },
       { en: 'The dispatcher sends me the route', ru: 'Диспетчер отправляет мне маршрут', highlight: 'sends' },
@@ -76,6 +85,12 @@ export const grammarTopics: GrammarTopic[] = [
   },
   {
     id: 'present-continuous',
+    difficulty: 'beginner',
+    estimatedMinutes: 15,
+    tips: [
+      { en: '🎯 Perfect for CB radio communication: "I am approaching exit 45"', ru: '🎯 Отлично для радио: "Я подъезжаю к выходу 45"' },
+      { en: '⚠️ Common mistake: Don\'t say "I waiting" - always use am/is/are', ru: '⚠️ Частая ошибка: не говорите "I waiting" - всегда используйте am/is/are' },
+    ],
     title: { 
       en: 'Present Continuous - Current Actions', 
       ru: 'Present Continuous - Текущие действия' 
@@ -121,6 +136,12 @@ export const grammarTopics: GrammarTopic[] = [
   },
   {
     id: 'past-simple',
+    difficulty: 'beginner',
+    estimatedMinutes: 20,
+    tips: [
+      { en: '💡 Essential for trip reports and accident reports', ru: '💡 Необходимо для отчетов о рейсах и авариях' },
+      { en: '⚠️ Watch out for irregular verbs: drive→drove, break→broke, sleep→slept', ru: '⚠️ Следите за неправильными глаголами: drive→drove, break→broke' },
+    ],
     title: { 
       en: 'Past Simple - Trip Reports', 
       ru: 'Past Simple - Отчеты о рейсах' 
@@ -166,6 +187,12 @@ export const grammarTopics: GrammarTopic[] = [
   },
   {
     id: 'future',
+    difficulty: 'beginner',
+    estimatedMinutes: 15,
+    tips: [
+      { en: '🎯 Use "will arrive" when giving ETAs to dispatch', ru: '🎯 Используйте "will arrive" при сообщении ETA диспетчеру' },
+      { en: '💡 Use "going to" when you already have a plan to fuel or rest', ru: '💡 Используйте "going to" когда уже есть план заправиться или отдохнуть' },
+    ],
     title: { 
       en: 'Future - Will & Going to', 
       ru: 'Будущее время - Will & Going to' 
@@ -204,6 +231,12 @@ export const grammarTopics: GrammarTopic[] = [
   },
   {
     id: 'modals',
+    difficulty: 'intermediate',
+    estimatedMinutes: 20,
+    tips: [
+      { en: '⚠️ MUST = DOT regulation (legal requirement)', ru: '⚠️ MUST = требование DOT (законное требование)' },
+      { en: '💡 SHOULD = safety recommendation, CAN = permission or ability', ru: '💡 SHOULD = рекомендация по безопасности, CAN = разрешение или возможность' },
+    ],
     title: { 
       en: 'Modal Verbs - Rules & Requirements', 
       ru: 'Модальные глаголы - Правила' 
@@ -242,6 +275,12 @@ export const grammarTopics: GrammarTopic[] = [
   },
   {
     id: 'prepositions',
+    difficulty: 'intermediate',
+    estimatedMinutes: 20,
+    tips: [
+      { en: '🎯 AT = specific location (at the dock, at mile marker 45)', ru: '🎯 AT = конкретное место (у дока, на миле 45)' },
+      { en: '💡 ON = surface/road (on I-80), IN = enclosed space (in the cab)', ru: '💡 ON = поверхность/дорога (на I-80), IN = закрытое пространство (в кабине)' },
+    ],
     title: { 
       en: 'Prepositions - Location & Movement', 
       ru: 'Предлоги - Местоположение' 
@@ -280,6 +319,12 @@ export const grammarTopics: GrammarTopic[] = [
   },
   {
     id: 'questions',
+    difficulty: 'beginner',
+    estimatedMinutes: 15,
+    tips: [
+      { en: '💡 Start with the question word: Where, What, When, How, Who', ru: '💡 Начинайте с вопросительного слова: Where, What, When, How, Who' },
+      { en: '🎯 Essential at loading docks and weigh stations', ru: '🎯 Необходимо на погрузочных площадках и весовых станциях' },
+    ],
     title: { 
       en: 'Questions - Asking for Information', 
       ru: 'Вопросы - Запрос информации' 
@@ -318,6 +363,12 @@ export const grammarTopics: GrammarTopic[] = [
   },
   {
     id: 'imperatives',
+    difficulty: 'beginner',
+    estimatedMinutes: 15,
+    tips: [
+      { en: '🎯 You\'ll hear these at loading docks: "Back it up", "Stop here"', ru: '🎯 Вы услышите это на погрузочных площадках: "Сдай назад", "Остановись здесь"' },
+      { en: '💡 Polite form: "Please" + imperative ("Please sign here")', ru: '💡 Вежливая форма: "Please" + повелительное ("Пожалуйста подпишите здесь")' },
+    ],
     title: { 
       en: 'Imperatives - Instructions & Commands', 
       ru: 'Повелительное наклонение - Инструкции' 

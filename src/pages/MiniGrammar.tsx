@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { 
   ArrowLeft, 
   Calendar, 
@@ -10,7 +11,9 @@ import {
   AlertTriangle, 
   MapPin, 
   MessageCircle, 
-  Navigation 
+  Navigation,
+  Timer,
+  TrendingUp
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { grammarTopics } from "@/data/grammarTopics";
@@ -61,28 +64,39 @@ export default function MiniGrammar() {
             return (
               <Card 
                 key={topic.id} 
-                className="hover:shadow-lg transition-all cursor-pointer border-2 hover:border-primary"
+                className="hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary hover:-translate-y-1"
                 onClick={() => navigate(`/mini-grammar/${topic.id}`)}
               >
                 <CardHeader>
-                  <div className="flex items-center gap-3 mb-2">
-                    {IconComponent && <IconComponent className="h-6 w-6 text-primary" />}
-                    <CardTitle className="text-xl">{topic.title[currentLang]}</CardTitle>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="p-3 bg-primary/10 rounded-xl">
+                        {IconComponent && <IconComponent className="h-7 w-7 text-primary" />}
+                      </div>
+                    </div>
+                    <Badge variant={topic.difficulty === 'beginner' ? 'secondary' : 'default'}>
+                      {topic.difficulty === 'beginner' 
+                        ? (currentLang === 'en' ? 'Beginner' : 'Начальный')
+                        : (currentLang === 'en' ? 'Intermediate' : 'Средний')}
+                    </Badge>
                   </div>
-                  <CardDescription>{topic.description[currentLang]}</CardDescription>
+                  <CardTitle className="text-xl mb-2">{topic.title[currentLang]}</CardTitle>
+                  <CardDescription className="text-base">{topic.description[currentLang]}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    {topic.explanation[currentLang].slice(0, 100)}...
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-muted-foreground">
-                      {topic.exercises.length} {currentLang === 'en' ? 'exercises' : 'упражнений'}
-                    </span>
-                    <Button variant="secondary" size="sm">
-                      {currentLang === 'en' ? 'Start Learning' : 'Начать'}
-                    </Button>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Timer className="h-4 w-4" />
+                      <span>{topic.estimatedMinutes} {currentLang === 'en' ? 'minutes' : 'минут'}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <TrendingUp className="h-4 w-4" />
+                      <span>{topic.exercises.length} {currentLang === 'en' ? 'exercises' : 'упражнений'}</span>
+                    </div>
                   </div>
+                  <Button variant="default" size="lg" className="w-full mt-4 text-base">
+                    {currentLang === 'en' ? 'Start Learning 🚛' : 'Начать обучение 🚛'}
+                  </Button>
                 </CardContent>
               </Card>
             );
