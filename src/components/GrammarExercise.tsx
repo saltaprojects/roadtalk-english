@@ -47,33 +47,36 @@ export const GrammarExercise = ({ exercise, onComplete }: GrammarExerciseProps) 
           
           <RadioGroup value={userAnswer} onValueChange={setUserAnswer}>
             {exercise.options?.map((option, index) => {
-              // For options, we don't have translations in data, so we just show the English option
+              const optionValue = typeof option === 'string' ? option : option.en;
+              const optionRu = typeof option === 'string' ? '' : option.ru;
+              
               return (
                 <div 
                   key={index} 
-                  className={`flex items-center space-x-3 mb-3 p-4 rounded-xl border-2 transition-all ${
-                    showFeedback && option === exercise.correctAnswer 
+                  className={`flex items-center space-x-3 mb-3 p-5 rounded-xl border-2 transition-all ${
+                    showFeedback && optionValue === exercise.correctAnswer 
                       ? 'bg-green-50 border-green-500 dark:bg-green-950' 
-                      : showFeedback && option === userAnswer && !isCorrect 
+                      : showFeedback && optionValue === userAnswer && !isCorrect 
                       ? 'bg-red-50 border-red-500 dark:bg-red-950' 
                       : 'border-border hover:border-primary hover:bg-accent'
                   }`}
                 >
-                  <RadioGroupItem value={option} id={`option-${index}`} disabled={showFeedback} className="h-6 w-6" />
+                  <RadioGroupItem value={optionValue} id={`option-${index}`} disabled={showFeedback} className="h-6 w-6" />
                   <Label 
                     htmlFor={`option-${index}`} 
-                    className={`cursor-pointer text-lg flex-1 ${
-                      showFeedback && option === exercise.correctAnswer ? 'text-green-700 dark:text-green-400 font-bold' : ''
+                    className={`cursor-pointer flex-1 ${
+                      showFeedback && optionValue === exercise.correctAnswer ? 'text-green-700 dark:text-green-400 font-bold' : ''
                     } ${
-                      showFeedback && option === userAnswer && !isCorrect ? 'text-red-700 dark:text-red-400 font-semibold' : ''
+                      showFeedback && optionValue === userAnswer && !isCorrect ? 'text-red-700 dark:text-red-400 font-semibold' : ''
                     }`}
                   >
-                    {option}
+                    <div className="text-lg font-semibold">{optionValue}</div>
+                    {optionRu && <div className="text-sm text-muted-foreground mt-1">({optionRu})</div>}
                   </Label>
-                  {showFeedback && option === exercise.correctAnswer && (
+                  {showFeedback && optionValue === exercise.correctAnswer && (
                     <Check className="h-6 w-6 text-green-600" />
                   )}
-                  {showFeedback && option === userAnswer && !isCorrect && (
+                  {showFeedback && optionValue === userAnswer && !isCorrect && (
                     <X className="h-6 w-6 text-red-600" />
                   )}
                 </div>

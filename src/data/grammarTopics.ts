@@ -7,7 +7,7 @@ export interface GrammarExample {
 export interface GrammarExercise {
   type: 'multiple-choice' | 'fill-blank' | 'reorder' | 'translate';
   question: { en: string; ru: string };
-  options?: string[];
+  options?: Array<{ en: string; ru: string }>;
   correctAnswer: string;
   explanation: { en: string; ru: string };
 }
@@ -57,7 +57,12 @@ export const grammarTopics: GrammarTopic[] = [
       {
         type: 'multiple-choice',
         question: { en: 'I ___ my hours every day', ru: 'Я ___ свои часы каждый день' },
-        options: ['log', 'logged', 'logging', 'logs'],
+        options: [
+          { en: 'log', ru: 'логирую' },
+          { en: 'logged', ru: 'логировал' },
+          { en: 'logging', ru: 'логирую (сейчас)' },
+          { en: 'logs', ru: 'логирует' }
+        ],
         correctAnswer: 'log',
         explanation: { en: 'Use base form with I/you/we/they', ru: 'Используйте базовую форму с I/you/we/they' }
       },
@@ -70,7 +75,12 @@ export const grammarTopics: GrammarTopic[] = [
       {
         type: 'multiple-choice',
         question: { en: 'The truck ___ 40 tons', ru: 'Грузовик ___ 40 тонн' },
-        options: ['weigh', 'weighs', 'weight', 'weighting'],
+        options: [
+          { en: 'weigh', ru: 'весить' },
+          { en: 'weighs', ru: 'весит' },
+          { en: 'weight', ru: 'вес' },
+          { en: 'weighting', ru: 'взвешивание' }
+        ],
         correctAnswer: 'weighs',
         explanation: { en: 'The truck = it, so add -s', ru: 'The truck = it, поэтому добавляем -s' }
       },
@@ -114,7 +124,12 @@ export const grammarTopics: GrammarTopic[] = [
       {
         type: 'multiple-choice',
         question: { en: 'I ___ at the fuel pump right now', ru: 'Я сейчас ___ на топливной колонке' },
-        options: ['wait', 'waiting', 'am waiting', 'waits'],
+        options: [
+          { en: 'wait', ru: 'жду' },
+          { en: 'waiting', ru: 'ждущий' },
+          { en: 'am waiting', ru: 'жду (сейчас)' },
+          { en: 'waits', ru: 'ждёт' }
+        ],
         correctAnswer: 'am waiting',
         explanation: { en: 'Use am + verb-ing for I', ru: 'Используйте am + глагол-ing с I' }
       },
@@ -127,7 +142,12 @@ export const grammarTopics: GrammarTopic[] = [
       {
         type: 'multiple-choice',
         question: { en: 'What ___ you ___ right now?', ru: 'Что ты сейчас ___?' },
-        options: ['do...do', 'are...doing', 'is...doing', 'does...do'],
+        options: [
+          { en: 'do...do', ru: 'делаешь (обычно)' },
+          { en: 'are...doing', ru: 'делаешь (сейчас)' },
+          { en: 'is...doing', ru: 'делает (сейчас)' },
+          { en: 'does...do', ru: 'делает (обычно)' }
+        ],
         correctAnswer: 'are...doing',
         explanation: { en: 'Questions: Are/Is + subject + verb-ing', ru: 'Вопросы: Are/Is + подлежащее + глагол-ing' }
       }
@@ -165,7 +185,12 @@ export const grammarTopics: GrammarTopic[] = [
       {
         type: 'multiple-choice',
         question: { en: 'I ___ the load at 3 PM', ru: 'Я ___ груз в 3 часа дня' },
-        options: ['pick up', 'picked up', 'picking up', 'picks up'],
+        options: [
+          { en: 'pick up', ru: 'забираю' },
+          { en: 'picked up', ru: 'забрал' },
+          { en: 'picking up', ru: 'забирающий' },
+          { en: 'picks up', ru: 'забирает' }
+        ],
         correctAnswer: 'picked up',
         explanation: { en: 'Past Simple: add -ed to regular verbs', ru: 'Past Simple: добавляем -ed к правильным глаголам' }
       },
@@ -178,7 +203,12 @@ export const grammarTopics: GrammarTopic[] = [
       {
         type: 'multiple-choice',
         question: { en: 'I ___ at a truck stop in Ohio', ru: 'Я ___ на стоянке в Огайо' },
-        options: ['sleep', 'slept', 'sleeping', 'sleeps'],
+        options: [
+          { en: 'sleep', ru: 'сплю' },
+          { en: 'slept', ru: 'спал' },
+          { en: 'sleeping', ru: 'спящий' },
+          { en: 'sleeps', ru: 'спит' }
+        ],
         correctAnswer: 'slept',
         explanation: { en: 'Irregular verb: sleep → slept', ru: 'Неправильный глагол: sleep → slept' }
       }
@@ -216,7 +246,12 @@ export const grammarTopics: GrammarTopic[] = [
       {
         type: 'multiple-choice',
         question: { en: 'I ___ there by 5 PM', ru: 'Я ___ там к 5 вечера' },
-        options: ['will be', 'am', 'was', 'be'],
+        options: [
+          { en: 'will be', ru: 'буду' },
+          { en: 'am', ru: 'есть (сейчас)' },
+          { en: 'was', ru: 'был' },
+          { en: 'be', ru: 'быть' }
+        ],
         correctAnswer: 'will be',
         explanation: { en: "Use 'will' for future predictions", ru: "Используйте 'will' для будущих предсказаний" }
       },
@@ -260,7 +295,12 @@ export const grammarTopics: GrammarTopic[] = [
       {
         type: 'multiple-choice',
         question: { en: 'All drivers ___ log their hours', ru: 'Все водители ___ записывать свои часы' },
-        options: ['must', 'can', 'may', 'should'],
+        options: [
+          { en: 'must', ru: 'должны' },
+          { en: 'can', ru: 'могут' },
+          { en: 'may', ru: 'могут (разрешение)' },
+          { en: 'should', ru: 'следует' }
+        ],
         correctAnswer: 'must',
         explanation: { en: "Use 'must' for legal obligations", ru: "Используйте 'must' для обязательств" }
       },
@@ -304,7 +344,12 @@ export const grammarTopics: GrammarTopic[] = [
       {
         type: 'multiple-choice',
         question: { en: 'Meet me ___ the fuel island', ru: 'Встретимся ___ на топливной колонке' },
-        options: ['at', 'in', 'on', 'to'],
+        options: [
+          { en: 'at', ru: 'у/на (точка)' },
+          { en: 'in', ru: 'в (внутри)' },
+          { en: 'on', ru: 'на (поверхность)' },
+          { en: 'to', ru: 'к/в (направление)' }
+        ],
         correctAnswer: 'at',
         explanation: { en: "Use 'at' for specific locations", ru: "Используйте 'at' для конкретных мест" }
       },
@@ -348,7 +393,12 @@ export const grammarTopics: GrammarTopic[] = [
       {
         type: 'multiple-choice',
         question: { en: '___ do I sign?', ru: '___ мне расписаться?' },
-        options: ['Where', 'What', 'When', 'Who'],
+        options: [
+          { en: 'Where', ru: 'Где' },
+          { en: 'What', ru: 'Что' },
+          { en: 'When', ru: 'Когда' },
+          { en: 'Who', ru: 'Кто' }
+        ],
         correctAnswer: 'Where',
         explanation: { en: "Use 'Where' for location questions", ru: "Используйте 'Where' для вопросов о местоположении" }
       },
@@ -392,7 +442,12 @@ export const grammarTopics: GrammarTopic[] = [
       {
         type: 'multiple-choice',
         question: { en: '___ your truck at dock 5', ru: '___ ваш грузовик у дока 5' },
-        options: ['Park', 'Parking', 'Parked', 'Parks'],
+        options: [
+          { en: 'Park', ru: 'Паркуйте' },
+          { en: 'Parking', ru: 'Парковка' },
+          { en: 'Parked', ru: 'Припарковал' },
+          { en: 'Parks', ru: 'Паркует' }
+        ],
         correctAnswer: 'Park',
         explanation: { en: 'Use base verb form for commands', ru: 'Используйте базовую форму глагола для команд' }
       },
