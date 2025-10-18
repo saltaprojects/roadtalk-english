@@ -60,16 +60,16 @@ const PhraseCard = ({ phrase, onPlay, isPlaying, isLoading, onPractice, isRecord
             {phrase.english}
           </p>
           
-          {/* Cyrillic transcription */}
-          <p className="text-sm text-muted-foreground italic mb-2">
-            {phrase.transcription}
-          </p>
-          
           {/* Russian translation - only show in Russian mode */}
           {isRussian && (
-            <p className="text-sm text-muted-foreground">
-              {phrase.translation}
-            </p>
+            <>
+              <p className="text-sm text-muted-foreground italic mb-2">
+                {phrase.transcription}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                {phrase.translation}
+              </p>
+            </>
           )}
         </div>
 
