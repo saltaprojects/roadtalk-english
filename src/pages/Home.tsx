@@ -18,15 +18,12 @@ const Home = () => {
     i18n
   } = useTranslation();
   const [currentNewsIndex, setCurrentNewsIndex] = useState(0);
-
   const nextNews = () => {
-    setCurrentNewsIndex((prev) => (prev + 1) % industryNews.length);
+    setCurrentNewsIndex(prev => (prev + 1) % industryNews.length);
   };
-
   const prevNews = () => {
-    setCurrentNewsIndex((prev) => (prev - 1 + industryNews.length) % industryNews.length);
+    setCurrentNewsIndex(prev => (prev - 1 + industryNews.length) % industryNews.length);
   };
-
   const currentNews = industryNews[currentNewsIndex];
   return <div className="min-h-screen">
       {/* Language Switcher */}
@@ -60,7 +57,7 @@ const Home = () => {
       </section>
 
       {/* Features Section */}
-      <section className="pt-20 pb-8 px-4 bg-muted/30">
+      <section className="py-20 px-4 bg-muted/30">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-12">
             {t('home.features.title')}
@@ -95,9 +92,9 @@ const Home = () => {
       </section>
 
       {/* About Me Section */}
-      <section className="pt-0 pb-12 px-4 bg-muted/30">
+      <section className="pt-6 pb-12 px-4 bg-muted/30">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold mb-8 text-left px-0 pt-6 pb-[9px] my-0 mx-0">
+          <h2 className="text-4xl font-bold mb-8 text-left px-0 pt-4 pb-[9px] my-0 mx-0">
             {t('home.about.title')}
           </h2>
           
@@ -124,7 +121,7 @@ const Home = () => {
       </section>
 
       {/* News Section */}
-      <section className="pt-8 pb-20 px-4 bg-gradient-to-br from-background to-muted/30">
+      <section className="py-20 px-4 bg-gradient-to-br from-background to-muted/30">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
           <div className="flex justify-center mb-0">
@@ -133,9 +130,7 @@ const Home = () => {
             <h2 className="text-4xl font-bold mb-4">
               {t('home.news.title')}
             </h2>
-            <p className="text-xl text-muted-foreground">
-              {t('home.news.subtitle')}
-            </p>
+            
           </div>
           
           <div className="relative">
@@ -161,16 +156,28 @@ const Home = () => {
                 <span className="text-sm text-muted-foreground font-medium">
                   {currentNews.source}
                 </span>
-                <a 
-                  href={currentNews.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-primary hover:text-primary/80 transition-colors flex items-center gap-2 font-medium"
-                >
+                <a href={currentNews.url} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 transition-colors flex items-center gap-2 font-medium">
                   {t('home.news.readMore')}
                   <ExternalLink className="w-4 h-4" />
                 </a>
               </div>
+            </div>
+
+            {/* Navigation */}
+            <div className="flex items-center justify-between mt-8">
+              <Button variant="outline" size="lg" onClick={prevNews} className="flex items-center gap-2">
+                <ChevronLeft className="w-5 h-5" />
+                {t('home.news.previous')}
+              </Button>
+              
+              <div className="flex gap-2">
+                {industryNews.map((_, index) => <button key={index} onClick={() => setCurrentNewsIndex(index)} className={`w-2 h-2 rounded-full transition-all ${index === currentNewsIndex ? 'bg-primary w-8' : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'}`} aria-label={`Go to news ${index + 1}`} />)}
+              </div>
+
+              <Button variant="outline" size="lg" onClick={nextNews} className="flex items-center gap-2">
+                {t('home.news.next')}
+                <ChevronRight className="w-5 h-5" />
+              </Button>
             </div>
           </div>
         </div>
