@@ -128,7 +128,7 @@ const Home = () => {
             <Newspaper className="w-12 h-12 text-accent" />
           </div>
             <h2 className="text-4xl font-bold mb-4">
-              {t('home.news.title')}
+              NEWS
             </h2>
             
           </div>
