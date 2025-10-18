@@ -172,44 +172,6 @@ const Home = () => {
                 </a>
               </div>
             </div>
-
-            {/* Navigation */}
-            <div className="flex items-center justify-between mt-8">
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={prevNews}
-                className="flex items-center gap-2"
-              >
-                <ChevronLeft className="w-5 h-5" />
-                {t('home.news.previous')}
-              </Button>
-              
-              <div className="flex gap-2">
-                {industryNews.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentNewsIndex(index)}
-                    className={`w-2 h-2 rounded-full transition-all ${
-                      index === currentNewsIndex 
-                        ? 'bg-primary w-8' 
-                        : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
-                    }`}
-                    aria-label={`Go to news ${index + 1}`}
-                  />
-                ))}
-              </div>
-
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={nextNews}
-                className="flex items-center gap-2"
-              >
-                {t('home.news.next')}
-                <ChevronRight className="w-5 h-5" />
-              </Button>
-            </div>
           </div>
         </div>
       </section>
