@@ -251,12 +251,6 @@ export const ConversationChat = ({
           </div>
         )}
 
-        {isPlaying && (
-          <div className="flex items-center gap-2 justify-center text-primary">
-            <Volume2 className="w-5 h-5 animate-pulse" />
-            <span className="text-sm font-medium">{t("practice.chat.speaking")}</span>
-          </div>
-        )}
       </div>
 
       {/* Input Area - Bottom Fixed */}
