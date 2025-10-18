@@ -673,7 +673,7 @@
     "title": "Listening Comprehension Practice",
     "subtitle": "Watch video dialogues and test your understanding",
     "backToDashboard": "Back to Dashboard",
-    "backToExercises": "go back",
+    "backToExercises": "Back to Exercises",
     "howItWorks": "How It Works",
     "step1": "Watch the short video dialogue between two people",
     "step2": "Listen carefully to understand what was said",
@@ -691,7 +691,16 @@
     "correctAnswerIs": "The correct answer is:",
     "translation": "Translation",
     "tryAgain": "Try Again",
-    "nextExercise": "Next Exercise"
+    "nextExercise": "Next Exercise",
+    "playAudio": "Play Audio",
+    "loading": "Loading audio...",
+    "pause": "Pause",
+    "replay": "Replay Audio",
+    "line": "Line",
+    "question": "What did they say?",
+    "submit": "Submit Answer",
+    "correctAnswer": "Correct answer",
+    "finish": "Finish Exercise"
   },
   "vocabulary": {
     "title": "Vocabulary Builder",
