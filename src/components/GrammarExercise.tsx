@@ -41,40 +41,44 @@ export const GrammarExercise = ({ exercise, onComplete }: GrammarExerciseProps) 
             <div className="text-sm font-semibold text-primary mb-2">
               {currentLang === 'en' ? '🎯 MULTIPLE CHOICE' : '🎯 ВЫБОР ОТВЕТА'}
             </div>
-            <p className="text-2xl font-bold mb-6">{exercise.question[currentLang]}</p>
+            <p className="text-2xl font-bold mb-2">{exercise.question.en}</p>
+            <p className="text-xl text-muted-foreground mb-6">{exercise.question.ru}</p>
           </div>
           
           <RadioGroup value={userAnswer} onValueChange={setUserAnswer}>
-            {exercise.options?.map((option, index) => (
-              <div 
-                key={index} 
-                className={`flex items-center space-x-3 mb-3 p-4 rounded-xl border-2 transition-all ${
-                  showFeedback && option === exercise.correctAnswer 
-                    ? 'bg-green-50 border-green-500 dark:bg-green-950' 
-                    : showFeedback && option === userAnswer && !isCorrect 
-                    ? 'bg-red-50 border-red-500 dark:bg-red-950' 
-                    : 'border-border hover:border-primary hover:bg-accent'
-                }`}
-              >
-                <RadioGroupItem value={option} id={`option-${index}`} disabled={showFeedback} className="h-6 w-6" />
-                <Label 
-                  htmlFor={`option-${index}`} 
-                  className={`cursor-pointer text-lg flex-1 ${
-                    showFeedback && option === exercise.correctAnswer ? 'text-green-700 dark:text-green-400 font-bold' : ''
-                  } ${
-                    showFeedback && option === userAnswer && !isCorrect ? 'text-red-700 dark:text-red-400 font-semibold' : ''
+            {exercise.options?.map((option, index) => {
+              // For options, we don't have translations in data, so we just show the English option
+              return (
+                <div 
+                  key={index} 
+                  className={`flex items-center space-x-3 mb-3 p-4 rounded-xl border-2 transition-all ${
+                    showFeedback && option === exercise.correctAnswer 
+                      ? 'bg-green-50 border-green-500 dark:bg-green-950' 
+                      : showFeedback && option === userAnswer && !isCorrect 
+                      ? 'bg-red-50 border-red-500 dark:bg-red-950' 
+                      : 'border-border hover:border-primary hover:bg-accent'
                   }`}
                 >
-                  {option}
-                </Label>
-                {showFeedback && option === exercise.correctAnswer && (
-                  <Check className="h-6 w-6 text-green-600" />
-                )}
-                {showFeedback && option === userAnswer && !isCorrect && (
-                  <X className="h-6 w-6 text-red-600" />
-                )}
-              </div>
-            ))}
+                  <RadioGroupItem value={option} id={`option-${index}`} disabled={showFeedback} className="h-6 w-6" />
+                  <Label 
+                    htmlFor={`option-${index}`} 
+                    className={`cursor-pointer text-lg flex-1 ${
+                      showFeedback && option === exercise.correctAnswer ? 'text-green-700 dark:text-green-400 font-bold' : ''
+                    } ${
+                      showFeedback && option === userAnswer && !isCorrect ? 'text-red-700 dark:text-red-400 font-semibold' : ''
+                    }`}
+                  >
+                    {option}
+                  </Label>
+                  {showFeedback && option === exercise.correctAnswer && (
+                    <Check className="h-6 w-6 text-green-600" />
+                  )}
+                  {showFeedback && option === userAnswer && !isCorrect && (
+                    <X className="h-6 w-6 text-red-600" />
+                  )}
+                </div>
+              );
+            })}
           </RadioGroup>
 
           {showFeedback && (
@@ -124,7 +128,8 @@ export const GrammarExercise = ({ exercise, onComplete }: GrammarExerciseProps) 
                 ? (currentLang === 'en' ? '✍️ FILL IN THE BLANK' : '✍️ ЗАПОЛНИТЕ ПРОПУСК')
                 : (currentLang === 'en' ? '🌐 TRANSLATION' : '🌐 ПЕРЕВОД')}
             </div>
-            <p className="text-2xl font-bold mb-6">{exercise.question[currentLang]}</p>
+            <p className="text-2xl font-bold mb-2">{exercise.question.en}</p>
+            <p className="text-xl text-muted-foreground mb-6">{exercise.question.ru}</p>
           </div>
           
           <Input
