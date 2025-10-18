@@ -3,9 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { useConversationChat } from "@/hooks/useConversationChat";
-import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useTranslation } from "react-i18next";
-import { Loader2, Send, X, Volume2 } from "lucide-react";
+import { Loader2, Send, X } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 import policeOfficer from "@/assets/characters/police-officer.png";
@@ -59,7 +58,6 @@ export const ConversationChat = ({
   const [input, setInput] = useState("");
   const [suggestedResponses, setSuggestedResponses] = useState<Array<{en: string, ru: string}>>([]);
   const { messages, isLoading, error, sendMessage, resetConversation } = useConversationChat();
-  const { playText, isPlaying, stop } = useTextToSpeech();
   const lastMessageRef = useRef<string>("");
   
   const characters = scenarioCharacters[scenario] || scenarioCharacters.police;
@@ -67,13 +65,12 @@ export const ConversationChat = ({
   const isIntermediate = difficulty === t("practice.scenarios.border.difficulty");
 
   useEffect(() => {
-    // Auto-play TTS for new AI messages - use English version for TTS
+    // Generate suggested responses for new AI messages
     const lastMessage = messages[messages.length - 1];
     if (lastMessage && lastMessage.role === "assistant") {
       const textToPlay = (lastMessage as any).contentEn || lastMessage.content;
       if (textToPlay !== lastMessageRef.current) {
         lastMessageRef.current = textToPlay;
-        playText(textToPlay, characters.aiVoice);
         
         // Generate suggested responses for beginner level
         if (isBeginner && !isLoading) {
@@ -81,7 +78,7 @@ export const ConversationChat = ({
         }
       }
     }
-  }, [messages, playText, characters.aiVoice, isBeginner, isLoading]);
+  }, [messages, isBeginner, isLoading]);
 
   // Generate suggested questions for intermediate level while AI is typing
   useEffect(() => {
@@ -139,7 +136,6 @@ export const ConversationChat = ({
   };
 
   const handleEnd = () => {
-    stop();
     resetConversation();
     onEnd();
   };
