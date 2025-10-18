@@ -7,6 +7,7 @@ import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 import { ReadingPassageViewer } from "./ReadingPassageViewer";
 import { DialogueText, DialogueDifficulty, getDialoguesByDifficulty } from "@/data/dialogueTexts";
+import { useTranslation } from "react-i18next";
 import { 
   ArrowLeft, 
   ArrowRight, 
@@ -32,9 +33,12 @@ interface TextReadingPracticeProps {
 }
 
 export const TextReadingPractice = ({ difficulty, onBack }: TextReadingPracticeProps) => {
+  const { i18n } = useTranslation();
+  const isRussian = i18n.language === 'ru';
+  
   const [dialogues, setDialogues] = useState<DialogueText[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [showTranslation, setShowTranslation] = useState(false);
+  const [showTranslation, setShowTranslation] = useState(isRussian);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [readingMode, setReadingMode] = useState<"none" | "read-along" | "recording" | "playback">("none");
   const [highlightedSentenceIndex, setHighlightedSentenceIndex] = useState<number>(-1);
@@ -145,7 +149,7 @@ export const TextReadingPractice = ({ difficulty, onBack }: TextReadingPracticeP
   const handleNext = () => {
     if (currentIndex < dialogues.length - 1) {
       setCurrentIndex(currentIndex + 1);
-      setShowTranslation(false);
+      setShowTranslation(isRussian);
       setReadingMode("none");
       setRecordingTime(0);
       setHighlightedSentenceIndex(-1);
@@ -162,7 +166,7 @@ export const TextReadingPractice = ({ difficulty, onBack }: TextReadingPracticeP
   const handlePrevious = () => {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
-      setShowTranslation(false);
+      setShowTranslation(isRussian);
       setReadingMode("none");
       setRecordingTime(0);
       setHighlightedSentenceIndex(-1);

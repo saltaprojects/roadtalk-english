@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { DialogueText } from "@/data/dialogueTexts";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { useTranslation } from "react-i18next";
 
 interface ImmersiveReaderProps {
   dialogues: DialogueText[];
@@ -29,6 +30,9 @@ export const ImmersiveReader = ({
   onNext,
   onPrevious 
 }: ImmersiveReaderProps) => {
+  const { i18n } = useTranslation();
+  const isRussian = i18n.language === 'ru';
+  
   const [readingTime, setReadingTime] = useState(0);
   const [highlightedSentence, setHighlightedSentence] = useState<number | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -166,10 +170,10 @@ export const ImmersiveReader = ({
               )}
             </div>
 
-            {/* Translation */}
-            {dialogue.translation && (
+            {/* Translation - Only show in Russian mode */}
+            {isRussian && dialogue.translation && (
               <div className="mt-8 pt-8 border-t border-[hsl(var(--reading-muted))]">
-                <h3 className="text-lg font-semibold mb-3 text-[hsl(var(--reading-text))]">Перевод</h3>
+                <h3 className="text-lg font-semibold mb-3 text-[hsl(var(--reading-text))]">Translation (Перевод)</h3>
                 <p className="text-[hsl(var(--reading-text))] font-serif leading-relaxed">
                   {dialogue.translation}
                 </p>
@@ -180,12 +184,14 @@ export const ImmersiveReader = ({
             {/* Key Vocabulary */}
             {dialogue.keyVocabulary && dialogue.keyVocabulary.length > 0 && (
               <div className="mt-8 pt-8 border-t border-[hsl(var(--reading-muted))]">
-                <h3 className="text-lg font-semibold mb-4 text-[hsl(var(--reading-text))]">Key Vocabulary / Ключевая лексика</h3>
+                <h3 className="text-lg font-semibold mb-4 text-[hsl(var(--reading-text))]">
+                  {isRussian ? "Key Vocabulary / Ключевая лексика" : "Key Vocabulary"}
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {dialogue.keyVocabulary.map((word, index) => (
                     <div key={index} className="bg-[hsl(var(--reading-bg))] p-3 rounded-lg">
                       <span className="font-semibold text-[hsl(var(--reading-accent))]">{word}</span>
-                      {dialogue.keyVocabularyTranslation && dialogue.keyVocabularyTranslation[index] && (
+                      {isRussian && dialogue.keyVocabularyTranslation && dialogue.keyVocabularyTranslation[index] && (
                         <span className="text-sm text-[hsl(var(--reading-text))]"> - {dialogue.keyVocabularyTranslation[index]}</span>
                       )}
                     </div>

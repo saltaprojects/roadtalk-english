@@ -18,14 +18,15 @@ interface DialogueReadingProps {
 }
 
 export const DialogueReading = ({ difficulty, onBack }: DialogueReadingProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { toast } = useToast();
   const { playText, isPlaying } = useTextToSpeech();
   const { isRecording, isAnalyzing, startRecording, stopRecording } = useSpeechRecognition();
+  const isRussian = i18n.language === 'ru';
   
   const [currentIndex, setCurrentIndex] = useState(0);
   const [practiceResults, setPracticeResults] = useState<Record<number, { score: number; category: string }>>({});
-  const [showTranslation, setShowTranslation] = useState(true);
+  const [showTranslation, setShowTranslation] = useState(isRussian);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   
   const dialogues = getDialoguesByDifficulty(difficulty);
@@ -203,8 +204,8 @@ export const DialogueReading = ({ difficulty, onBack }: DialogueReadingProps) =>
                 <p className="text-base italic leading-relaxed">{currentDialogue.transcription}</p>
               </div>
 
-              {/* Translation - Conditional */}
-              {showTranslation && (
+              {/* Translation - Conditional, only in Russian mode */}
+              {showTranslation && isRussian && (
                 <div className="bg-accent/30 p-4 rounded-lg border border-accent/20 animate-fade-in">
                   <p className="text-sm text-muted-foreground mb-2">{t('dialogue.translation')}:</p>
                   <p className="text-base leading-relaxed">{currentDialogue.translation}</p>

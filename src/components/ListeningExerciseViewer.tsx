@@ -54,13 +54,19 @@ export const ListeningExerciseViewer = ({
     replay(exercise.dialogue, false); // Always use English audio
   };
   const options = [{
-    text: isRussian ? exercise.correctAnswerRu : exercise.correctAnswer,
+    text: isRussian 
+      ? `${exercise.correctAnswer} (${exercise.correctAnswerRu})`
+      : exercise.correctAnswer,
     isCorrect: true
   }, {
-    text: isRussian ? exercise.wrongOption1Ru : exercise.wrongOption1,
+    text: isRussian 
+      ? `${exercise.wrongOption1} (${exercise.wrongOption1Ru})`
+      : exercise.wrongOption1,
     isCorrect: false
   }, {
-    text: isRussian ? exercise.wrongOption2Ru : exercise.wrongOption2,
+    text: isRussian 
+      ? `${exercise.wrongOption2} (${exercise.wrongOption2Ru})`
+      : exercise.wrongOption2,
     isCorrect: false
   }].sort(() => Math.random() - 0.5);
   const isCorrect = selectedAnswer === options.find(o => o.isCorrect)?.text;
@@ -78,7 +84,7 @@ export const ListeningExerciseViewer = ({
             {t('listeningPractice.backToExercises')}
           </Button>
           <h1 className="text-3xl font-bold">
-            {isRussian ? exercise.titleRu : exercise.title}
+            {isRussian ? `${exercise.title} (${exercise.titleRu})` : exercise.title}
           </h1>
         </div>
       </header>
@@ -107,6 +113,11 @@ export const ListeningExerciseViewer = ({
                 <p className="text-lg leading-relaxed">
                   {currentDialogueLine.text}
                 </p>
+                {isRussian && (
+                  <p className="text-sm text-muted-foreground italic mt-1">
+                    {currentDialogueLine.textRu}
+                  </p>
+                )}
               </div>
             </div>
 

@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Clock, BookOpen, Target } from "lucide-react";
 import { DialogueText } from "@/data/dialogueTexts";
+import { useTranslation } from "react-i18next";
 
 interface ReadingPassageViewerProps {
   dialogue: DialogueText;
@@ -14,6 +15,8 @@ export const ReadingPassageViewer = ({
   highlightedSentenceIndex,
   showTranslation 
 }: ReadingPassageViewerProps) => {
+  const { i18n } = useTranslation();
+  const isRussian = i18n.language === 'ru';
   const sentences = dialogue.sentences || [dialogue.dialogueText];
   
   return (
@@ -99,11 +102,11 @@ export const ReadingPassageViewer = ({
           </div>
         )}
 
-        {/* Translation */}
-        {showTranslation && dialogue.translation && (
+        {/* Translation - Only show in Russian mode */}
+        {showTranslation && isRussian && dialogue.translation && (
           <div className="mt-6 pt-6 border-t border-amber-200">
             <h3 className="text-sm font-semibold text-amber-800 mb-2">
-              Translation:
+              Translation (Перевод):
             </h3>
             <p className="text-sm text-amber-700 italic">
               {dialogue.translation}
