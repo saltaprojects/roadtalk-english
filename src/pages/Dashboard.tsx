@@ -129,7 +129,7 @@ const Dashboard = () => {
             </h1>
             <p className="text-white/80 mt-1">{t('dashboard.subtitle')}</p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2 items-center">
             <LanguageSwitcher />
             <Button variant="outline" className="bg-white/10 backdrop-blur-sm text-white border-white/30 hover:bg-white/20" onClick={handleLogout}>
               <LogOut className="mr-2 h-4 w-4" />
@@ -143,12 +143,12 @@ const Dashboard = () => {
         {/* Subscription Required Alert */}
         {!subLoading && !subscribed && <Alert className="border-accent bg-accent/10">
             <AlertCircle className="h-4 w-4" />
-            <AlertDescription className="flex items-center justify-between">
+            <AlertDescription className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <p className="font-medium mb-1">{t('dashboard.subscription.required')}</p>
                 <p className="text-sm">{t('dashboard.subscription.description')}</p>
               </div>
-              <Button onClick={createCheckoutSession} className="ml-4 shrink-0">
+              <Button onClick={createCheckoutSession} className="sm:ml-4 shrink-0 w-full sm:w-auto">
                 <CreditCard className="mr-2 h-4 w-4" />
                 {t('dashboard.subscription.subscribeNow')}
               </Button>
@@ -158,14 +158,14 @@ const Dashboard = () => {
         {/* Subscription Active */}
         {!subLoading && subscribed && <Alert className="border-green-500 bg-green-500/10">
             <Trophy className="h-4 w-4 text-green-500" />
-            <AlertDescription className="flex items-center justify-between">
+            <AlertDescription className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <div className="font-medium">{t('dashboard.subscription.active')} - {t('dashboard.subscription.activeDescription')}</div>
                 {subscription_end && <p className="text-sm mt-1">
                     Next payment: {new Date(subscription_end).toLocaleDateString()} ($5.99/week)
                   </p>}
               </div>
-              <Button variant="outline" size="sm" onClick={manageSubscription} className="ml-4 shrink-0">
+              <Button variant="outline" size="sm" onClick={manageSubscription} className="sm:ml-4 shrink-0 w-full sm:w-auto">
                 Manage Subscription
               </Button>
             </AlertDescription>
