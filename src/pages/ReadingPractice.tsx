@@ -40,20 +40,20 @@ const ReadingPractice = () => {
               <Library className="w-6 h-6 text-amber-700 dark:text-amber-500" />
             </div>
             <h1 className="text-4xl font-bold flex items-center gap-2">
-              {t("dialogue.title")}
+              {t("dialogueReading.title")}
               <BookOpen className="w-10 h-10 text-amber-600" />
             </h1>
           </div>
-          <p className="text-muted-foreground text-lg ml-16">{t("dialogue.subtitle")}</p>
+          <p className="text-muted-foreground text-lg ml-16">{t("dialogueReading.subtitle")}</p>
         </div>
 
         {/* Beginner Reading Passages */}
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-4">
             <Badge variant="default" className="text-sm px-3 py-1">
-              {t('dialogue.difficulty.beginner')}
+              {t('dialogueReading.difficulty.beginner')}
             </Badge>
-            
+            <h3 className="text-xl font-semibold">{t('dialogueReading.beginnerDesc')}</h3>
           </div>
           <div className="space-y-3">
             {getDialoguesByDifficulty('beginner').map(dialogue => <ReadingPassagePreview key={dialogue.id} dialogue={dialogue} onClick={() => handleDialogueClick(dialogue)} />)}
@@ -64,9 +64,9 @@ const ReadingPractice = () => {
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-4">
             <Badge variant="secondary" className="text-sm px-3 py-1">
-              {t('dialogue.difficulty.intermediate')}
+              {t('dialogueReading.difficulty.intermediate')}
             </Badge>
-            <h3 className="text-xl font-semibold">{t('dialogue.intermediateDesc')}</h3>
+            <h3 className="text-xl font-semibold">{t('dialogueReading.intermediateDesc')}</h3>
           </div>
           <div className="space-y-3">
             {getDialoguesByDifficulty('intermediate').map(dialogue => <ReadingPassagePreview key={dialogue.id} dialogue={dialogue} onClick={() => handleDialogueClick(dialogue)} />)}
@@ -77,9 +77,9 @@ const ReadingPractice = () => {
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-4">
             <Badge variant="destructive" className="text-sm px-3 py-1">
-              {t('dialogue.difficulty.advanced')}
+              {t('dialogueReading.difficulty.advanced')}
             </Badge>
-            <h3 className="text-xl font-semibold">{t('dialogue.advancedDesc')}</h3>
+            <h3 className="text-xl font-semibold">{t('dialogueReading.advancedDesc')}</h3>
           </div>
           <div className="space-y-3">
             {getDialoguesByDifficulty('advanced').map(dialogue => <ReadingPassagePreview key={dialogue.id} dialogue={dialogue} onClick={() => handleDialogueClick(dialogue)} />)}
