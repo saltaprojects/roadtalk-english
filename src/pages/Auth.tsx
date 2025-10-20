@@ -237,6 +237,20 @@ const Auth = () => {
                     {t('auth.passwordRequirements')}
                   </p>
                 </div>
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox id="remember-signup" defaultChecked />
+                    <Label
+                      htmlFor="remember-signup"
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                    >
+                      {t('auth.rememberMe')}
+                    </Label>
+                  </div>
+                  <p className="text-xs text-muted-foreground ml-6">
+                    {t('auth.stayLoggedIn')}
+                  </p>
+                </div>
                 <Button
                   type="submit"
                   className="w-full h-12 text-lg bg-accent hover:bg-accent/90"

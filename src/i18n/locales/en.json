@@ -68,7 +68,8 @@
     "startLearning": "Start learning practical English today",
     "success": "Welcome! Let's get started.",
     "guestSuccess": "Continuing as guest. Your progress won't be saved.",
-    "passwordRequirements": "Password must be at least 8 characters with uppercase, lowercase, and number"
+    "passwordRequirements": "Password must be at least 8 characters with uppercase, lowercase, and number",
+    "stayLoggedIn": "Stay logged in on this device"
   },
   "dashboard": {
     "welcome": "Welcome Back, Name of Driver!",
