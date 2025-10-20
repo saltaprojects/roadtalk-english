@@ -234,7 +234,7 @@ const Auth = () => {
                     className="h-12 text-lg"
                   />
                   <p className="text-xs text-muted-foreground">
-                    Password must be at least 8 characters with uppercase, lowercase, and number
+                    {t('auth.passwordRequirements')}
                   </p>
                 </div>
                 <Button
