@@ -3,10 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { ArrowLeft, Play, Pause, RotateCcw, Volume2 } from "lucide-react";
+import { ArrowLeft, Play, Pause, RotateCcw, Volume2, Headphones } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { ListeningExercise } from "@/data/listeningExercises";
 import { useAudioDialogue } from "@/hooks/useAudioDialogue";
+import { useIsMobile } from "@/hooks/use-mobile";
 interface ListeningExerciseViewerProps {
   exercise: ListeningExercise;
   onClose: () => void;
@@ -20,6 +21,7 @@ export const ListeningExerciseViewer = ({
     i18n
   } = useTranslation();
   const isRussian = i18n.language === 'ru';
+  const isMobile = useIsMobile();
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showQuestion, setShowQuestion] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -28,6 +30,8 @@ export const ListeningExerciseViewer = ({
     currentLineIndex,
     isLoading,
     hasPlayedOnce,
+    isAudioUnlocked,
+    unlockAudio,
     playDialogue,
     pause,
     replay
@@ -133,11 +137,26 @@ export const ListeningExerciseViewer = ({
         {/* Audio Controls */}
         <Card className="p-6">
           <div className="flex flex-col items-center gap-4">
-            <div className="flex items-center gap-4">
-              {!isPlaying && !hasPlayedOnce && <Button size="lg" onClick={handlePlay} disabled={isLoading} className="gap-2">
-                  <Play className="h-5 w-5" />
-                  {isLoading ? t('listeningPractice.loading') : t('listeningPractice.playAudio')}
-                </Button>}
+            {/* Mobile Audio Unlock Button */}
+            {isMobile && !isAudioUnlocked && !hasPlayedOnce && (
+              <div className="text-center space-y-3">
+                <p className="text-sm text-muted-foreground">
+                  {t('listeningPractice.tapToEnableAudio')}
+                </p>
+                <Button size="lg" onClick={unlockAudio} className="gap-2">
+                  <Headphones className="h-5 w-5" />
+                  {t('listeningPractice.enableAudio')}
+                </Button>
+              </div>
+            )}
+
+            {/* Show Play controls only after audio is unlocked on mobile, or always on desktop */}
+            {(!isMobile || isAudioUnlocked) && (
+              <div className="flex items-center gap-4">
+                {!isPlaying && !hasPlayedOnce && <Button size="lg" onClick={handlePlay} disabled={isLoading} className="gap-2">
+                    <Play className="h-5 w-5" />
+                    {isLoading ? t('listeningPractice.loading') : t('listeningPractice.playAudio')}
+                  </Button>}
 
               {isPlaying && <Button size="lg" onClick={handlePause} variant="secondary" className="gap-2">
                   <Pause className="h-5 w-5" />
@@ -148,7 +167,8 @@ export const ListeningExerciseViewer = ({
                   <RotateCcw className="h-5 w-5" />
                   {t('listeningPractice.replay')}
                 </Button>}
-            </div>
+              </div>
+            )}
 
             {showQuestionButton && <Button size="lg" onClick={() => setShowQuestion(true)} className="gap-2">
                 <Volume2 className="h-5 w-5" />
