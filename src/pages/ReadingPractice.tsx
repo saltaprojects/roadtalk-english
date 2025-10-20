@@ -48,7 +48,17 @@ const ReadingPractice = () => {
         </div>
 
         {/* Beginner Reading Passages */}
-        
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-4">
+            <Badge variant="default" className="text-sm px-3 py-1">
+              {t('dialogue.difficulty.beginner')}
+            </Badge>
+            
+          </div>
+          <div className="space-y-3">
+            {getDialoguesByDifficulty('beginner').map(dialogue => <ReadingPassagePreview key={dialogue.id} dialogue={dialogue} onClick={() => handleDialogueClick(dialogue)} />)}
+          </div>
+        </div>
 
         {/* Intermediate Reading Passages */}
         <div className="mb-8">
