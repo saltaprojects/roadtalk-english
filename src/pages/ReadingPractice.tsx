@@ -7,45 +7,29 @@ import { ArrowLeft, BookOpen, Library } from "lucide-react";
 import { ImmersiveReader } from "@/components/ImmersiveReader";
 import { ReadingPassagePreview } from "@/components/ReadingPassagePreview";
 import { getDialoguesByDifficulty, type DialogueDifficulty } from "@/data/dialogueTexts";
-
 const ReadingPractice = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const {
+    t
+  } = useTranslation();
   const [selectedReadingDifficulty, setSelectedReadingDifficulty] = useState<DialogueDifficulty | null>(null);
   const [currentReadingIndex, setCurrentReadingIndex] = useState(0);
-
   const handleDialogueClick = (dialogue: any) => {
     const dialogues = getDialoguesByDifficulty(dialogue.difficulty);
     const index = dialogues.findIndex(d => d.id === dialogue.id);
     setCurrentReadingIndex(index >= 0 ? index : 0);
     setSelectedReadingDifficulty(dialogue.difficulty);
   };
-
   if (selectedReadingDifficulty) {
     const dialogues = getDialoguesByDifficulty(selectedReadingDifficulty);
-    
-    return (
-      <ImmersiveReader 
-        dialogues={dialogues}
-        currentIndex={currentReadingIndex}
-        onBack={() => {
-          setSelectedReadingDifficulty(null);
-          setCurrentReadingIndex(0);
-        }}
-        onNext={() => setCurrentReadingIndex(prev => Math.min(prev + 1, dialogues.length - 1))}
-        onPrevious={() => setCurrentReadingIndex(prev => Math.max(prev - 1, 0))}
-      />
-    );
+    return <ImmersiveReader dialogues={dialogues} currentIndex={currentReadingIndex} onBack={() => {
+      setSelectedReadingDifficulty(null);
+      setCurrentReadingIndex(0);
+    }} onNext={() => setCurrentReadingIndex(prev => Math.min(prev + 1, dialogues.length - 1))} onPrevious={() => setCurrentReadingIndex(prev => Math.max(prev - 1, 0))} />;
   }
-
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted p-6">
+  return <div className="min-h-screen bg-gradient-to-b from-background to-muted p-6">
       <div className="container mx-auto max-w-6xl">
-        <Button
-          variant="ghost"
-          onClick={() => navigate("/dashboard")}
-          className="mb-6"
-        >
+        <Button variant="ghost" onClick={() => navigate("/dashboard")} className="mb-6">
           <ArrowLeft className="mr-2 h-4 w-4" />
           {t("contact.back")}
         </Button>
@@ -69,16 +53,10 @@ const ReadingPractice = () => {
             <Badge variant="default" className="text-sm px-3 py-1">
               {t('dialogue.difficulty.beginner')}
             </Badge>
-            <h3 className="text-xl font-semibold">{t('dialogue.beginnerDesc')}</h3>
+            
           </div>
           <div className="space-y-3">
-            {getDialoguesByDifficulty('beginner').map((dialogue) => (
-              <ReadingPassagePreview
-                key={dialogue.id}
-                dialogue={dialogue}
-                onClick={() => handleDialogueClick(dialogue)}
-              />
-            ))}
+            {getDialoguesByDifficulty('beginner').map(dialogue => <ReadingPassagePreview key={dialogue.id} dialogue={dialogue} onClick={() => handleDialogueClick(dialogue)} />)}
           </div>
         </div>
 
@@ -91,13 +69,7 @@ const ReadingPractice = () => {
             <h3 className="text-xl font-semibold">{t('dialogue.intermediateDesc')}</h3>
           </div>
           <div className="space-y-3">
-            {getDialoguesByDifficulty('intermediate').map((dialogue) => (
-              <ReadingPassagePreview
-                key={dialogue.id}
-                dialogue={dialogue}
-                onClick={() => handleDialogueClick(dialogue)}
-              />
-            ))}
+            {getDialoguesByDifficulty('intermediate').map(dialogue => <ReadingPassagePreview key={dialogue.id} dialogue={dialogue} onClick={() => handleDialogueClick(dialogue)} />)}
           </div>
         </div>
 
@@ -110,18 +82,10 @@ const ReadingPractice = () => {
             <h3 className="text-xl font-semibold">{t('dialogue.advancedDesc')}</h3>
           </div>
           <div className="space-y-3">
-            {getDialoguesByDifficulty('advanced').map((dialogue) => (
-              <ReadingPassagePreview
-                key={dialogue.id}
-                dialogue={dialogue}
-                onClick={() => handleDialogueClick(dialogue)}
-              />
-            ))}
+            {getDialoguesByDifficulty('advanced').map(dialogue => <ReadingPassagePreview key={dialogue.id} dialogue={dialogue} onClick={() => handleDialogueClick(dialogue)} />)}
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default ReadingPractice;
