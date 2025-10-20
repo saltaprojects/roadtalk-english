@@ -15,7 +15,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "weigh-en-1",
     scenario: "weigh-station",
-    imageUrl: "/src/assets/scenarios/weigh-station-conversation.jpg",
+    imageUrl: "/scenarios/weigh-station-conversation.jpg",
     phraseEN: "May I see your logbook?",
     phraseRU: "Можно посмотреть вашу путевую книгу?",
     questionLanguage: "en",
@@ -30,7 +30,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "weigh-en-2",
     scenario: "weigh-station",
-    imageUrl: "/src/assets/scenarios/weigh-station-conversation.jpg",
+    imageUrl: "/scenarios/weigh-station-conversation.jpg",
     phraseEN: "Pull your truck onto the scale",
     phraseRU: "Заезжайте на весы",
     questionLanguage: "en",
@@ -45,7 +45,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "weigh-en-3",
     scenario: "weigh-station",
-    imageUrl: "/src/assets/scenarios/weigh-station-conversation.jpg",
+    imageUrl: "/scenarios/weigh-station-conversation.jpg",
     phraseEN: "Your axle weight is over the limit",
     phraseRU: "Вес на оси превышает норму",
     questionLanguage: "en",
@@ -60,7 +60,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "weigh-en-4",
     scenario: "weigh-station",
-    imageUrl: "/src/assets/scenarios/weigh-station-conversation.jpg",
+    imageUrl: "/scenarios/weigh-station-conversation.jpg",
     phraseEN: "Are you carrying any hazardous materials?",
     phraseRU: "Вы перевозите опасные грузы?",
     questionLanguage: "en",
@@ -75,7 +75,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "weigh-en-5",
     scenario: "weigh-station",
-    imageUrl: "/src/assets/scenarios/weigh-station-conversation.jpg",
+    imageUrl: "/scenarios/weigh-station-conversation.jpg",
     phraseEN: "How many hours have you been driving today?",
     phraseRU: "Сколько часов вы сегодня за рулем?",
     questionLanguage: "en",
@@ -92,7 +92,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "weigh-ru-1",
     scenario: "weigh-station",
-    imageUrl: "/src/assets/scenarios/weigh-station-conversation.jpg",
+    imageUrl: "/scenarios/weigh-station-conversation.jpg",
     phraseEN: "Here it is, officer",
     phraseRU: "Вот, офицер",
     questionLanguage: "ru",
@@ -107,7 +107,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "weigh-ru-2",
     scenario: "weigh-station",
-    imageUrl: "/src/assets/scenarios/weigh-station-conversation.jpg",
+    imageUrl: "/scenarios/weigh-station-conversation.jpg",
     phraseEN: "I understand. What should I do?",
     phraseRU: "Я понимаю. Что мне делать?",
     questionLanguage: "ru",
@@ -122,7 +122,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "weigh-ru-3",
     scenario: "weigh-station",
-    imageUrl: "/src/assets/scenarios/weigh-station-conversation.jpg",
+    imageUrl: "/scenarios/weigh-station-conversation.jpg",
     phraseEN: "No, just regular cargo",
     phraseRU: "Нет, просто обычный груз",
     questionLanguage: "ru",
@@ -137,7 +137,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "weigh-ru-4",
     scenario: "weigh-station",
-    imageUrl: "/src/assets/scenarios/weigh-station-conversation.jpg",
+    imageUrl: "/scenarios/weigh-station-conversation.jpg",
     phraseEN: "I've driven 8 hours so far",
     phraseRU: "Я проехал 8 часов на данный момент",
     questionLanguage: "ru",
@@ -152,7 +152,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "weigh-ru-5",
     scenario: "weigh-station",
-    imageUrl: "/src/assets/scenarios/weigh-station-conversation.jpg",
+    imageUrl: "/scenarios/weigh-station-conversation.jpg",
     phraseEN: "Thank you, officer. Have a good day",
     phraseRU: "Спасибо, офицер. Хорошего дня",
     questionLanguage: "ru",
@@ -169,7 +169,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "gas-en-1",
     scenario: "gas-station",
-    imageUrl: "/src/assets/scenarios/gas-station-conversation.jpg",
+    imageUrl: "/scenarios/gas-station-conversation.jpg",
     phraseEN: "Diesel, please. Fill it up",
     phraseRU: "Дизель, пожалуйста. Полный бак",
     questionLanguage: "en",
@@ -184,7 +184,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "gas-en-2",
     scenario: "gas-station",
-    imageUrl: "/src/assets/scenarios/gas-station-conversation.jpg",
+    imageUrl: "/scenarios/gas-station-conversation.jpg",
     phraseEN: "Can I pay with a company card?",
     phraseRU: "Могу я оплатить корпоративной картой?",
     questionLanguage: "en",
@@ -199,7 +199,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "gas-en-3",
     scenario: "gas-station",
-    imageUrl: "/src/assets/scenarios/gas-station-conversation.jpg",
+    imageUrl: "/scenarios/gas-station-conversation.jpg",
     phraseEN: "Yes, please. I need it for my company",
     phraseRU: "Да, пожалуйста. Он нужен для моей компании",
     questionLanguage: "en",
@@ -214,7 +214,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "gas-en-4",
     scenario: "gas-station",
-    imageUrl: "/src/assets/scenarios/gas-station-conversation.jpg",
+    imageUrl: "/scenarios/gas-station-conversation.jpg",
     phraseEN: "How far is the next station?",
     phraseRU: "Как далеко следующая заправка?",
     questionLanguage: "en",
@@ -229,7 +229,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "gas-en-5",
     scenario: "gas-station",
-    imageUrl: "/src/assets/scenarios/gas-station-conversation.jpg",
+    imageUrl: "/scenarios/gas-station-conversation.jpg",
     phraseEN: "I'm at pump number 7",
     phraseRU: "Я на колонке номер 7",
     questionLanguage: "en",
@@ -246,7 +246,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "gas-ru-1",
     scenario: "gas-station",
-    imageUrl: "/src/assets/scenarios/gas-station-conversation.jpg",
+    imageUrl: "/scenarios/gas-station-conversation.jpg",
     phraseEN: "Let me try another card. One moment",
     phraseRU: "Позвольте попробовать другую карту. Одну минуту",
     questionLanguage: "ru",
@@ -261,7 +261,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "gas-ru-2",
     scenario: "gas-station",
-    imageUrl: "/src/assets/scenarios/gas-station-conversation.jpg",
+    imageUrl: "/scenarios/gas-station-conversation.jpg",
     phraseEN: "Yes, I'll take 5 gallons",
     phraseRU: "Да, возьму 5 галлонов",
     questionLanguage: "ru",
@@ -276,7 +276,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "gas-ru-3",
     scenario: "gas-station",
-    imageUrl: "/src/assets/scenarios/gas-station-conversation.jpg",
+    imageUrl: "/scenarios/gas-station-conversation.jpg",
     phraseEN: "Great! Thank you for letting me know",
     phraseRU: "Отлично! Спасибо, что сообщили",
     questionLanguage: "ru",
@@ -291,7 +291,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "gas-ru-4",
     scenario: "gas-station",
-    imageUrl: "/src/assets/scenarios/gas-station-conversation.jpg",
+    imageUrl: "/scenarios/gas-station-conversation.jpg",
     phraseEN: "You can park in the back lot, near the fence",
     phraseRU: "Можете припарковаться сзади, у забора",
     questionLanguage: "ru",
@@ -306,7 +306,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "gas-ru-5",
     scenario: "gas-station",
-    imageUrl: "/src/assets/scenarios/gas-station-conversation.jpg",
+    imageUrl: "/scenarios/gas-station-conversation.jpg",
     phraseEN: "Is there another restroom nearby?",
     phraseRU: "Есть ли другой туалет поблизости?",
     questionLanguage: "ru",
@@ -323,7 +323,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "police-en-1",
     scenario: "police-stop",
-    imageUrl: "/src/assets/scenarios/police-conversation.jpg",
+    imageUrl: "/scenarios/police-conversation.jpg",
     phraseEN: "Yes, officer. Let me get them for you",
     phraseRU: "Да, офицер. Позвольте я их достану",
     questionLanguage: "en",
@@ -338,7 +338,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "police-en-2",
     scenario: "police-stop",
-    imageUrl: "/src/assets/scenarios/police-conversation.jpg",
+    imageUrl: "/scenarios/police-conversation.jpg",
     phraseEN: "No, officer. I'm not sure",
     phraseRU: "Нет, офицер. Я не уверен",
     questionLanguage: "en",
@@ -353,7 +353,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "police-en-3",
     scenario: "police-stop",
-    imageUrl: "/src/assets/scenarios/police-conversation.jpg",
+    imageUrl: "/scenarios/police-conversation.jpg",
     phraseEN: "I apologize, officer. I didn't realize",
     phraseRU: "Прошу прощения, офицер. Я не осознавал",
     questionLanguage: "en",
@@ -368,7 +368,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "police-en-4",
     scenario: "police-stop",
-    imageUrl: "/src/assets/scenarios/police-conversation.jpg",
+    imageUrl: "/scenarios/police-conversation.jpg",
     phraseEN: "No, officer. Not at all",
     phraseRU: "Нет, офицер. Совсем нет",
     questionLanguage: "en",
@@ -383,7 +383,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "police-en-5",
     scenario: "police-stop",
-    imageUrl: "/src/assets/scenarios/police-conversation.jpg",
+    imageUrl: "/scenarios/police-conversation.jpg",
     phraseEN: "Of course, officer. Here are the keys",
     phraseRU: "Конечно, офицер. Вот ключи",
     questionLanguage: "en",
@@ -400,7 +400,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "police-ru-1",
     scenario: "police-stop",
-    imageUrl: "/src/assets/scenarios/police-conversation.jpg",
+    imageUrl: "/scenarios/police-conversation.jpg",
     phraseEN: "I'm coming from Denver, Colorado",
     phraseRU: "Я еду из Денвера, Колорадо",
     questionLanguage: "ru",
@@ -415,7 +415,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "police-ru-2",
     scenario: "police-stop",
-    imageUrl: "/src/assets/scenarios/police-conversation.jpg",
+    imageUrl: "/scenarios/police-conversation.jpg",
     phraseEN: "I didn't know that. I'll get it fixed immediately",
     phraseRU: "Я не знал об этом. Я исправлю это немедленно",
     questionLanguage: "ru",
@@ -430,7 +430,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "police-ru-3",
     scenario: "police-stop",
-    imageUrl: "/src/assets/scenarios/police-conversation.jpg",
+    imageUrl: "/scenarios/police-conversation.jpg",
     phraseEN: "It belongs to my company, Swift Transport",
     phraseRU: "Он принадлежит моей компании, Swift Transport",
     questionLanguage: "ru",
@@ -445,7 +445,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "police-ru-4",
     scenario: "police-stop",
-    imageUrl: "/src/assets/scenarios/police-conversation.jpg",
+    imageUrl: "/scenarios/police-conversation.jpg",
     phraseEN: "Thank you, officer. I appreciate it",
     phraseRU: "Спасибо, офицер. Я ценю это",
     questionLanguage: "ru",
@@ -460,7 +460,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "police-ru-5",
     scenario: "police-stop",
-    imageUrl: "/src/assets/scenarios/police-conversation.jpg",
+    imageUrl: "/scenarios/police-conversation.jpg",
     phraseEN: "Yes, officer. Right away",
     phraseRU: "Да, офицер. Прямо сейчас",
     questionLanguage: "ru",
@@ -477,7 +477,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "border-en-1",
     scenario: "border-crossing",
-    imageUrl: "/src/assets/scenarios/border-conversation.jpg",
+    imageUrl: "/scenarios/border-conversation.jpg",
     phraseEN: "I'm delivering commercial cargo to Toronto",
     phraseRU: "Я доставляю коммерческий груз в Торонто",
     questionLanguage: "en",
@@ -492,7 +492,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "border-en-2",
     scenario: "border-crossing",
-    imageUrl: "/src/assets/scenarios/border-conversation.jpg",
+    imageUrl: "/scenarios/border-conversation.jpg",
     phraseEN: "Here's the invoice and bill of lading",
     phraseRU: "Вот счет-фактура и коносамент",
     questionLanguage: "en",
@@ -507,7 +507,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "border-en-3",
     scenario: "border-crossing",
-    imageUrl: "/src/assets/scenarios/border-conversation.jpg",
+    imageUrl: "/scenarios/border-conversation.jpg",
     phraseEN: "No, sir. Only the items listed on my manifest",
     phraseRU: "Нет, сэр. Только предметы, указанные в моем манифесте",
     questionLanguage: "en",
@@ -522,7 +522,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "border-en-4",
     scenario: "border-crossing",
-    imageUrl: "/src/assets/scenarios/border-conversation.jpg",
+    imageUrl: "/scenarios/border-conversation.jpg",
     phraseEN: "I'll be here for two days to complete the delivery",
     phraseRU: "Я буду здесь два дня, чтобы завершить доставку",
     questionLanguage: "en",
@@ -537,7 +537,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "border-en-5",
     scenario: "border-crossing",
-    imageUrl: "/src/assets/scenarios/border-conversation.jpg",
+    imageUrl: "/scenarios/border-conversation.jpg",
     phraseEN: "The total declared value is $85,000",
     phraseRU: "Общая заявленная стоимость составляет $85,000",
     questionLanguage: "en",
@@ -554,7 +554,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "border-ru-1",
     scenario: "border-crossing",
-    imageUrl: "/src/assets/scenarios/border-conversation.jpg",
+    imageUrl: "/scenarios/border-conversation.jpg",
     phraseEN: "I apologize. Can I cross with standard documentation?",
     phraseRU: "Прошу прощения. Могу я пересечь границу со стандартными документами?",
     questionLanguage: "ru",
@@ -569,7 +569,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "border-ru-2",
     scenario: "border-crossing",
-    imageUrl: "/src/assets/scenarios/border-conversation.jpg",
+    imageUrl: "/scenarios/border-conversation.jpg",
     phraseEN: "Yes, sir. Where should I park?",
     phraseRU: "Да, сэр. Где мне припарковаться?",
     questionLanguage: "ru",
@@ -584,7 +584,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "border-ru-3",
     scenario: "border-crossing",
-    imageUrl: "/src/assets/scenarios/border-conversation.jpg",
+    imageUrl: "/scenarios/border-conversation.jpg",
     phraseEN: "I have all the required permits",
     phraseRU: "У меня есть все необходимые разрешения",
     questionLanguage: "ru",
@@ -599,7 +599,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "border-ru-4",
     scenario: "border-crossing",
-    imageUrl: "/src/assets/scenarios/border-conversation.jpg",
+    imageUrl: "/scenarios/border-conversation.jpg",
     phraseEN: "The cargo is sealed and secure",
     phraseRU: "Груз опечатан и надежно закреплен",
     questionLanguage: "ru",
@@ -614,7 +614,7 @@ export const miniGameQuestions: GameQuestion[] = [
   {
     id: "border-ru-5",
     scenario: "border-crossing",
-    imageUrl: "/src/assets/scenarios/border-conversation.jpg",
+    imageUrl: "/scenarios/border-conversation.jpg",
     phraseEN: "Thank you. Have a good day",
     phraseRU: "Спасибо. Хорошего дня",
     questionLanguage: "ru",
