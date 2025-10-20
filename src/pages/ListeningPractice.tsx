@@ -54,7 +54,7 @@ const ListeningPractice = () => {
             onClick={() => navigate("/dashboard")}
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back
+            {t('listeningPractice.backToDashboard')}
           </Button>
           <h1 className="text-4xl font-bold mb-2">{t('listeningPractice.title')}</h1>
           <p className="text-white/90 text-lg">{t('listeningPractice.subtitle')}</p>

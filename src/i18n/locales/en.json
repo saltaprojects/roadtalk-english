@@ -521,7 +521,8 @@
     "tryAgain": "Try Again",
     "finish": "Finish",
     "line": "Line",
-    "backToDashboard": "Back to Dashboard"
+    "backToDashboard": "Back to Dashboard",
+    "backToExercises": "Back to Exercises"
   },
   "dialogueReading": {
     "title": "Dialogue Reading Practice",

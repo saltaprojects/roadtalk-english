@@ -521,7 +521,8 @@
     "tryAgain": "Попробовать снова",
     "finish": "Завершить",
     "line": "Строка",
-    "backToDashboard": "Вернуться на панель"
+    "backToDashboard": "Вернуться на панель",
+    "backToExercises": "Назад к упражнениям"
   },
   "dialogueReading": {
     "title": "Практика чтения диалогов",
