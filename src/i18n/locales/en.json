@@ -72,7 +72,8 @@
     "stayLoggedIn": "Stay logged in on this device"
   },
   "dashboard": {
-    "welcome": "Welcome Back, Name of Driver!",
+    "welcome": "Welcome Back!",
+    "welcomeBack": "Welcome Back, {{name}}!",
     "subtitle": "Ready to continue learning?",
     "logout": "Logout",
     "levels": {
