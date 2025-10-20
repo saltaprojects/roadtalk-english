@@ -524,6 +524,8 @@
     "backToDashboard": "Back to Dashboard"
   },
   "dialogueReading": {
+    "title": "Dialogue Reading Practice",
+    "subtitle": "Practice reading complete conversations and improve your comprehension",
     "readingPractice": "Dialogue Reading Practice",
     "difficulty": {
       "beginner": "Beginner",
