@@ -497,7 +497,15 @@
   },
   "dialogue": {
     "title": "Improve Your Reading Skills",
-    "subtitle": "Practice reading full dialogue texts and improve your fluency"
+    "subtitle": "Practice reading full dialogue texts and improve your fluency",
+    "difficulty": {
+      "beginner": "Beginner Level",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "beginnerDesc": "Simple conversations for everyday situations",
+    "intermediateDesc": "Professional interactions and work scenarios",
+    "advancedDesc": "Complex situations requiring formal communication"
   },
   "listeningPractice": {
     "title": "Listening Practice",
