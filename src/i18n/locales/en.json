@@ -486,7 +486,10 @@
       "speaking": "Speaking...",
       "you": "You",
       "suggestedQuestions": "Suggested questions:"
-    }
+    },
+    "startPractice": "Start Practice",
+    "backToDashboard": "Back to Dashboard",
+    "listeningInstructions": "Listen to real conversations and test your comprehension"
   },
   "roadSigns": {
     "title": "Road Signs Quiz",

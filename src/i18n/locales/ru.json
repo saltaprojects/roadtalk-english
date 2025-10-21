@@ -486,7 +486,10 @@
       "speaking": "Говорит...",
       "you": "Вы",
       "suggestedQuestions": "Предлагаемые вопросы:"
-    }
+    },
+    "startPractice": "Начать практику",
+    "backToDashboard": "Назад к панели",
+    "listeningInstructions": "Слушайте реальные разговоры и проверьте понимание"
   },
   "roadSigns": {
     "title": "Тест по дорожным знакам",
