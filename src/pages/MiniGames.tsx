@@ -1,13 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Trophy, Timer, Target } from "lucide-react";
+import { ArrowLeft, Trophy, Timer, Target, Lock } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { scenarios } from "@/data/miniGameQuestions";
+import { useSubscription } from "@/hooks/useSubscription";
+import { useLessonProgress } from "@/hooks/useLessonProgress";
 
 const MiniGames = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { subscribed, createCheckoutSession } = useSubscription();
+  const { canAccessItem } = useLessonProgress();
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -24,6 +29,15 @@ const MiniGames = () => {
 
   const getDifficultyLabel = (difficulty: string) => {
     return t(`miniGames.difficulty.${difficulty}`);
+  };
+
+  const handleScenarioClick = (scenarioId: string, index: number) => {
+    const canAccess = canAccessItem('games', index, subscribed);
+    if (canAccess) {
+      navigate(`/mini-games/play?scenario=${scenarioId}`);
+    } else {
+      createCheckoutSession();
+    }
   };
 
   return (
@@ -89,34 +103,61 @@ const MiniGames = () => {
           <h2 className="text-2xl font-bold mb-4">{t('miniGames.selectScenario')}</h2>
           <p className="text-muted-foreground mb-6">{t('miniGames.scenarioDescriptionNew')}</p>
           <div className="grid md:grid-cols-2 gap-4">
-            {scenarios.map((scenario) => (
-              <Card
-                key={scenario.id}
-                className="card-elevated transition-transform duration-200 hover:scale-105 cursor-pointer"
-                onClick={() => navigate(`/mini-games/play?scenario=${scenario.id}`)}
-              >
-                <CardHeader>
-                  <div className="text-5xl mb-2">{scenario.icon}</div>
-                  <CardTitle className="flex items-center justify-between">
-                    <span>{t(scenario.titleKey)}</span>
-                    <span className="text-xs px-2 py-1 bg-muted rounded">
-                      {scenario.questionCount} {t('miniGames.phrases')}
-                    </span>
-                  </CardTitle>
-                  <CardDescription>{t(scenario.descriptionKey)}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-between">
-                    <span className={`text-sm font-medium ${getDifficultyColor(scenario.difficulty)}`}>
-                      {getDifficultyLabel(scenario.difficulty)}
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      {t('miniGames.playNow')}
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+            {scenarios.map((scenario, index) => {
+              const isFirstScenario = index === 0;
+              const canAccess = canAccessItem('games', index, subscribed);
+              
+              return (
+                <Card
+                  key={scenario.id}
+                  className={`card-elevated transition-transform duration-200 ${
+                    canAccess ? 'hover:scale-105 cursor-pointer' : 'opacity-60 cursor-not-allowed'
+                  }`}
+                  onClick={() => handleScenarioClick(scenario.id, index)}
+                >
+                  <CardHeader>
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="text-5xl">{scenario.icon}</div>
+                      {isFirstScenario && (
+                        <Badge className="bg-green-500 text-white ml-auto">
+                          {t('freemium.firstFree')}
+                        </Badge>
+                      )}
+                      {!canAccess && (
+                        <Lock className="h-5 w-5 text-muted-foreground ml-auto" />
+                      )}
+                    </div>
+                    <CardTitle className="flex items-center justify-between">
+                      <span>{t(scenario.titleKey)}</span>
+                      <span className="text-xs px-2 py-1 bg-muted rounded">
+                        {scenario.questionCount} {t('miniGames.phrases')}
+                      </span>
+                    </CardTitle>
+                    <CardDescription>{t(scenario.descriptionKey)}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className={`text-sm font-medium ${getDifficultyColor(scenario.difficulty)}`}>
+                        {getDifficultyLabel(scenario.difficulty)}
+                      </span>
+                    </div>
+                    {canAccess ? (
+                      <Button className="w-full">
+                        {t('miniGames.playNow')}
+                      </Button>
+                    ) : (
+                      <Button className="w-full" variant="outline" onClick={(e) => {
+                        e.stopPropagation();
+                        createCheckoutSession();
+                      }}>
+                        <Lock className="mr-2 h-4 w-4" />
+                        {t('freemium.unlockWith')}
+                      </Button>
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
 

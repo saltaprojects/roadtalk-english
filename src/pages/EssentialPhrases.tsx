@@ -79,7 +79,7 @@ const EssentialPhrases = () => {
               </Button>
               {!subscribed && (
                 <p className="text-sm text-muted-foreground mt-3">
-                  ✨ Try your first lesson free! Subscribe for $19.99/month to unlock all lessons.
+                  ✨ Try your first lesson free! Subscribe for $5.99/week to unlock all lessons.
                 </p>
               )}
             </div>

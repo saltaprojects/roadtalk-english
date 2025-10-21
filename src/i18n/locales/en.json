@@ -155,11 +155,20 @@
     "score": "Your Score",
     "subscription": {
       "required": "Subscription Required",
-      "description": "Subscribe for $19.99/month to access lessons.",
-      "descriptionFull": "Your first lesson is free! Subscribe for $19.99/month to access all lessons.",
-      "firstFree": "Your first lesson is free! Subscribe for $19.99/month to access all lessons.",
-      "subscribeNow": "Subscribe for $19.99/month"
+      "description": "Subscribe for $5.99/week to access lessons.",
+      "descriptionFull": "Your first lesson is free! Subscribe for $5.99/week to access all lessons.",
+      "firstFree": "Your first lesson is free! Subscribe for $5.99/week to access all lessons.",
+      "subscribeNow": "Subscribe for $5.99/week"
     }
+  },
+  "freemium": {
+    "firstFree": "🔓 FREE",
+    "premiumOnly": "🔒 Premium",
+    "unlockWith": "Subscribe to unlock",
+    "tryFirstFree": "Try the first lesson in each section free!",
+    "upgradePrompt": "Subscribe for $5.99/week to unlock all content",
+    "locked": "Locked",
+    "subscribeToAccess": "Subscribe for $5.99/week to access this content"
   },
   "flashcard": {
     "flip": "Tap to flip",

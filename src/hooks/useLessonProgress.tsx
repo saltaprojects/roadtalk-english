@@ -4,6 +4,9 @@ import { useToast } from '@/hooks/use-toast';
 
 const FREE_LESSONS_LIMIT = 3;
 
+// Section types for freemium access
+export type SectionType = 'lessons' | 'listening' | 'vocabulary' | 'games' | 'reading' | 'grammar';
+
 export const useLessonProgress = () => {
   const [completedLessons, setCompletedLessons] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -74,6 +77,17 @@ export const useLessonProgress = () => {
     return isSubscribed;
   };
 
+  // Generic freemium access checker for any section
+  // First item in each section is free, rest requires subscription
+  const canAccessItem = (sectionType: SectionType, itemIndex: number, isSubscribed: boolean) => {
+    // First item (index 0) is always free
+    if (itemIndex === 0) {
+      return true;
+    }
+    // All other items require subscription
+    return isSubscribed;
+  };
+
   const getCompletedCount = () => completedLessons.length;
 
   const hasReachedFreeLimit = () => completedLessons.length >= FREE_LESSONS_LIMIT;
@@ -87,6 +101,7 @@ export const useLessonProgress = () => {
     loading,
     markLessonComplete,
     canAccessLesson,
+    canAccessItem,
     getCompletedCount,
     hasReachedFreeLimit,
     fetchCompletedLessons,

@@ -3,15 +3,20 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { PhraseBuilder } from "@/components/vocabulary/PhraseBuilder";
 import { vocabularyScenarios } from "@/data/vocabularyWords";
-import { ArrowLeft, Trophy } from "lucide-react";
+import { ArrowLeft, Trophy, Lock } from "lucide-react";
+import { useSubscription } from "@/hooks/useSubscription";
+import { useLessonProgress } from "@/hooks/useLessonProgress";
 
 const VocabularyBuilder = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [selectedScenario, setSelectedScenario] = useState<string | null>(null);
   const [completedScenarios, setCompletedScenarios] = useState<string[]>([]);
+  const { subscribed, createCheckoutSession } = useSubscription();
+  const { canAccessItem } = useLessonProgress();
 
   const currentScenario = vocabularyScenarios.find(s => s.id === selectedScenario);
 
@@ -20,6 +25,15 @@ const VocabularyBuilder = () => {
       setCompletedScenarios([...completedScenarios, selectedScenario]);
     }
     setSelectedScenario(null);
+  };
+
+  const handleScenarioClick = (scenarioId: string, index: number) => {
+    const canAccess = canAccessItem('vocabulary', index, subscribed);
+    if (canAccess) {
+      setSelectedScenario(scenarioId);
+    } else {
+      createCheckoutSession();
+    }
   };
 
   if (selectedScenario && currentScenario) {
@@ -65,13 +79,18 @@ const VocabularyBuilder = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {vocabularyScenarios.map((scenario) => {
+          {vocabularyScenarios.map((scenario, index) => {
             const isCompleted = completedScenarios.includes(scenario.id);
+            const isFirstScenario = index === 0;
+            const canAccess = canAccessItem('vocabulary', index, subscribed);
+            
             return (
               <Card
                 key={scenario.id}
-                className="cursor-pointer hover:shadow-lg transition-all"
-                onClick={() => setSelectedScenario(scenario.id)}
+                className={`transition-all ${
+                  canAccess ? 'cursor-pointer hover:shadow-lg' : 'opacity-60 cursor-not-allowed'
+                }`}
+                onClick={() => handleScenarioClick(scenario.id, index)}
               >
                 <CardHeader>
                   <div className="relative rounded-lg overflow-hidden mb-4">
@@ -85,6 +104,18 @@ const VocabularyBuilder = () => {
                         <Trophy className="h-5 w-5" />
                       </div>
                     )}
+                    {isFirstScenario && (
+                      <div className="absolute top-2 left-2">
+                        <Badge className="bg-green-500 text-white">
+                          {t('freemium.firstFree')}
+                        </Badge>
+                      </div>
+                    )}
+                    {!canAccess && (
+                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                        <Lock className="h-12 w-12 text-white" />
+                      </div>
+                    )}
                   </div>
                   <CardTitle>{t(scenario.titleKey)}</CardTitle>
                   <CardDescription>
@@ -92,9 +123,19 @@ const VocabularyBuilder = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Button className="w-full">
-                    {isCompleted ? t("vocabulary.playAgain") : t("vocabulary.startPractice")}
-                  </Button>
+                  {canAccess ? (
+                    <Button className="w-full">
+                      {isCompleted ? t("vocabulary.playAgain") : t("vocabulary.startPractice")}
+                    </Button>
+                  ) : (
+                    <Button className="w-full" variant="outline" onClick={(e) => {
+                      e.stopPropagation();
+                      createCheckoutSession();
+                    }}>
+                      <Lock className="mr-2 h-4 w-4" />
+                      {t('freemium.unlockWith')}
+                    </Button>
+                  )}
                 </CardContent>
               </Card>
             );
