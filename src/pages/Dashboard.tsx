@@ -10,16 +10,15 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useSubscription } from "@/hooks/useSubscription";
 import { useLessonProgress } from "@/hooks/useLessonProgress";
+import { useUser } from "@/hooks/useUser";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 const Dashboard = () => {
   const navigate = useNavigate();
   const {
     t
   } = useTranslation();
-  const {
-    toast
-  } = useToast();
-  const [userName, setUserName] = useState<string>("");
+  const { toast } = useToast();
+  const { userName } = useUser();
   const {
     subscribed,
     subscription_status,
@@ -40,22 +39,10 @@ const Dashboard = () => {
   const progressPercentage = completedLessons / totalLessons * 100;
   useEffect(() => {
     const checkAuth = async () => {
-      const {
-        data: {
-          session
-        }
-      } = await supabase.auth.getSession();
+      const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
         navigate("/auth");
         return;
-      }
-
-      // Fetch user profile
-      const {
-        data: profile
-      } = await supabase.from("profiles").select("first_name, last_name").eq("id", session.user.id).single();
-      if (profile) {
-        setUserName(`${profile.first_name} ${profile.last_name}`);
       }
     };
     checkAuth();
@@ -70,7 +57,7 @@ const Dashboard = () => {
       });
       window.history.replaceState({}, '', '/dashboard');
     }
-  }, [navigate, checkSubscription, toast]);
+  }, [navigate, toast]);
   const handleLogout = async () => {
     await supabase.auth.signOut();
     toast({
