@@ -87,7 +87,30 @@ serve(async (req) => {
 
     if (hasActiveSub) {
       const subscription = subscriptions.data[0];
-      subscriptionEnd = new Date(subscription.current_period_end * 1000).toISOString();
+      
+      // Log the raw subscription data for debugging
+      logStep("Raw subscription data", { 
+        id: subscription.id,
+        status: subscription.status,
+        current_period_end: subscription.current_period_end,
+        current_period_start: subscription.current_period_start,
+        hasCurrentPeriodEnd: !!subscription.current_period_end
+      });
+      
+      // Check if current_period_end exists before using it
+      if (subscription.current_period_end) {
+        subscriptionEnd = new Date(subscription.current_period_end * 1000).toISOString();
+      } else {
+        logStep("WARNING: current_period_end is missing from subscription", { 
+          subscriptionId: subscription.id 
+        });
+        // Fallback: calculate from created date + 1 week for weekly subscription
+        const createdDate = new Date(subscription.created * 1000);
+        createdDate.setDate(createdDate.getDate() + 7); // Add 7 days
+        subscriptionEnd = createdDate.toISOString();
+        logStep("Using fallback end date", { fallbackDate: subscriptionEnd });
+      }
+      
       subscriptionId = subscription.id;
       logStep("Active subscription found", { subscriptionId, endDate: subscriptionEnd });
       
