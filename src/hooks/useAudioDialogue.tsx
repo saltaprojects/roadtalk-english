@@ -81,26 +81,7 @@ export const useAudioDialogue = () => {
         setIsPlaying(false);
       };
 
-      try {
-        await audio.play();
-      } catch (playError: any) {
-        // Handle autoplay policy restrictions (common on mobile)
-        if (playError.name === 'NotAllowedError') {
-          toast({
-            title: "Permission Required",
-            description: "Please tap the Play button to start audio playback.",
-            variant: "destructive",
-          });
-        } else {
-          toast({
-            title: "Playback Error",
-            description: "Failed to play audio. Please try again.",
-            variant: "destructive",
-          });
-        }
-        setIsPlaying(false);
-        throw playError;
-      }
+      await audio.play();
     } catch (error: any) {
       console.error("Error playing dialogue line:", error);
       toast({
