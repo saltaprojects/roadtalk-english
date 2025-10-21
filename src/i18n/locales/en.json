@@ -522,10 +522,7 @@
     "finish": "Finish",
     "line": "Line",
     "backToDashboard": "Back",
-    "backToExercises": "Back to Exercises",
-    "enableAudio": "Enable Audio",
-    "tapToEnableAudio": "Tap to enable audio playback for this exercise",
-    "audioReady": "Audio ready! Tap Play to start"
+    "backToExercises": "Back to Exercises"
   },
   "dialogueReading": {
     "title": "Dialogue Reading Practice",

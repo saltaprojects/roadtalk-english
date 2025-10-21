@@ -13,31 +13,8 @@ export const useAudioDialogue = () => {
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
-  const [isAudioUnlocked, setIsAudioUnlocked] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const audioCacheRef = useRef<Map<string, string>>(new Map());
-
-  const unlockAudio = async (): Promise<boolean> => {
-    try {
-      // Play a silent audio to unlock the audio context (required for mobile browsers)
-      const silentAudio = new Audio('data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//tQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAADhADAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwP////////////////////////////////////////////////////////////////8AAAAATGF2YzU4LjEzAAAAAAAAAAAAAAAAJAQKAAAAAAAAA4T/Kmh0AAAAAAD/+xDEAAPAAAGkAAAAIAAANIAAAARMQU1FMy4xMDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/+xDEHgPAAAGkAAAAIAAANIAAAARMQU1FMy4xMDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/+xDEKQPAAAGkAAAAIAAANIAAAARMQU1FMy4xMDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=');
-      await silentAudio.play();
-      setIsAudioUnlocked(true);
-      toast({
-        title: "Audio Ready",
-        description: "Audio playback is now enabled. Tap Play to start!",
-      });
-      return true;
-    } catch (e) {
-      console.error("Failed to unlock audio:", e);
-      toast({
-        title: "Audio Setup Failed",
-        description: "Please try again or check your browser settings.",
-        variant: "destructive",
-      });
-      return false;
-    }
-  };
 
   const generateAudio = async (text: string, voice: string = "echo"): Promise<string> => {
     // Check cache first
@@ -187,8 +164,6 @@ export const useAudioDialogue = () => {
     currentLineIndex,
     isLoading,
     hasPlayedOnce,
-    isAudioUnlocked,
-    unlockAudio,
     playDialogue,
     pause,
     replay,
