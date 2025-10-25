@@ -90,7 +90,7 @@ const ReadingPractice = () => {
           className="mb-6"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          {t('reading.backToDashboard')}
+          {t('practice.backToDashboard')}
         </Button>
 
         <div className="mb-8">

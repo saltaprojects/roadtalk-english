@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -15,6 +16,7 @@ type Message = {
 
 const DriverChat = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -169,20 +171,20 @@ const DriverChat = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto p-4 max-w-4xl">
-        <div className="flex items-center gap-4 mb-6">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => navigate("/dashboard")}
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <div>
-            <h1 className="text-2xl font-bold">🤖 Driver Chat Assistant</h1>
-            <p className="text-sm text-muted-foreground">
-              Ask me anything about trucking in the USA
-            </p>
-          </div>
+        <Button
+          variant="ghost"
+          onClick={() => navigate("/dashboard")}
+          className="mb-6"
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          {t('practice.backToDashboard')}
+        </Button>
+
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold">🤖 Driver Chat Assistant</h1>
+          <p className="text-sm text-muted-foreground">
+            Ask me anything about trucking in the USA
+          </p>
         </div>
 
         {messages.length <= 1 && (

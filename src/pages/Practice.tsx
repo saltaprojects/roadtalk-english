@@ -86,7 +86,7 @@ const Practice = () => {
           className="mb-6"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          {t("contact.back")}
+          {t('practice.backToDashboard')}
         </Button>
 
         <div className="mb-8">
