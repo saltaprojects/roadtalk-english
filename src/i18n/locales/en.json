@@ -115,6 +115,10 @@
         "description": "Learn traffic signs"
       }
     },
+    "aiPractice": {
+      "title": "AI-Powered Practice Tools",
+      "subtitle": "Practice with advanced AI features"
+    },
     "todayLesson": {
       "badge": "Today's Lesson",
       "title": "Highway Communication",

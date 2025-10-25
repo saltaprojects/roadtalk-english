@@ -12,6 +12,7 @@ import { useSubscription } from "@/hooks/useSubscription";
 import { useLessonProgress } from "@/hooks/useLessonProgress";
 import { useUser } from "@/hooks/useUser";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Separator } from "@/components/ui/separator";
 const Dashboard = () => {
   const navigate = useNavigate();
   const {
@@ -158,6 +159,24 @@ const Dashboard = () => {
             </AlertDescription>
           </Alert>}
 
+        {/* Your Progress */}
+        <Card className="p-4 card-elevated">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="text-2xl font-bold">{t('dashboard.progress.title')}</h2>
+              <p className="text-muted-foreground">{completedLessons} {t('dashboard.progress.lessonsCompleted')}</p>
+            </div>
+            <Trophy className="w-12 h-12 text-accent" />
+          </div>
+          <div className="space-y-2">
+            <div className="flex justify-between text-sm">
+              <span className="font-medium">{completedLessons} / {totalLessons}</span>
+              <span className="text-muted-foreground">{Math.round(progressPercentage)}%</span>
+            </div>
+            <Progress value={progressPercentage} className="h-3" />
+          </div>
+        </Card>
+
         {/* Everyday English for Truck Drivers */}
         <div className="space-y-6">
           <div>
@@ -216,54 +235,46 @@ const Dashboard = () => {
           </div>
         </div>
 
+        {/* Separator Line */}
+        <Separator className="my-8" />
+
         {/* AI-Powered Practice Tools */}
-        <Card className="p-4 card-elevated">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h2 className="text-2xl font-bold">{t('dashboard.progress.title')}</h2>
-              <p className="text-muted-foreground">{completedLessons} {t('dashboard.progress.lessonsCompleted')}</p>
-            </div>
-            <Trophy className="w-12 h-12 text-accent" />
-          </div>
-          <div className="space-y-2 mb-6">
-            <div className="flex justify-between text-sm">
-              <span className="font-medium">{completedLessons} / {totalLessons}</span>
-              <span className="text-muted-foreground">{Math.round(progressPercentage)}%</span>
-            </div>
-            <Progress value={progressPercentage} className="h-3" />
+        <div className="space-y-6">
+          <div>
+            <h2 className="text-3xl font-bold mb-2">{t('dashboard.aiPractice.title')}</h2>
+            <p className="text-muted-foreground">{t('dashboard.aiPractice.subtitle')}</p>
           </div>
 
-          {/* Practice Sections */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* AI Conversation Practice */}
-            <div className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer" onClick={() => navigate("/practice")}>
-              <Bot className="w-8 h-8 mx-auto mb-2 text-primary" />
-              <h3 className="font-semibold text-sm mb-1">{t('dashboard.practiceSections.aiConversation.title')}</h3>
-              <p className="text-xs text-muted-foreground">{t('dashboard.practiceSections.aiConversation.description')}</p>
-            </div>
+            <Card className="p-6 card-elevated hover:scale-105 transition-transform cursor-pointer" onClick={() => navigate("/practice")}>
+              <Bot className="w-10 h-10 mb-3 text-primary" />
+              <h3 className="text-lg font-bold mb-2">{t('dashboard.practiceSections.aiConversation.title')}</h3>
+              <p className="text-sm text-muted-foreground">{t('dashboard.practiceSections.aiConversation.description')}</p>
+            </Card>
 
             {/* Pronunciation Help */}
-            <div className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer" onClick={() => navigate("/pronunciation-help")}>
-              <Mic className="w-8 h-8 mx-auto mb-2 text-primary" />
-              <h3 className="font-semibold text-sm mb-1">{t('dashboard.practiceSections.pronunciation.title')}</h3>
-              <p className="text-xs text-muted-foreground">{t('dashboard.practiceSections.pronunciation.description')}</p>
-            </div>
+            <Card className="p-6 card-elevated hover:scale-105 transition-transform cursor-pointer" onClick={() => navigate("/pronunciation-help")}>
+              <Mic className="w-10 h-10 mb-3 text-primary" />
+              <h3 className="text-lg font-bold mb-2">{t('dashboard.practiceSections.pronunciation.title')}</h3>
+              <p className="text-sm text-muted-foreground">{t('dashboard.practiceSections.pronunciation.description')}</p>
+            </Card>
 
             {/* Driver Chat with AI */}
-            <div className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer" onClick={() => navigate("/driver-chat")}>
-              <MessageSquare className="w-8 h-8 mx-auto mb-2 text-primary" />
-              <h3 className="font-semibold text-sm mb-1">{t('dashboard.practiceSections.driverChat.title')}</h3>
-              <p className="text-xs text-muted-foreground">{t('dashboard.practiceSections.driverChat.description')}</p>
-            </div>
+            <Card className="p-6 card-elevated hover:scale-105 transition-transform cursor-pointer" onClick={() => navigate("/driver-chat")}>
+              <MessageSquare className="w-10 h-10 mb-3 text-primary" />
+              <h3 className="text-lg font-bold mb-2">{t('dashboard.practiceSections.driverChat.title')}</h3>
+              <p className="text-sm text-muted-foreground">{t('dashboard.practiceSections.driverChat.description')}</p>
+            </Card>
 
             {/* Road Signs Practice */}
-            <div className="text-center p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer" onClick={() => navigate("/road-signs")}>
-              <OctagonAlert className="w-8 h-8 mx-auto mb-2 text-primary" />
-              <h3 className="font-semibold text-sm mb-1">{t('dashboard.practiceSections.roadSigns.title')}</h3>
-              <p className="text-xs text-muted-foreground">{t('dashboard.practiceSections.roadSigns.description')}</p>
-            </div>
+            <Card className="p-6 card-elevated hover:scale-105 transition-transform cursor-pointer" onClick={() => navigate("/road-signs")}>
+              <OctagonAlert className="w-10 h-10 mb-3 text-primary" />
+              <h3 className="text-lg font-bold mb-2">{t('dashboard.practiceSections.roadSigns.title')}</h3>
+              <p className="text-sm text-muted-foreground">{t('dashboard.practiceSections.roadSigns.description')}</p>
+            </Card>
           </div>
-        </Card>
+        </div>
       </div>
     </div>;
 };
