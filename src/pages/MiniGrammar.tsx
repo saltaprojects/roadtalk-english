@@ -57,7 +57,7 @@ export default function MiniGrammar() {
           className="mb-6"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          {currentLang === 'en' ? 'Back to Dashboard' : 'На панель управления'}
+          {t('miniGames.backToDashboard')}
         </Button>
 
         <div className="mb-8">

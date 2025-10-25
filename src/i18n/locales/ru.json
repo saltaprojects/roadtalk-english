@@ -153,7 +153,7 @@
     "complete": "Завершено!",
     "next": "Далее",
     "finish": "Завершить",
-    "backToDashboard": "Назад к панели",
+    "backToDashboard": "Назад к панели управления",
     "congratulations": "Отличная работа!",
     "completionMessage": "Вы завершили этот урок. Продолжайте в том же духе!",
     "score": "Ваш результат",
@@ -188,7 +188,7 @@
   "miniGames": {
     "title": "Практика перевода фраз",
     "subtitle": "Изучайте важные фразы для дальнобойщиков через практику перевода",
-    "backToDashboard": "Назад к панели",
+    "backToDashboard": "Назад к панели управления",
     "selectScenario": "Выберите сценарий",
     "scenarioDescription": "Выберите ситуацию дальнобойщика и практикуйте правильные ответы на английском под давлением времени",
     "scenarioDescriptionNew": "Выберите сценарий и практикуйте перевод важных фраз между английским и русским в своем темпе",
@@ -492,13 +492,13 @@
       "suggestedQuestions": "Предлагаемые вопросы:"
     },
     "startPractice": "Начать практику",
-    "backToDashboard": "Назад к панели",
+    "backToDashboard": "Назад к панели управления",
     "listeningInstructions": "Слушайте реальные разговоры и проверьте понимание"
   },
   "roadSigns": {
     "title": "Тест по дорожным знакам",
     "subtitle": "Проверьте свои знания дорожных знаков США",
-    "backToDashboard": "Вернуться на панель",
+    "backToDashboard": "Назад к панели управления",
     "questionLabel": "Вопрос",
     "selectAnswer": "Выберите ответ",
     "correct": "Правильно!",
@@ -537,7 +537,7 @@
     "tryAgain": "Попробовать снова",
     "finish": "Завершить",
     "line": "Строка",
-    "backToDashboard": "Назад",
+    "backToDashboard": "Назад к панели управления",
     "backToExercises": "Назад к упражнениям"
   },
   "dialogueReading": {
@@ -594,7 +594,7 @@
   "pronunciation": {
     "title": "Помощь с произношением: Практика фраз",
     "subtitle": "Практикуйте отдельные фразы и улучшайте произношение",
-    "backToDashboard": "Назад к панели",
+    "backToDashboard": "Назад к панели управления",
     "dialoguePractice": "Практика диалогов",
     "listenToPhrase": "Слушать фразу",
     "recordYourself": "Записать себя",
@@ -694,7 +694,7 @@
   "vocabulary": {
     "title": "Словарный тренажер",
     "subtitle": "Составляйте фразы из слов с картинками и звуком",
-    "backToDashboard": "Назад на панель",
+    "backToDashboard": "Назад к панели управления",
     "backToScenarios": "Назад к сценариям",
     "scenarios": {
       "gasStation": "АЗС",

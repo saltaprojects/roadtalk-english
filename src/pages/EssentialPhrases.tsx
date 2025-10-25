@@ -46,7 +46,7 @@ const EssentialPhrases = () => {
             onClick={() => navigate("/dashboard")}
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Dashboard
+            {t('lesson.backToDashboard')}
           </Button>
           <h1 className="text-3xl font-bold">Essential Phrases & Short Tests</h1>
           <p className="text-white/80 mt-1">Highway communication, navigation, delivery documentation, and essential truck driver phrases</p>
