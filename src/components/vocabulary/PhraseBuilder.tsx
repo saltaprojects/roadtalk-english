@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { WordCard } from "./WordCard";
 import { Phrase, Word } from "@/data/vocabularyWords";
-import { CheckCircle, XCircle, RotateCcw } from "lucide-react";
+import { CheckCircle, XCircle, RotateCcw, Volume2 } from "lucide-react";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useToast } from "@/hooks/use-toast";
 
@@ -164,9 +164,23 @@ export const PhraseBuilder = ({ phrases, scenarioTitle, scenarioImage, onComplet
                 </Button>
               </>
             ) : isCorrect ? (
-              <Button onClick={handleNext} className="flex-1" size="lg">
-                {currentPhraseIndex < phrases.length - 1 ? t("vocabulary.nextPhrase") : t("vocabulary.finish")}
-              </Button>
+              <>
+                <Button 
+                  onClick={() => {
+                    const fullPhrase = selectedWords.map(w => w.text).join(" ");
+                    playText(fullPhrase);
+                  }}
+                  variant="outline"
+                  size="lg"
+                  disabled={isPlaying}
+                >
+                  <Volume2 className="mr-2 h-5 w-5" />
+                  {isPlaying ? t("vocabulary.playing") : t("vocabulary.hearPhrase")}
+                </Button>
+                <Button onClick={handleNext} className="flex-1" size="lg">
+                  {currentPhraseIndex < phrases.length - 1 ? t("vocabulary.nextPhrase") : t("vocabulary.finish")}
+                </Button>
+              </>
             ) : (
               <Button onClick={handleReset} variant="outline" className="flex-1" size="lg">
                 <RotateCcw className="mr-2 h-5 w-5" />

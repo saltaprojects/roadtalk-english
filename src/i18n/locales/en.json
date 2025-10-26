@@ -717,6 +717,8 @@
     "correctDescription": "Great job! Moving to next phrase.",
     "incorrect": "Incorrect",
     "correctFeedback": "Perfect! You built the phrase correctly!",
-    "incorrectFeedback": "Not quite right. Try again!"
+    "incorrectFeedback": "Not quite right. Try again!",
+    "playing": "Playing...",
+    "hearPhrase": "Hear Phrase Again"
   }
 }
