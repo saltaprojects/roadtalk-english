@@ -1420,11 +1420,11 @@ const RoadSigns = () => {
           <div className="container mx-auto max-w-4xl">
             <Button
               variant="ghost"
-              size="icon"
               onClick={() => navigate("/dashboard")}
               className="text-white hover:bg-white/20 mb-4"
             >
-              <ArrowLeft className="h-5 w-5" />
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              {t('roadSigns.backToDashboard')}
             </Button>
           </div>
         </div>
@@ -1490,11 +1490,11 @@ const RoadSigns = () => {
           <div className="flex items-center justify-between mb-4">
             <Button
               variant="ghost"
-              size="icon"
               onClick={() => navigate("/dashboard")}
               className="text-white hover:bg-white/20"
             >
-              <ArrowLeft className="h-5 w-5" />
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              {t('roadSigns.backToDashboard')}
             </Button>
             <div className="text-right">
               <p className="text-sm text-white/80">{t('roadSigns.score')}</p>
