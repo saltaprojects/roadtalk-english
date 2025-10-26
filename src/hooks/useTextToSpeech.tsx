@@ -1,19 +1,32 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 export const useTextToSpeech = () => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
   const { toast } = useToast();
   const audioCacheRef = useRef<Map<string, string>>(new Map());
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    // Create a single audio element that will be reused
+    audioRef.current = new Audio();
+    
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.src = '';
+        audioRef.current = null;
+      }
+    };
+  }, []);
 
   const playText = async (text: string, voice: string = "echo", retries = 2) => {
     try {
       // Stop any currently playing audio
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio.currentTime = 0;
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
       }
 
       setIsPlaying(true);
@@ -22,17 +35,24 @@ export const useTextToSpeech = () => {
       const cacheKey = `${text}-${voice}`;
       if (audioCacheRef.current.has(cacheKey)) {
         const cachedAudio = audioCacheRef.current.get(cacheKey)!;
-        const audio = new Audio(`data:audio/mp3;base64,${cachedAudio}`);
-        setCurrentAudio(audio);
-
+        
+        if (!audioRef.current) {
+          audioRef.current = new Audio();
+        }
+        
+        const audio = audioRef.current;
+        
+        // Remove old event listeners
+        audio.onended = null;
+        audio.onerror = null;
+        
+        // Set new event listeners
         audio.onended = () => {
           setIsPlaying(false);
-          setCurrentAudio(null);
         };
 
         audio.onerror = () => {
           setIsPlaying(false);
-          setCurrentAudio(null);
           toast({
             title: "Error",
             description: "Failed to play audio.",
@@ -40,6 +60,8 @@ export const useTextToSpeech = () => {
           });
         };
 
+        // Set the audio source and play
+        audio.src = `data:audio/mp3;base64,${cachedAudio}`;
         await audio.play();
         return;
       }
@@ -70,17 +92,23 @@ export const useTextToSpeech = () => {
             // Cache the audio
             audioCacheRef.current.set(cacheKey, data.audioContent);
 
-            const audio = new Audio(`data:audio/mp3;base64,${data.audioContent}`);
-            setCurrentAudio(audio);
-
+            if (!audioRef.current) {
+              audioRef.current = new Audio();
+            }
+            
+            const audio = audioRef.current;
+            
+            // Remove old event listeners
+            audio.onended = null;
+            audio.onerror = null;
+            
+            // Set new event listeners
             audio.onended = () => {
               setIsPlaying(false);
-              setCurrentAudio(null);
             };
 
             audio.onerror = () => {
               setIsPlaying(false);
-              setCurrentAudio(null);
               toast({
                 title: "Error",
                 description: "Failed to play audio.",
@@ -88,6 +116,8 @@ export const useTextToSpeech = () => {
               });
             };
 
+            // Set the audio source and play
+            audio.src = `data:audio/mp3;base64,${data.audioContent}`;
             await audio.play();
             return;
           }
@@ -114,10 +144,9 @@ export const useTextToSpeech = () => {
   };
 
   const stop = () => {
-    if (currentAudio) {
-      currentAudio.pause();
-      currentAudio.currentTime = 0;
-      setCurrentAudio(null);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
     }
     setIsPlaying(false);
   };
