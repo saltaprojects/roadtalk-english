@@ -18,6 +18,8 @@ export const useAudioDialogue = () => {
   const playbackAbortedRef = useRef(false);
   const isGeneratingRef = useRef(false);
   const currentBlobUrlRef = useRef<string | null>(null);
+  const preloadedAudioRef = useRef<Map<number, ArrayBuffer>>(new Map());
+  const isPreloadingRef = useRef(false);
 
   const generateAudio = async (text: string, voice: string = "echo", retries = 2): Promise<ArrayBuffer> => {
     // Check cache first
@@ -66,76 +68,146 @@ export const useAudioDialogue = () => {
     throw lastError;
   };
 
+  const preloadAllAudio = async (
+    dialogue: DialogueLine[],
+    isRussian: boolean
+  ): Promise<void> => {
+    if (isPreloadingRef.current) return;
+    
+    isPreloadingRef.current = true;
+    setIsLoading(true);
+    
+    try {
+      console.log("[Audio] Preloading all dialogue audio...");
+      
+      const preloadPromises = dialogue.map(async (line, index) => {
+        const text = isRussian ? line.textRu : line.text;
+        const voice = line.speaker.toLowerCase().includes("driver") ? "echo" : "alloy";
+        
+        try {
+          const audioBuffer = await generateAudio(text, voice);
+          preloadedAudioRef.current.set(index, audioBuffer);
+          console.log(`[Audio] Preloaded line ${index}: ${text.substring(0, 30)}...`);
+          return true;
+        } catch (error) {
+          console.error(`[Audio] Failed to preload line ${index}:`, error);
+          return false;
+        }
+      });
+      
+      const results = await Promise.all(preloadPromises);
+      const successCount = results.filter(r => r).length;
+      console.log(`[Audio] Preloaded ${successCount}/${dialogue.length} audio files`);
+      
+      if (successCount === 0) {
+        throw new Error("Failed to preload any audio files");
+      }
+    } finally {
+      isPreloadingRef.current = false;
+      setIsLoading(false);
+    }
+  };
+
   const playDialogueLine = async (
     line: DialogueLine,
     index: number,
     isRussian: boolean,
     onComplete: () => void
   ) => {
-    // Check if playback was aborted
     if (playbackAbortedRef.current) {
+      console.log("[Audio] Playback aborted before starting line", index);
       return;
     }
 
     try {
-      isGeneratingRef.current = true;
-      const text = isRussian ? line.textRu : line.text;
-      // Use different voices: "echo" for driver, "alloy" for others
-      const voice = line.speaker.toLowerCase().includes("driver") ? "echo" : "alloy";
+      let audioBuffer: ArrayBuffer;
       
-      const audioBuffer = await generateAudio(text, voice);
-      
-      // Check again after async operation
-      if (playbackAbortedRef.current) {
+      if (preloadedAudioRef.current.has(index)) {
+        console.log(`[Audio] Using preloaded audio for line ${index}`);
+        audioBuffer = preloadedAudioRef.current.get(index)!;
+      } else {
+        console.log(`[Audio] Generating audio on-demand for line ${index}`);
+        isGeneratingRef.current = true;
+        const text = isRussian ? line.textRu : line.text;
+        const voice = line.speaker.toLowerCase().includes("driver") ? "echo" : "alloy";
+        audioBuffer = await generateAudio(text, voice);
         isGeneratingRef.current = false;
+      }
+      
+      if (playbackAbortedRef.current) {
+        console.log("[Audio] Playback aborted after audio generation");
         return;
       }
 
-      // Clean up previous audio if exists
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current.src = "";
         audioRef.current = null;
       }
       
-      // Revoke previous blob URL to free memory
       if (currentBlobUrlRef.current) {
         URL.revokeObjectURL(currentBlobUrlRef.current);
         currentBlobUrlRef.current = null;
       }
       
-      // Create Blob URL from ArrayBuffer (much more mobile-friendly)
       const audioBlob = new Blob([audioBuffer], { type: 'audio/mpeg' });
       const blobUrl = URL.createObjectURL(audioBlob);
       currentBlobUrlRef.current = blobUrl;
       
-      // Create audio element with Blob URL
       const audio = new Audio(blobUrl);
+      audio.preload = 'auto';
+      
+      console.log(`[Audio] Waiting for audio to be ready for line ${index}...`);
+      
+      await new Promise<void>((resolve, reject) => {
+        const timeout = setTimeout(() => {
+          console.error("[Audio] Audio load timeout");
+          reject(new Error('Audio load timeout - file may be too large or network issue'));
+        }, 15000);
+        
+        const onCanPlay = () => {
+          clearTimeout(timeout);
+          console.log(`[Audio] Audio ready for line ${index}`);
+          resolve();
+        };
+        
+        const onError = (e: Event) => {
+          clearTimeout(timeout);
+          console.error("[Audio] Audio load error:", e);
+          reject(new Error('Audio failed to load'));
+        };
+        
+        audio.addEventListener('canplaythrough', onCanPlay, { once: true });
+        audio.addEventListener('error', onError, { once: true });
+        audio.load();
+      });
+      
+      if (playbackAbortedRef.current) {
+        console.log("[Audio] Playback aborted after audio ready");
+        URL.revokeObjectURL(blobUrl);
+        return;
+      }
+      
       audioRef.current = audio;
-      isGeneratingRef.current = false;
 
       audio.onended = () => {
-        // Check if playback was aborted during playback
         if (!playbackAbortedRef.current) {
-          // Longer pause for mobile devices (1000ms instead of 500ms)
+          console.log(`[Audio] Line ${index} ended, moving to next`);
           setTimeout(() => {
             if (!playbackAbortedRef.current) {
-              // Clean up blob URL before moving to next line
               if (currentBlobUrlRef.current) {
                 URL.revokeObjectURL(currentBlobUrlRef.current);
                 currentBlobUrlRef.current = null;
               }
               onComplete();
             }
-          }, 1000);
+          }, 500);
         }
       };
 
       audio.onerror = (event) => {
-        isGeneratingRef.current = false;
-        console.error("Audio playback error:", event);
+        console.error(`[Audio] Playback error for line ${index}:`, event);
         if (!playbackAbortedRef.current) {
-          // Revoke blob URL on error
           if (currentBlobUrlRef.current) {
             URL.revokeObjectURL(currentBlobUrlRef.current);
             currentBlobUrlRef.current = null;
@@ -150,83 +222,122 @@ export const useAudioDialogue = () => {
         }
       };
 
-      // Wrap play() in try-catch to handle mobile Safari promise rejections
       try {
-        await audio.play();
+        console.log(`[Audio] Starting playback for line ${index}`);
+        const playPromise = audio.play();
+        
+        if (playPromise !== undefined) {
+          await playPromise;
+        }
+        console.log(`[Audio] Successfully started playback for line ${index}`);
       } catch (playError: any) {
-        console.error("Play promise rejected:", playError);
-        // Handle specific mobile errors
+        console.error(`[Audio] Play error for line ${index}:`, playError);
+        
         if (playError.name === 'NotAllowedError') {
           toast({
             title: "Playback Blocked",
-            description: "Please enable audio playback in your browser settings.",
+            description: "Please tap the screen to enable audio playback.",
+            variant: "destructive",
+          });
+        } else if (playError.name === 'NotSupportedError') {
+          toast({
+            title: "Format Not Supported",
+            description: "Your device cannot play this audio format.",
             variant: "destructive",
           });
         } else {
           toast({
             title: "Playback Error",
-            description: "Failed to play audio. Please try again.",
+            description: `Failed to play audio: ${playError.message}`,
+            variant: "destructive",
+          });
+        }
+        
+        setIsPlaying(false);
+        setIsLoading(false);
+        
+        if (currentBlobUrlRef.current) {
+          URL.revokeObjectURL(currentBlobUrlRef.current);
+          currentBlobUrlRef.current = null;
+        }
+        
+        throw playError;
+      }
+    } catch (error: any) {
+      isGeneratingRef.current = false;
+      console.error(`[Audio] Error playing dialogue line ${index}:`, error);
+      
+      if (!playbackAbortedRef.current) {
+        if (!error.name || !['NotAllowedError', 'NotSupportedError'].includes(error.name)) {
+          toast({
+            title: "Error",
+            description: error.message || "Failed to play audio",
             variant: "destructive",
           });
         }
         setIsPlaying(false);
         setIsLoading(false);
-        
-        // Clean up on play failure
-        if (currentBlobUrlRef.current) {
-          URL.revokeObjectURL(currentBlobUrlRef.current);
-          currentBlobUrlRef.current = null;
-        }
       }
-    } catch (error: any) {
-      isGeneratingRef.current = false;
-      console.error("Error playing dialogue line:", error);
-      if (!playbackAbortedRef.current) {
-        toast({
-          title: "Error",
-          description: error.message || "Failed to generate audio",
-          variant: "destructive",
-        });
-        setIsPlaying(false);
-        setIsLoading(false);
-      }
+      
+      throw error;
     }
   };
 
   const playDialogue = async (dialogue: DialogueLine[], isRussian: boolean) => {
-    if (isPlaying || isGeneratingRef.current) return;
+    if (isPlaying || isGeneratingRef.current || isPreloadingRef.current) {
+      console.log("[Audio] Playback already in progress, ignoring");
+      return;
+    }
 
     playbackAbortedRef.current = false;
+    
+    console.log("[Audio] Starting dialogue playback sequence");
+    
+    try {
+      await preloadAllAudio(dialogue, isRussian);
+    } catch (error) {
+      console.error("[Audio] Preload failed:", error);
+      toast({
+        title: "Loading Error",
+        description: "Failed to load audio files. Please try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    if (playbackAbortedRef.current) {
+      console.log("[Audio] Playback aborted after preload");
+      return;
+    }
+    
     setIsPlaying(true);
-    setIsLoading(true);
     setCurrentLineIndex(0);
     setHasPlayedOnce(true);
 
     const playNextLine = async (index: number) => {
-      // Check if playback was aborted
       if (playbackAbortedRef.current) {
+        console.log("[Audio] Playback aborted in playNextLine");
         setIsPlaying(false);
-        setIsLoading(false);
         return;
       }
 
       if (index >= dialogue.length) {
+        console.log("[Audio] Dialogue sequence complete");
         setIsPlaying(false);
-        setIsLoading(false);
+        preloadedAudioRef.current.clear();
         return;
       }
 
       setCurrentLineIndex(index);
-      setIsLoading(false);
 
       try {
         await playDialogueLine(dialogue[index], index, isRussian, () => {
           playNextLine(index + 1);
         });
       } catch (error) {
-        console.error("Error in playNextLine:", error);
+        console.error(`[Audio] Error in playNextLine at index ${index}:`, error);
         setIsPlaying(false);
-        setIsLoading(false);
+        preloadedAudioRef.current.clear();
       }
     };
 
@@ -262,16 +373,18 @@ export const useAudioDialogue = () => {
   };
 
   const stop = () => {
+    console.log("[Audio] Stopping playback");
     playbackAbortedRef.current = true;
     pause();
     setCurrentLineIndex(0);
     setHasPlayedOnce(false);
     
-    // Ensure blob URL is cleaned up
     if (currentBlobUrlRef.current) {
       URL.revokeObjectURL(currentBlobUrlRef.current);
       currentBlobUrlRef.current = null;
     }
+    
+    preloadedAudioRef.current.clear();
   };
 
   return {
