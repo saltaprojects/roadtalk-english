@@ -14,11 +14,12 @@ export const useAudioDialogue = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const audioCacheRef = useRef<Map<string, string>>(new Map());
+  const audioCacheRef = useRef<Map<string, ArrayBuffer>>(new Map());
   const playbackAbortedRef = useRef(false);
   const isGeneratingRef = useRef(false);
+  const currentBlobUrlRef = useRef<string | null>(null);
 
-  const generateAudio = async (text: string, voice: string = "echo", retries = 2): Promise<string> => {
+  const generateAudio = async (text: string, voice: string = "echo", retries = 2): Promise<ArrayBuffer> => {
     // Check cache first
     const cacheKey = `${text}-${voice}`;
     if (audioCacheRef.current.has(cacheKey)) {
@@ -43,9 +44,17 @@ export const useAudioDialogue = () => {
           throw new Error("No audio data received");
         }
 
-        // Cache the audio
-        audioCacheRef.current.set(cacheKey, data.audioContent);
-        return data.audioContent;
+        // Convert base64 to ArrayBuffer for efficient storage
+        const binaryString = atob(data.audioContent);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+        const audioBuffer = bytes.buffer;
+
+        // Cache the raw audio buffer
+        audioCacheRef.current.set(cacheKey, audioBuffer);
+        return audioBuffer;
       } catch (error: any) {
         lastError = error;
         console.error(`Audio generation attempt ${attempt + 1} failed:`, error);
@@ -74,7 +83,7 @@ export const useAudioDialogue = () => {
       // Use different voices: "echo" for driver, "alloy" for others
       const voice = line.speaker.toLowerCase().includes("driver") ? "echo" : "alloy";
       
-      const audioContent = await generateAudio(text, voice);
+      const audioBuffer = await generateAudio(text, voice);
       
       // Check again after async operation
       if (playbackAbortedRef.current) {
@@ -89,26 +98,48 @@ export const useAudioDialogue = () => {
         audioRef.current = null;
       }
       
-      // Create audio element
-      const audio = new Audio(`data:audio/mp3;base64,${audioContent}`);
+      // Revoke previous blob URL to free memory
+      if (currentBlobUrlRef.current) {
+        URL.revokeObjectURL(currentBlobUrlRef.current);
+        currentBlobUrlRef.current = null;
+      }
+      
+      // Create Blob URL from ArrayBuffer (much more mobile-friendly)
+      const audioBlob = new Blob([audioBuffer], { type: 'audio/mpeg' });
+      const blobUrl = URL.createObjectURL(audioBlob);
+      currentBlobUrlRef.current = blobUrl;
+      
+      // Create audio element with Blob URL
+      const audio = new Audio(blobUrl);
       audioRef.current = audio;
       isGeneratingRef.current = false;
 
       audio.onended = () => {
         // Check if playback was aborted during playback
         if (!playbackAbortedRef.current) {
-          // Add a natural pause between lines (500ms)
+          // Longer pause for mobile devices (1000ms instead of 500ms)
           setTimeout(() => {
             if (!playbackAbortedRef.current) {
+              // Clean up blob URL before moving to next line
+              if (currentBlobUrlRef.current) {
+                URL.revokeObjectURL(currentBlobUrlRef.current);
+                currentBlobUrlRef.current = null;
+              }
               onComplete();
             }
-          }, 500);
+          }, 1000);
         }
       };
 
-      audio.onerror = () => {
+      audio.onerror = (event) => {
         isGeneratingRef.current = false;
+        console.error("Audio playback error:", event);
         if (!playbackAbortedRef.current) {
+          // Revoke blob URL on error
+          if (currentBlobUrlRef.current) {
+            URL.revokeObjectURL(currentBlobUrlRef.current);
+            currentBlobUrlRef.current = null;
+          }
           toast({
             title: "Audio Error",
             description: "Failed to play audio. Please try again.",
@@ -119,7 +150,34 @@ export const useAudioDialogue = () => {
         }
       };
 
-      await audio.play();
+      // Wrap play() in try-catch to handle mobile Safari promise rejections
+      try {
+        await audio.play();
+      } catch (playError: any) {
+        console.error("Play promise rejected:", playError);
+        // Handle specific mobile errors
+        if (playError.name === 'NotAllowedError') {
+          toast({
+            title: "Playback Blocked",
+            description: "Please enable audio playback in your browser settings.",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Playback Error",
+            description: "Failed to play audio. Please try again.",
+            variant: "destructive",
+          });
+        }
+        setIsPlaying(false);
+        setIsLoading(false);
+        
+        // Clean up on play failure
+        if (currentBlobUrlRef.current) {
+          URL.revokeObjectURL(currentBlobUrlRef.current);
+          currentBlobUrlRef.current = null;
+        }
+      }
     } catch (error: any) {
       isGeneratingRef.current = false;
       console.error("Error playing dialogue line:", error);
@@ -184,6 +242,13 @@ export const useAudioDialogue = () => {
       audioRef.current.src = "";
       audioRef.current = null;
     }
+    
+    // Clean up blob URL
+    if (currentBlobUrlRef.current) {
+      URL.revokeObjectURL(currentBlobUrlRef.current);
+      currentBlobUrlRef.current = null;
+    }
+    
     setIsPlaying(false);
     setIsLoading(false);
   };
@@ -201,6 +266,12 @@ export const useAudioDialogue = () => {
     pause();
     setCurrentLineIndex(0);
     setHasPlayedOnce(false);
+    
+    // Ensure blob URL is cleaned up
+    if (currentBlobUrlRef.current) {
+      URL.revokeObjectURL(currentBlobUrlRef.current);
+      currentBlobUrlRef.current = null;
+    }
   };
 
   return {
