@@ -42,28 +42,32 @@ export const useTextToSpeech = () => {
         
         const audio = audioRef.current;
         
-        // Remove old event listeners
-        audio.onended = null;
-        audio.onerror = null;
-        
-        // Set new event listeners
-        audio.onended = () => {
-          setIsPlaying(false);
-        };
+        // Return a Promise that resolves when audio finishes
+        return new Promise<void>((resolve, reject) => {
+          // Remove old event listeners
+          audio.onended = null;
+          audio.onerror = null;
+          
+          // Set new event listeners
+          audio.onended = () => {
+            setIsPlaying(false);
+            resolve();
+          };
 
-        audio.onerror = () => {
-          setIsPlaying(false);
-          toast({
-            title: "Error",
-            description: "Failed to play audio.",
-            variant: "destructive",
-          });
-        };
+          audio.onerror = (error) => {
+            setIsPlaying(false);
+            toast({
+              title: "Error",
+              description: "Failed to play audio.",
+              variant: "destructive",
+            });
+            reject(error);
+          };
 
-        // Set the audio source and play
-        audio.src = `data:audio/mp3;base64,${cachedAudio}`;
-        await audio.play();
-        return;
+          // Set the audio source and play
+          audio.src = `data:audio/mp3;base64,${cachedAudio}`;
+          audio.play().catch(reject);
+        });
       }
 
       // Retry logic for audio generation
@@ -98,28 +102,32 @@ export const useTextToSpeech = () => {
             
             const audio = audioRef.current;
             
-            // Remove old event listeners
-            audio.onended = null;
-            audio.onerror = null;
-            
-            // Set new event listeners
-            audio.onended = () => {
-              setIsPlaying(false);
-            };
+            // Return a Promise that resolves when audio finishes
+            return new Promise<void>((resolve, reject) => {
+              // Remove old event listeners
+              audio.onended = null;
+              audio.onerror = null;
+              
+              // Set new event listeners
+              audio.onended = () => {
+                setIsPlaying(false);
+                resolve();
+              };
 
-            audio.onerror = () => {
-              setIsPlaying(false);
-              toast({
-                title: "Error",
-                description: "Failed to play audio.",
-                variant: "destructive",
-              });
-            };
+              audio.onerror = (error) => {
+                setIsPlaying(false);
+                toast({
+                  title: "Error",
+                  description: "Failed to play audio.",
+                  variant: "destructive",
+                });
+                reject(error);
+              };
 
-            // Set the audio source and play
-            audio.src = `data:audio/mp3;base64,${data.audioContent}`;
-            await audio.play();
-            return;
+              // Set the audio source and play
+              audio.src = `data:audio/mp3;base64,${data.audioContent}`;
+              audio.play().catch(reject);
+            });
           }
         } catch (error: any) {
           lastError = error;
