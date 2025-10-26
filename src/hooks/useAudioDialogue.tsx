@@ -139,12 +139,6 @@ export const useAudioDialogue = () => {
         return;
       }
 
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.src = "";
-        audioRef.current = null;
-      }
-      
       if (currentBlobUrlRef.current) {
         URL.revokeObjectURL(currentBlobUrlRef.current);
         currentBlobUrlRef.current = null;
@@ -154,45 +148,18 @@ export const useAudioDialogue = () => {
       const blobUrl = URL.createObjectURL(audioBlob);
       currentBlobUrlRef.current = blobUrl;
       
-      const audio = new Audio(blobUrl);
-      audio.preload = 'auto';
+      const audio = audioRef.current;
       
-      console.log(`[Audio] Waiting for audio to be ready for line ${index}...`);
-      
-      await new Promise<void>((resolve, reject) => {
-        const timeout = setTimeout(() => {
-          console.error("[Audio] Audio load timeout");
-          reject(new Error('Audio load timeout - file may be too large or network issue'));
-        }, 15000);
-        
-        const onCanPlay = () => {
-          clearTimeout(timeout);
-          console.log(`[Audio] Audio ready for line ${index}`);
-          resolve();
-        };
-        
-        const onError = (e: Event) => {
-          clearTimeout(timeout);
-          console.error("[Audio] Audio load error:", e);
-          reject(new Error('Audio failed to load'));
-        };
-        
-        audio.addEventListener('canplaythrough', onCanPlay, { once: true });
-        audio.addEventListener('error', onError, { once: true });
-        audio.load();
-      });
-      
-      if (playbackAbortedRef.current) {
-        console.log("[Audio] Playback aborted after audio ready");
-        URL.revokeObjectURL(blobUrl);
-        return;
+      if (!audio) {
+        throw new Error("Audio element not initialized");
       }
-      
-      audioRef.current = audio;
 
-      audio.onended = () => {
+      const handleEnded = () => {
         if (!playbackAbortedRef.current) {
           console.log(`[Audio] Line ${index} ended, moving to next`);
+          audio.removeEventListener('ended', handleEnded);
+          audio.removeEventListener('error', handleError);
+          
           setTimeout(() => {
             if (!playbackAbortedRef.current) {
               if (currentBlobUrlRef.current) {
@@ -201,17 +168,21 @@ export const useAudioDialogue = () => {
               }
               onComplete();
             }
-          }, 500);
+          }, 300);
         }
       };
 
-      audio.onerror = (event) => {
+      const handleError = (event: Event) => {
         console.error(`[Audio] Playback error for line ${index}:`, event);
+        audio.removeEventListener('ended', handleEnded);
+        audio.removeEventListener('error', handleError);
+        
         if (!playbackAbortedRef.current) {
           if (currentBlobUrlRef.current) {
             URL.revokeObjectURL(currentBlobUrlRef.current);
             currentBlobUrlRef.current = null;
           }
+          
           toast({
             title: "Audio Error",
             description: "Failed to play audio. Please try again.",
@@ -219,19 +190,59 @@ export const useAudioDialogue = () => {
           });
           setIsPlaying(false);
           setIsLoading(false);
+          throw new Error("Audio playback failed");
         }
       };
 
+      audio.addEventListener('ended', handleEnded);
+      audio.addEventListener('error', handleError);
+      
+      audio.src = blobUrl;
+      audio.load();
+      
+      console.log(`[Audio] Waiting for audio to be ready for line ${index}...`);
+      
+      await new Promise<void>((resolve, reject) => {
+        const timeout = setTimeout(() => {
+          console.error("[Audio] Audio load timeout");
+          audio.removeEventListener('canplaythrough', onCanPlay);
+          audio.removeEventListener('error', onLoadError);
+          reject(new Error('Audio load timeout'));
+        }, 15000);
+        
+        const onCanPlay = () => {
+          clearTimeout(timeout);
+          audio.removeEventListener('error', onLoadError);
+          console.log(`[Audio] Audio ready for line ${index}`);
+          resolve();
+        };
+        
+        const onLoadError = (e: Event) => {
+          clearTimeout(timeout);
+          audio.removeEventListener('canplaythrough', onCanPlay);
+          console.error("[Audio] Audio load error:", e);
+          reject(new Error('Audio failed to load'));
+        };
+        
+        audio.addEventListener('canplaythrough', onCanPlay, { once: true });
+        audio.addEventListener('error', onLoadError, { once: true });
+      });
+      
+      if (playbackAbortedRef.current) {
+        console.log("[Audio] Playback aborted after audio ready");
+        URL.revokeObjectURL(blobUrl);
+        return;
+      }
+
       try {
         console.log(`[Audio] Starting playback for line ${index}`);
-        const playPromise = audio.play();
-        
-        if (playPromise !== undefined) {
-          await playPromise;
-        }
+        await audio.play();
         console.log(`[Audio] Successfully started playback for line ${index}`);
       } catch (playError: any) {
         console.error(`[Audio] Play error for line ${index}:`, playError);
+        
+        audio.removeEventListener('ended', handleEnded);
+        audio.removeEventListener('error', handleError);
         
         if (playError.name === 'NotAllowedError') {
           toast({
@@ -309,6 +320,15 @@ export const useAudioDialogue = () => {
       console.log("[Audio] Playback aborted after preload");
       return;
     }
+    
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.src = "";
+    }
+    
+    audioRef.current = new Audio();
+    audioRef.current.preload = 'auto';
+    console.log("[Audio] Created single audio element for dialogue playback");
     
     setIsPlaying(true);
     setCurrentLineIndex(0);
