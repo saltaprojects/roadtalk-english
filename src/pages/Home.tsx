@@ -127,7 +127,7 @@ const Home = () => {
           <div className="flex items-center justify-center gap-3 mb-4">
             <Newspaper className="w-10 h-10 text-accent" />
             <h2 className="text-4xl font-bold">
-              NEWS
+              {t('home.news.title')}
             </h2>
           </div>
             
@@ -145,11 +145,11 @@ const Home = () => {
               </div>
               
               <h3 className="text-3xl font-bold mb-4">
-                {currentNews.title[i18n.language as 'en' | 'ru'] || currentNews.title.en}
+                {currentNews.title[i18n.language.split('-')[0] as 'en' | 'ru'] || currentNews.title.en}
               </h3>
               
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                {currentNews.excerpt[i18n.language as 'en' | 'ru'] || currentNews.excerpt.en}
+                {currentNews.excerpt[i18n.language.split('-')[0] as 'en' | 'ru'] || currentNews.excerpt.en}
               </p>
               
               <div className="flex items-center justify-between pt-6 border-t">
