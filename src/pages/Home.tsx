@@ -28,21 +28,15 @@ const Home = () => {
   return <div className="min-h-screen">
       {/* Language Switcher */}
       <div className="absolute top-4 right-4 z-20 flex items-center gap-3">
-        <Button
-          variant="ghost"
-          size="icon"
-          asChild
-          className="text-white hover:text-white/80 transition-colors"
+        <a
+          href="https://www.instagram.com/roadtalk_english/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-white hover:text-white/80 transition-colors inline-flex items-center justify-center w-10 h-10 rounded-md hover:bg-white/10"
+          aria-label={t('home.social.instagram')}
         >
-          <a
-            href="https://www.instagram.com/roadtalk_english/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={t('home.social.instagram')}
-          >
-            <Instagram className="w-5 h-5" />
-          </a>
-        </Button>
+          <Instagram className="w-5 h-5" />
+        </a>
         <LanguageSwitcher />
       </div>
 
