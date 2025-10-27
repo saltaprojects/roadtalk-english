@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
-import { Truck, BookOpen, Award, Clock, Mail, User, Newspaper, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import { Truck, BookOpen, Award, Clock, Mail, User, Newspaper, ExternalLink, ChevronLeft, ChevronRight, Instagram } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -27,7 +27,22 @@ const Home = () => {
   const currentNews = industryNews[currentNewsIndex];
   return <div className="min-h-screen">
       {/* Language Switcher */}
-      <div className="absolute top-4 right-4 z-20">
+      <div className="absolute top-4 right-4 z-20 flex items-center gap-3">
+        <Button
+          variant="ghost"
+          size="icon"
+          asChild
+          className="text-white hover:text-white/80 transition-colors"
+        >
+          <a
+            href="https://instagram.com/truck_english_usa"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={t('home.social.instagram')}
+          >
+            <Instagram className="w-5 h-5" />
+          </a>
+        </Button>
         <LanguageSwitcher />
       </div>
 
@@ -200,8 +215,21 @@ const Home = () => {
 
       {/* Footer */}
       <footer className="py-8 px-4 border-t">
-        <div className="max-w-6xl mx-auto text-center text-muted-foreground">
-          <p>{t('home.footer')}</p>
+        <div className="max-w-6xl mx-auto text-center">
+          {/* Social Media Icons */}
+          <div className="flex justify-center gap-4 mb-4">
+            <a
+              href="https://instagram.com/truck_english_usa"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors"
+              aria-label={t('home.social.instagram')}
+            >
+              <Instagram className="w-6 h-6" />
+            </a>
+          </div>
+          
+          <p className="text-muted-foreground">{t('home.footer')}</p>
         </div>
       </footer>
 
