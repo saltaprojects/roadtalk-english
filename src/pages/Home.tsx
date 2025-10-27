@@ -35,7 +35,7 @@ const Home = () => {
           className="text-white hover:text-white/80 transition-colors"
         >
           <a
-            href="https://instagram.com/truck_english_usa"
+            href="https://www.instagram.com/roadtalk_english/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label={t('home.social.instagram')}
@@ -219,7 +219,7 @@ const Home = () => {
           {/* Social Media Icons */}
           <div className="flex justify-center gap-4 mb-4">
             <a
-              href="https://instagram.com/truck_english_usa"
+              href="https://www.instagram.com/roadtalk_english/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors"
