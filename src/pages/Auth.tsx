@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -25,6 +25,8 @@ const Auth = () => {
   const { toast } = useToast();
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
+  const [showSignupPassword, setShowSignupPassword] = useState(false);
 
   useEffect(() => {
     const checkUser = async () => {
@@ -159,15 +161,27 @@ const Auth = () => {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="login-password">{t('auth.password')}</Label>
-                  <Input
-                    id="login-password"
-                    name="password"
-                    type="password"
-                    placeholder="••••••••"
-                    autoComplete="current-password"
-                    required
-                    className="h-12 text-lg"
-                  />
+                  <div className="relative">
+                    <Input
+                      id="login-password"
+                      name="password"
+                      type={showLoginPassword ? "text" : "password"}
+                      placeholder="••••••••"
+                      autoComplete="current-password"
+                      required
+                      className="h-12 text-lg pr-12"
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="absolute right-1 top-1/2 -translate-y-1/2 h-10 w-10 text-muted-foreground hover:text-foreground"
+                      onClick={() => setShowLoginPassword(!showLoginPassword)}
+                      aria-label={showLoginPassword ? "Hide password" : "Show password"}
+                    >
+                      {showLoginPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                    </Button>
+                  </div>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Checkbox id="remember" defaultChecked />
@@ -225,14 +239,26 @@ const Auth = () => {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="signup-password">{t('auth.password')}</Label>
-                  <Input
-                    id="signup-password"
-                    name="password"
-                    type="password"
-                    placeholder="••••••••"
-                    required
-                    className="h-12 text-lg"
-                  />
+                  <div className="relative">
+                    <Input
+                      id="signup-password"
+                      name="password"
+                      type={showSignupPassword ? "text" : "password"}
+                      placeholder="••••••••"
+                      required
+                      className="h-12 text-lg pr-12"
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="absolute right-1 top-1/2 -translate-y-1/2 h-10 w-10 text-muted-foreground hover:text-foreground"
+                      onClick={() => setShowSignupPassword(!showSignupPassword)}
+                      aria-label={showSignupPassword ? "Hide password" : "Show password"}
+                    >
+                      {showSignupPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                    </Button>
+                  </div>
                   <p className="text-xs text-muted-foreground">
                     {t('auth.passwordRequirements')}
                   </p>
